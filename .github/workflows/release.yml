@@ -1,0 +1,72 @@
+name: release
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to build, for example 1.0.0'
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Resolve version
+        id: version
+        shell: pwsh
+        run: |
+          $version = if ('${{ github.event_name }}' -eq 'workflow_dispatch') {
+            '${{ github.event.inputs.version }}'
+          } else {
+            '${{ github.ref_name }}'.TrimStart('v')
+          }
+          "value=$version" >> $env:GITHUB_OUTPUT
+          Write-Host "building $version"
+
+      - name: Test
+        run: dotnet test tests/FileMerge.Tests/FileMerge.Tests.csproj -c Release
+
+      - name: Build portable (x64)
+        shell: pwsh
+        run: ./build/Build-Portable.ps1 -Runtime win-x64 -Version ${{ steps.version.outputs.value }}
+
+      - name: Build portable (arm64)
+        shell: pwsh
+        run: ./build/Build-Portable.ps1 -Runtime win-arm64 -Version ${{ steps.version.outputs.value }} -SkipFrameworkDependent
+
+      # Unsigned on purpose: Partner Center signs Store submissions with the certificate that
+      # belongs to the reserved app identity. Set the repository variables to your own values.
+      - name: Build MSIX for the Store
+        shell: pwsh
+        run: |
+          ./packaging/msix/Build-Msix.ps1 `
+            -IdentityName '${{ vars.MSIX_IDENTITY_NAME }}' `
+            -Publisher '${{ vars.MSIX_PUBLISHER }}' `
+            -PublisherDisplayName '${{ vars.MSIX_PUBLISHER_DISPLAY_NAME }}' `
+            -Architecture x64 `
+            -Version ${{ steps.version.outputs.value }}
+        continue-on-error: true
+
+      - name: Publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: FileMerge ${{ steps.version.outputs.value }}
+          draft: true
+          generate_release_notes: true
+          files: |
+            artifacts/*.exe
+            artifacts/*.zip
+            artifacts/*.msix

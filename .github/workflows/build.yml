@@ -1,0 +1,63 @@
+name: build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Restore
+        run: dotnet restore FileMerge.slnx
+
+      - name: Build
+        run: dotnet build FileMerge.slnx -c Release --no-restore
+
+      - name: Test
+        run: dotnet test tests/FileMerge.Tests/FileMerge.Tests.csproj -c Release --no-build --verbosity normal
+
+      # Every language file must carry exactly the keys en.json carries. A missing key would
+      # silently fall back to English at runtime, which is easy to ship and hard to notice.
+      - name: Check translations
+        shell: pwsh
+        run: |
+          $dir = 'src/FileMerge/Localization/Strings'
+          $enKeys = (Get-Content "$dir/en.json" -Raw -Encoding UTF8 | ConvertFrom-Json).PSObject.Properties.Name
+          $failed = $false
+          foreach ($file in Get-ChildItem "$dir/*.json") {
+            $keys = (Get-Content $file.FullName -Raw -Encoding UTF8 | ConvertFrom-Json).PSObject.Properties.Name
+            $missing = $enKeys | Where-Object { $keys -notcontains $_ }
+            $extra = $keys | Where-Object { $enKeys -notcontains $_ }
+            if ($missing -or $extra) {
+              Write-Host "::error file=$($file.FullName)::missing=$($missing -join ',') extra=$($extra -join ',')"
+              $failed = $true
+            }
+          }
+          if ($failed) { exit 1 }
+          Write-Host "$($enKeys.Count) keys x $((Get-ChildItem "$dir/*.json").Count) languages: consistent"
+
+      - name: Build portable release
+        shell: pwsh
+        run: ./build/Build-Portable.ps1
+
+      - name: Upload portable build
+        uses: actions/upload-artifact@v4
+        with:
+          name: FileMerge-portable-win-x64
+          path: artifacts/*.exe
+          if-no-files-found: error

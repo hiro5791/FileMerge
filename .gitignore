@@ -1,0 +1,24 @@
+# Build output
+bin/
+obj/
+artifacts/
+publish/
+*.user
+*.suo
+.vs/
+
+# MSIX build output
+packaging/msix/layout/
+packaging/msix/*.msix
+packaging/msix/*.msixbundle
+packaging/msix/*.pfx
+packaging/msix/*.cer
+
+# Portable settings written next to the executable (portable mode)
+FileMerge.settings.json
+portable.txt
+
+# OS
+Thumbs.db
+desktop.ini
+.DS_Store

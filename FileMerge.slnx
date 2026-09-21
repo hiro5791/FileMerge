@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/FileMerge.Core/FileMerge.Core.csproj" />
+    <Project Path="src/FileMerge/FileMerge.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/FileMerge.Tests/FileMerge.Tests.csproj" />
+  </Folder>
+</Solution>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Template for the Microsoft Store package.
+
+  Identity/Name, Identity/Publisher and Properties/PublisherDisplayName must match the values
+  Partner Center shows under "Product identity" for the reserved app name. Build-Msix.ps1
+  substitutes them, so this file is never edited by hand for a release.
+-->
+<Package
+  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+  IgnorableNamespaces="uap rescap">
+
+  <Identity
+    Name="__IDENTITY_NAME__"
+    Publisher="__PUBLISHER__"
+    Version="__VERSION__"
+    ProcessorArchitecture="__ARCH__" />
+
+  <Properties>
+    <DisplayName>FileMerge</DisplayName>
+    <PublisherDisplayName>__PUBLISHER_DISPLAY_NAME__</PublisherDisplayName>
+    <Logo>Images\StoreLogo.png</Logo>
+    <Description>Combine multiple files into one.</Description>
+  </Properties>
+
+  <Dependencies>
+    <!-- Windows 10 1809 is the oldest release the .NET 10 desktop runtime supports. -->
+    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.17763.0" MaxVersionTested="10.0.26100.0" />
+  </Dependencies>
+
+  <Resources>
+    <Resource Language="en-us" />
+    <Resource Language="ja-jp" />
+    <Resource Language="zh-hans" />
+    <Resource Language="zh-hant" />
+    <Resource Language="ko-kr" />
+    <Resource Language="es-es" />
+    <Resource Language="pt-br" />
+    <Resource Language="fr-fr" />
+    <Resource Language="de-de" />
+    <Resource Language="it-it" />
+    <Resource Language="ru-ru" />
+    <Resource Language="uk-ua" />
+    <Resource Language="pl-pl" />
+    <Resource Language="nl-nl" />
+    <Resource Language="tr-tr" />
+    <Resource Language="ar-sa" />
+    <Resource Language="hi-in" />
+    <Resource Language="id-id" />
+    <Resource Language="vi-vn" />
+    <Resource Language="th-th" />
+  </Resources>
+
+  <Applications>
+    <Application Id="FileMerge" Executable="FileMerge.exe" EntryPoint="Windows.FullTrustApplication">
+      <uap:VisualElements
+        DisplayName="FileMerge"
+        Description="Combine multiple files into one."
+        BackgroundColor="transparent"
+        Square150x150Logo="Images\Square150x150Logo.png"
+        Square44x44Logo="Images\Square44x44Logo.png">
+        <uap:DefaultTile
+          Wide310x150Logo="Images\Wide310x150Logo.png"
+          Square71x71Logo="Images\Square71x71Logo.png"
+          Square310x310Logo="Images\Square310x310Logo.png" />
+        <uap:SplashScreen Image="Images\SplashScreen.png" BackgroundColor="transparent" />
+      </uap:VisualElements>
+    </Application>
+  </Applications>
+
+  <Capabilities>
+    <!-- A desktop app packaged as MSIX declares full trust; it reads and writes the files the
+         user picks and needs nothing else. -->
+    <rescap:Capability Name="runFullTrust" />
+  </Capabilities>
+
+</Package>

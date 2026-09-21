@@ -1,0 +1,13 @@
+# Windows-only project: normalise to LF in the repository, check out as CRLF.
+* text=auto eol=crlf
+
+# Scripts that CI runs on Linux runners would break with CRLF.
+*.sh text eol=lf
+*.yml text eol=lf
+
+# Binary assets must never be touched.
+*.png binary
+*.ico binary
+*.msix binary
+*.pfx binary
+*.cer binary

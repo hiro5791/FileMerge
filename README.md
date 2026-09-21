@@ -1,0 +1,130 @@
+# FileMerge
+
+Combine multiple files into one, on Windows. A single `.exe` — nothing to install, no .NET
+runtime needed, no registry entries, no background service.
+
+[日本語 README](README.ja.md)
+
+![FileMerge](docs/images/screenshot-light.png)
+
+## The one thing worth knowing
+
+**By default FileMerge does not change your files. At all.**
+
+Run it with everything at its defaults and the output is the input files joined byte for byte
+— the same result as `copy /b a+b out`. That holds for text, for CSV, for logs, and for the
+`.001` / `.002` parts of a split archive.
+
+This matters because the alternative is worse. A merge tool that "helpfully" converts
+character encodings has to *guess* what encoding each file is in, and encoding detection is a
+heuristic that is sometimes wrong. When it guesses wrong it rewrites your text incorrectly and
+the original bytes are gone. FileMerge never takes that risk unless you ask it to.
+
+Everything that would alter content is opt-in:
+
+| Option | Default | What it does |
+| --- | --- | --- |
+| Output encoding | **Do not convert** | Re-encodes every file to one encoding |
+| Line endings | **Keep as is** | Rewrites CRLF / LF / CR |
+| Between files | **Nothing** | Inserts blank lines or file-name headers |
+| Start each file on a new line | **Off** | Adds a line break where a file lacks one |
+| Skip repeated header row | **Off** | Drops line 1 of every file after the first (CSV/TSV) |
+| Remove blank lines at file end | **Off** | Trims trailing blank lines |
+| Remove BOM from later files | **Off** | Strips the byte order mark from files 2..n |
+
+When the defaults would produce a file you probably do not want, FileMerge **says so and
+offers a one-click fix** — it does not apply the fix on its own:
+
+- *"These files use different encodings (UTF-8 / Shift_JIS). Joined as they are, part of the
+  text will be unreadable."* → **Convert everything to UTF-8**
+- *"Files after the first start with a byte order mark…"* → **Remove those marks**
+- *"Some files do not end with a line break…"* → **Add the line breaks**
+
+## Features
+
+- **Drag and drop**, or **Add files**, or **Add folder** with a wildcard filter
+  (`*.log; *.txt`), subfolder recursion, and a live count of what matches
+- **Reorder by dragging rows**, or with the arrow buttons, or sort by name, date, size or path
+- **Natural sort**, so `part2` comes before `part10` and `.001` before `.010` — ordinary
+  alphabetical sorting silently corrupts split archives, so this is the default everywhere
+- **Rejoins split archives** (`.001`, `.part01`, `.r00`, `.z01`) byte-exactly
+- **Detects and shows each file's encoding** before you merge anything
+- **Progress and cancel** for large merges, written to a temporary file first so a cancelled
+  or failed run never leaves a half-written file where you expect a complete one
+- **Refuses to write over one of its own inputs**
+- **Light / dark theme**, following Windows or pinned
+- **20 languages**, switchable at runtime, with right-to-left layout for Arabic
+
+## Download
+
+Grab the latest from [Releases](../../releases):
+
+| File | Size | Requirements |
+| --- | --- | --- |
+| `FileMerge-<version>-win-x64.exe` | ~59 MB | none — .NET is inside the executable |
+| `FileMerge-<version>-win-arm64.exe` | ~59 MB | none |
+| `FileMerge-<version>-win-x64-netdep.zip` | ~0.3 MB | [.NET Desktop Runtime 10](https://dotnet.microsoft.com/download/dotnet/10.0) |
+
+Windows 10 version 1809 or later. Double-click and it runs.
+
+On first launch the single-file build unpacks its native WPF components into `%TEMP%`. That is
+how single-file WPF works; it needs no administrator rights and happens only once.
+
+FileMerge is also on the **Microsoft Store**, if you would rather have automatic updates.
+
+### Portable mode
+
+Settings normally live in `%LOCALAPPDATA%\FileMerge\`. Put an empty file named `portable.txt`
+next to the executable and they are stored beside it instead, so a copy on a USB stick carries
+its own configuration. On read-only media nothing is written and the app still runs.
+
+## Languages
+
+English · 日本語 · 简体中文 · 繁體中文 · 한국어 · Español · Português (Brasil) · Français ·
+Deutsch · Italiano · Русский · Українська · Polski · Nederlands · Türkçe · العربية · हिन्दी ·
+Bahasa Indonesia · Tiếng Việt · ไทย
+
+The language is picked from Windows on first run and can be changed at any time from the
+header. Every string lives in [`src/FileMerge/Localization/Strings`](src/FileMerge/Localization/Strings)
+as one JSON file per language, embedded into the executable so the portable build stays a
+single file. CI fails if any language is missing a key that `en.json` has.
+
+## Build from source
+
+Requires the [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0).
+
+```powershell
+git clone https://github.com/OWNER/FileMerge.git
+cd FileMerge
+
+dotnet test tests/FileMerge.Tests/FileMerge.Tests.csproj   # 42 tests
+dotnet run --project src/FileMerge/FileMerge.csproj
+
+./build/Build-Portable.ps1                                  # artifacts/*.exe
+```
+
+| Project | Contents |
+| --- | --- |
+| `src/FileMerge.Core` | Merge engine, encoding detection, folder scanning. No UI dependency. |
+| `src/FileMerge` | WPF window, view models, themes, the 20 string tables. |
+| `tests/FileMerge.Tests` | xUnit tests, most of them asserting that bytes survive unchanged. |
+
+Regenerate the icon and the Store tiles with `./build/New-Icons.ps1` — the artwork is drawn in
+code rather than checked in as binaries.
+
+## Microsoft Store
+
+```powershell
+./packaging/msix/Build-Msix.ps1 `
+    -IdentityName '12345Publisher.FileMerge' `
+    -Publisher 'CN=ABCDEFGH-1234-5678-9012-ABCDEFGHIJKL' `
+    -PublisherDisplayName 'Your Publisher Name'
+```
+
+Those three values come from Partner Center, under **Product identity** for your reserved app
+name. The package is left unsigned on purpose: Partner Center signs Store submissions itself.
+See [docs/STORE.md](docs/STORE.md) for the full submission checklist.
+
+## License
+
+[MIT](LICENSE)
