@@ -52,7 +52,7 @@
   "Options.Separator.Custom": "Свой текст",
   "Options.SeparatorTemplate": "Текст разделителя",
   "Options.SeparatorTemplateHint": "Подстановки: {name} {path} {ext} {index}",
-  "Options.EnsureTrailingNewline": "Начинать каждый файл с новой строки",
+  "Options.EnsureTrailingNewline": "Добавлять перевод строки в файлы, которые им не заканчиваются",
   "Options.SkipRepeatedHeader": "Пропускать строку заголовка во всех файлах, кроме первого",
   "Options.SkipRepeatedHeaderHint": "Для файлов CSV и TSV, в которых повторяются имена столбцов.",
   "Options.TrimTrailingBlankLines": "Удалять пустые строки в конце каждого файла",
@@ -68,12 +68,6 @@
   "Plan.Transform": "Файлы будут прочитаны как текст и перезаписаны с параметрами ниже.",
   "Detect.SplitArchive": "Обнаружены части разделённого файла. Они будут склеены байт за байтом.",
 
-  "Warn.MixedEncodings": "У этих файлов разные кодировки ({0}). При склейке как есть часть текста станет нечитаемой.",
-  "Warn.InnerBom": "Файлы после первого начинаются с BOM. При склейке как есть он останется посреди текста невидимым символом.",
-  "Warn.NoTrailingNewline": "Некоторые файлы не заканчиваются переводом строки, поэтому следующий файл продолжится на той же строке.",
-  "Warn.FixEncoding": "Преобразовать всё в UTF-8",
-  "Warn.FixBom": "Удалить эти метки",
-  "Warn.FixNewline": "Добавить переводы строк",
 
   "Folder.Title": "Добавить папку",
   "Folder.Path": "Папка",

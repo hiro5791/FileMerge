@@ -188,16 +188,10 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty]
     private bool _splitArchiveDetected;
 
-    // --- Warnings. Each one states a fact and offers a fix; none of them act on their own. ---
-
-    [ObservableProperty]
-    private string _mixedEncodingWarning = string.Empty;
-
-    [ObservableProperty]
-    private string _innerBomWarning = string.Empty;
-
-    [ObservableProperty]
-    private string _trailingNewlineWarning = string.Empty;
+    // The window deliberately carries no warnings. Joining files without converting anything
+    // is the faithful result the user asked for, whether that leaves mixed encodings, a byte
+    // order mark mid-file, or two files on the same line. The list shows each file's encoding
+    // as information, and the options below are there for anyone who wants a different result.
 
     public bool IsIdle => !IsBusy;
 
@@ -429,29 +423,6 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     private void Cancel() => _mergeCts?.Cancel();
 
-    // --- One-click fixes offered next to each warning. The user asks; the app never assumes. ---
-
-    [RelayCommand]
-    private void ConvertToUtf8()
-    {
-        SelectedOutputEncoding = OutputEncodings.First(o => o.Value == OutputEncodingKind.Utf8);
-        RefreshWarnings();
-    }
-
-    [RelayCommand]
-    private void StripInnerBoms()
-    {
-        RemoveInnerBoms = true;
-        RefreshWarnings();
-    }
-
-    [RelayCommand]
-    private void AddTrailingNewlines()
-    {
-        EnsureTrailingNewline = true;
-        RefreshWarnings();
-    }
-
     [RelayCommand]
     private async Task MergeAsync()
     {
@@ -573,19 +544,13 @@ public partial class MainViewModel : ObservableObject
         _ = ProbeFilesAsync();
     }
 
-    partial void OnSelectedInputEncodingChanged(EncodingOption? value)
-    {
-        OnPropertyChanged(nameof(PlanText));
-        RefreshWarnings();
-    }
+    partial void OnSelectedInputEncodingChanged(EncodingOption? value) => OnPropertyChanged(nameof(PlanText));
 
     partial void OnSelectedFallbackEncodingChanged(EncodingOption? value) => _ = ProbeFilesAsync(force: true);
 
-    partial void OnRemoveInnerBomsChanged(bool value) => RefreshWarnings();
-
     /// <summary>
-    /// Reads the head and tail of each file off the UI thread, then recomputes what the
-    /// window shows. Nothing here changes a file.
+    /// Reads the head of each file off the UI thread to fill in the Encoding column.
+    /// Nothing here changes a file.
     /// </summary>
     private async Task ProbeFilesAsync(bool force = false)
     {
@@ -593,7 +558,7 @@ public partial class MainViewModel : ObservableObject
         var cts = new CancellationTokenSource();
         _probeCts = cts;
 
-        var pending = Files.Where(f => force || (f.EncodingLabel is null && f.EndsWithNewline is null && f.Error is null)).ToList();
+        var pending = Files.Where(f => force || (f.EncodingLabel is null && f.Error is null)).ToList();
         var fallback = SelectedFallbackEncoding?.ToEncoding();
 
         foreach (var entry in pending)
@@ -608,8 +573,6 @@ public partial class MainViewModel : ObservableObject
             {
                 var probe = await Task.Run(() => FileProbe.Probe(path, fallback), cts.Token);
                 entry.EncodingLabel = probe.EncodingLabel;
-                entry.HasBom = probe.HasBom;
-                entry.EndsWithNewline = probe.EndsWithNewline;
                 entry.IsTextLike = probe.IsTextLike;
             }
             catch (OperationCanceledException)
@@ -624,47 +587,19 @@ public partial class MainViewModel : ObservableObject
 
         if (!cts.IsCancellationRequested)
         {
-            RefreshWarnings();
+            RefreshDetection();
         }
     }
 
-    /// <summary>Recomputes the advisory text. Every message describes; none of them act.</summary>
-    private void RefreshWarnings()
+    /// <summary>
+    /// Decides what the options panel should offer. Text options are pointless for a split
+    /// archive and dangerous to reach for by accident, so they are hidden unless every file
+    /// in the list reads as text.
+    /// </summary>
+    private void RefreshDetection()
     {
         SplitArchiveDetected = Files.Count > 1 && Files.All(f => ContentSniffer.LooksLikeSplitPart(f.FullPath));
         ShowTextOptions = Files.Count > 0 && Files.All(f => f.IsTextLike) && !SplitArchiveDetected;
-
-        if (!ShowTextOptions)
-        {
-            MixedEncodingWarning = string.Empty;
-            InnerBomWarning = string.Empty;
-            TrailingNewlineWarning = string.Empty;
-            OnPropertyChanged(nameof(PlanText));
-            return;
-        }
-
-        // Mixed encodings only matter while the bytes are passed straight through; once the
-        // user has chosen an output encoding, the pipeline reconciles them.
-        var labels = Files
-            .Select(f => f.EncodingLabel)
-            .Where(l => !string.IsNullOrEmpty(l))
-            .Select(l => l!.Replace(" (BOM)", string.Empty, StringComparison.Ordinal))
-            .Distinct(StringComparer.OrdinalIgnoreCase)
-            .ToList();
-
-        bool converting = (SelectedOutputEncoding?.Value ?? OutputEncodingKind.Preserve) != OutputEncodingKind.Preserve;
-
-        MixedEncodingWarning = labels.Count > 1 && !converting
-            ? Loc.Current.Format("Warn.MixedEncodings", string.Join(" / ", labels))
-            : string.Empty;
-
-        InnerBomWarning = !RemoveInnerBoms && Files.Skip(1).Any(f => f.HasBom)
-            ? Loc.Current["Warn.InnerBom"]
-            : string.Empty;
-
-        TrailingNewlineWarning = !EnsureTrailingNewline && Files.Take(Math.Max(0, Files.Count - 1)).Any(f => f.EndsWithNewline == false)
-            ? Loc.Current["Warn.NoTrailingNewline"]
-            : string.Empty;
 
         OnPropertyChanged(nameof(PlanText));
     }
@@ -693,7 +628,7 @@ public partial class MainViewModel : ObservableObject
     private void RefreshLocalizedText()
     {
         UpdateSummary();
-        RefreshWarnings();
+        RefreshDetection();
 
         if (!IsBusy)
         {

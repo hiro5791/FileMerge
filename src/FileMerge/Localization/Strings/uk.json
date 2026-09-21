@@ -52,7 +52,7 @@
   "Options.Separator.Custom": "Власний текст",
   "Options.SeparatorTemplate": "Текст роздільника",
   "Options.SeparatorTemplateHint": "Підстановки: {name} {path} {ext} {index}",
-  "Options.EnsureTrailingNewline": "Починати кожен файл з нового рядка",
+  "Options.EnsureTrailingNewline": "Додавати перехід рядка у файли, які ним не закінчуються",
   "Options.SkipRepeatedHeader": "Пропускати рядок заголовка в усіх файлах, крім першого",
   "Options.SkipRepeatedHeaderHint": "Для файлів CSV і TSV, у яких повторюються назви стовпців.",
   "Options.TrimTrailingBlankLines": "Видаляти порожні рядки в кінці кожного файлу",
@@ -68,12 +68,6 @@
   "Plan.Transform": "Файли буде прочитано як текст і перезаписано з параметрами нижче.",
   "Detect.SplitArchive": "Виявлено частини розділеного файлу. Їх буде склеєно байт за байтом.",
 
-  "Warn.MixedEncodings": "Ці файли мають різні кодування ({0}). Якщо склеїти як є, частина тексту стане нечитабельною.",
-  "Warn.InnerBom": "Файли після першого починаються з BOM. Якщо склеїти як є, він залишиться посеред тексту невидимим символом.",
-  "Warn.NoTrailingNewline": "Деякі файли не закінчуються переходом рядка, тому наступний файл продовжиться в тому самому рядку.",
-  "Warn.FixEncoding": "Перетворити все на UTF-8",
-  "Warn.FixBom": "Вилучити ці позначки",
-  "Warn.FixNewline": "Додати переходи рядка",
 
   "Folder.Title": "Додати папку",
   "Folder.Path": "Папка",

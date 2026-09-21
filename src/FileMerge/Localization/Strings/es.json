@@ -52,7 +52,7 @@
   "Options.Separator.Custom": "Texto personalizado",
   "Options.SeparatorTemplate": "Texto separador",
   "Options.SeparatorTemplateHint": "Marcadores: {name} {path} {ext} {index}",
-  "Options.EnsureTrailingNewline": "Empezar cada archivo en una línea nueva",
+  "Options.EnsureTrailingNewline": "Añadir un salto de línea a los archivos que no terminan con uno",
   "Options.SkipRepeatedHeader": "Omitir la fila de encabezado de cada archivo salvo el primero",
   "Options.SkipRepeatedHeaderHint": "Para archivos CSV y TSV que repiten los nombres de columna.",
   "Options.TrimTrailingBlankLines": "Quitar las líneas en blanco del final de cada archivo",
@@ -68,12 +68,6 @@
   "Plan.Transform": "Los archivos se leerán como texto y se reescribirán con las opciones de abajo.",
   "Detect.SplitArchive": "Se detectaron partes de un archivo dividido. Se unirán byte a byte.",
 
-  "Warn.MixedEncodings": "Estos archivos usan codificaciones distintas ({0}). Si se unen tal cual, parte del texto quedará ilegible.",
-  "Warn.InnerBom": "Los archivos posteriores al primero empiezan con una marca BOM. Si se unen tal cual, queda en medio del texto como un carácter invisible.",
-  "Warn.NoTrailingNewline": "Algunos archivos no terminan con un salto de línea, así que el siguiente continuará en la misma línea.",
-  "Warn.FixEncoding": "Convertir todo a UTF-8",
-  "Warn.FixBom": "Quitar esas marcas",
-  "Warn.FixNewline": "Añadir los saltos de línea",
 
   "Folder.Title": "Agregar carpeta",
   "Folder.Path": "Carpeta",

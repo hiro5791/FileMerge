@@ -52,7 +52,7 @@
   "Options.Separator.Custom": "Texto personalizado",
   "Options.SeparatorTemplate": "Texto do separador",
   "Options.SeparatorTemplateHint": "Marcadores: {name} {path} {ext} {index}",
-  "Options.EnsureTrailingNewline": "Começar cada arquivo em uma nova linha",
+  "Options.EnsureTrailingNewline": "Adicionar uma quebra de linha aos arquivos que não terminam com uma",
   "Options.SkipRepeatedHeader": "Ignorar a linha de cabeçalho de todos os arquivos após o primeiro",
   "Options.SkipRepeatedHeaderHint": "Para arquivos CSV e TSV que repetem os nomes das colunas.",
   "Options.TrimTrailingBlankLines": "Remover as linhas em branco no fim de cada arquivo",
@@ -68,12 +68,6 @@
   "Plan.Transform": "Os arquivos serão lidos como texto e reescritos com as opções abaixo.",
   "Detect.SplitArchive": "Partes de arquivo dividido detectadas. Serão emendadas byte a byte.",
 
-  "Warn.MixedEncodings": "Estes arquivos usam codificações diferentes ({0}). Se forem unidos assim, parte do texto ficará ilegível.",
-  "Warn.InnerBom": "Os arquivos após o primeiro começam com uma marca BOM. Se forem unidos assim, ela fica no meio do texto como um caractere invisível.",
-  "Warn.NoTrailingNewline": "Alguns arquivos não terminam com quebra de linha, então o próximo continuará na mesma linha.",
-  "Warn.FixEncoding": "Converter tudo para UTF-8",
-  "Warn.FixBom": "Remover essas marcas",
-  "Warn.FixNewline": "Adicionar as quebras de linha",
 
   "Folder.Title": "Adicionar pasta",
   "Folder.Path": "Pasta",

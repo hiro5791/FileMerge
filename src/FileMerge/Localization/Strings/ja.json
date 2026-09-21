@@ -52,7 +52,7 @@
   "Options.Separator.Custom": "任意の文字列",
   "Options.SeparatorTemplate": "区切り文字列",
   "Options.SeparatorTemplateHint": "使える置換子: {name} {path} {ext} {index}",
-  "Options.EnsureTrailingNewline": "各ファイルを必ず行頭から始める",
+  "Options.EnsureTrailingNewline": "改行で終わっていないファイルに改行を補う",
   "Options.SkipRepeatedHeader": "2 個目以降のファイルの見出し行を除く",
   "Options.SkipRepeatedHeaderHint": "列名が繰り返される CSV / TSV 向けです。",
   "Options.TrimTrailingBlankLines": "各ファイル末尾の空行を削除する",
@@ -68,12 +68,6 @@
   "Plan.Transform": "テキストとして読み込み、下の設定で書き直します。",
   "Detect.SplitArchive": "分割ファイルを検出しました。バイト列をそのまま連結します。",
 
-  "Warn.MixedEncodings": "文字コードが混在しています（{0}）。このまま結合すると一部が文字化けします。",
-  "Warn.InnerBom": "2 個目以降のファイルに BOM があります。このまま結合すると本文の途中に見えない文字として残ります。",
-  "Warn.NoTrailingNewline": "改行で終わっていないファイルがあります。次のファイルが同じ行に続きます。",
-  "Warn.FixEncoding": "すべて UTF-8 に変換する",
-  "Warn.FixBom": "BOM を取り除く",
-  "Warn.FixNewline": "改行を補う",
 
   "Folder.Title": "フォルダーを追加",
   "Folder.Path": "フォルダー",

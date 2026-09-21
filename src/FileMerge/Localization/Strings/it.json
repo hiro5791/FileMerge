@@ -52,7 +52,7 @@
   "Options.Separator.Custom": "Testo personalizzato",
   "Options.SeparatorTemplate": "Testo separatore",
   "Options.SeparatorTemplateHint": "Segnaposto: {name} {path} {ext} {index}",
-  "Options.EnsureTrailingNewline": "Inizia ogni file su una nuova riga",
+  "Options.EnsureTrailingNewline": "Aggiungi un a capo ai file che non terminano con uno",
   "Options.SkipRepeatedHeader": "Salta la riga di intestazione di ogni file dopo il primo",
   "Options.SkipRepeatedHeaderHint": "Per file CSV e TSV che ripetono i nomi delle colonne.",
   "Options.TrimTrailingBlankLines": "Rimuovi le righe vuote alla fine di ogni file",
@@ -68,12 +68,6 @@
   "Plan.Transform": "I file verranno letti come testo e riscritti con le opzioni qui sotto.",
   "Detect.SplitArchive": "Rilevati file divisi. Verranno ricomposti byte per byte.",
 
-  "Warn.MixedEncodings": "Questi file usano codifiche diverse ({0}). Uniti così come sono, parte del testo risulterà illeggibile.",
-  "Warn.InnerBom": "I file successivi al primo iniziano con un BOM. Uniti così come sono, resta in mezzo al testo come carattere invisibile.",
-  "Warn.NoTrailingNewline": "Alcuni file non terminano con un a capo, quindi il file successivo proseguirà sulla stessa riga.",
-  "Warn.FixEncoding": "Converti tutto in UTF-8",
-  "Warn.FixBom": "Rimuovi quei segni",
-  "Warn.FixNewline": "Aggiungi gli a capo",
 
   "Folder.Title": "Aggiungi cartella",
   "Folder.Path": "Cartella",

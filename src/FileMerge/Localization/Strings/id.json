@@ -52,7 +52,7 @@
   "Options.Separator.Custom": "Teks khusus",
   "Options.SeparatorTemplate": "Teks pemisah",
   "Options.SeparatorTemplateHint": "Penampung: {name} {path} {ext} {index}",
-  "Options.EnsureTrailingNewline": "Mulai setiap berkas pada baris baru",
+  "Options.EnsureTrailingNewline": "Tambahkan baris baru pada berkas yang tidak diakhiri baris baru",
   "Options.SkipRepeatedHeader": "Lewati baris tajuk pada setiap berkas setelah yang pertama",
   "Options.SkipRepeatedHeaderHint": "Untuk berkas CSV dan TSV yang mengulang nama kolom.",
   "Options.TrimTrailingBlankLines": "Hapus baris kosong di akhir setiap berkas",
@@ -68,12 +68,6 @@
   "Plan.Transform": "Berkas akan dibaca sebagai teks dan ditulis ulang dengan opsi di bawah.",
   "Detect.SplitArchive": "Bagian berkas terpisah terdeteksi. Akan disambung bita demi bita.",
 
-  "Warn.MixedEncodings": "Berkas-berkas ini memakai pengodean berbeda ({0}). Jika digabungkan apa adanya, sebagian teks tidak akan terbaca.",
-  "Warn.InnerBom": "Berkas setelah yang pertama diawali tanda BOM. Jika digabungkan apa adanya, tanda itu tertinggal di tengah teks sebagai karakter tak terlihat.",
-  "Warn.NoTrailingNewline": "Beberapa berkas tidak diakhiri baris baru, sehingga berkas berikutnya menyambung di baris yang sama.",
-  "Warn.FixEncoding": "Konversi semua ke UTF-8",
-  "Warn.FixBom": "Hapus tanda itu",
-  "Warn.FixNewline": "Tambahkan baris baru",
 
   "Folder.Title": "Tambah folder",
   "Folder.Path": "Folder",

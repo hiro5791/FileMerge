@@ -52,7 +52,7 @@
   "Options.Separator.Custom": "Custom text",
   "Options.SeparatorTemplate": "Separator text",
   "Options.SeparatorTemplateHint": "Placeholders: {name} {path} {ext} {index}",
-  "Options.EnsureTrailingNewline": "Start each file on a new line",
+  "Options.EnsureTrailingNewline": "Add a line break to files that do not end with one",
   "Options.SkipRepeatedHeader": "Skip the header row of every file after the first",
   "Options.SkipRepeatedHeaderHint": "For CSV and TSV files that repeat their column names.",
   "Options.TrimTrailingBlankLines": "Remove blank lines at the end of each file",
@@ -68,12 +68,6 @@
   "Plan.Transform": "Files will be read as text and rewritten using the options below.",
   "Detect.SplitArchive": "Split archive parts detected. They will be joined byte for byte.",
 
-  "Warn.MixedEncodings": "These files use different encodings ({0}). Joined as they are, part of the text will be unreadable.",
-  "Warn.InnerBom": "Files after the first start with a byte order mark. Joined as they are, it stays in the middle of the text as an invisible character.",
-  "Warn.NoTrailingNewline": "Some files do not end with a line break, so the next file will continue on the same line.",
-  "Warn.FixEncoding": "Convert everything to UTF-8",
-  "Warn.FixBom": "Remove those marks",
-  "Warn.FixNewline": "Add the line breaks",
 
   "Folder.Title": "Add folder",
   "Folder.Path": "Folder",

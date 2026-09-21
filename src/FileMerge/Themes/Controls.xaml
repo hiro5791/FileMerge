@@ -34,11 +34,6 @@
         <Setter Property="TextWrapping" Value="Wrap" />
     </Style>
 
-    <Style x:Key="WarningText" TargetType="TextBlock" BasedOn="{StaticResource CaptionText}">
-        <Setter Property="Foreground" Value="{DynamicResource DangerBrush}" />
-        <Setter Property="LineHeight" Value="16" />
-    </Style>
-
     <!-- ============================================================ Card -->
 
     <Style x:Key="Card" TargetType="Border">

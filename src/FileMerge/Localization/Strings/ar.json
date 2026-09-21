@@ -52,7 +52,7 @@
   "Options.Separator.Custom": "نص مخصص",
   "Options.SeparatorTemplate": "نص الفاصل",
   "Options.SeparatorTemplateHint": "العناصر النائبة: {name} {path} {ext} {index}",
-  "Options.EnsureTrailingNewline": "بدء كل ملف في سطر جديد",
+  "Options.EnsureTrailingNewline": "إضافة سطر جديد إلى الملفات التي لا تنتهي به",
   "Options.SkipRepeatedHeader": "تخطي صف العناوين في كل ملف بعد الأول",
   "Options.SkipRepeatedHeaderHint": "لملفات CSV وTSV التي تكرر أسماء الأعمدة.",
   "Options.TrimTrailingBlankLines": "إزالة الأسطر الفارغة في نهاية كل ملف",
@@ -68,12 +68,6 @@
   "Plan.Transform": "ستُقرأ الملفات كنص وتُكتب من جديد وفق الخيارات أدناه.",
   "Detect.SplitArchive": "تم اكتشاف أجزاء ملف مقسّم. ستُلحق بايتًا ببايت.",
 
-  "Warn.MixedEncodings": "هذه الملفات تستخدم ترميزات مختلفة ({0}). إذا دُمجت كما هي فسيتعذّر قراءة جزء من النص.",
-  "Warn.InnerBom": "الملفات بعد الأول تبدأ بعلامة BOM. إذا دُمجت كما هي فستبقى في وسط النص كمحرف غير مرئي.",
-  "Warn.NoTrailingNewline": "بعض الملفات لا تنتهي بسطر جديد، لذا سيكمل الملف التالي في السطر نفسه.",
-  "Warn.FixEncoding": "تحويل كل شيء إلى UTF-8",
-  "Warn.FixBom": "إزالة تلك العلامات",
-  "Warn.FixNewline": "إضافة فواصل الأسطر",
 
   "Folder.Title": "إضافة مجلد",
   "Folder.Path": "المجلد",

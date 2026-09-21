@@ -52,7 +52,7 @@
   "Options.Separator.Custom": "ข้อความที่กำหนดเอง",
   "Options.SeparatorTemplate": "ข้อความคั่น",
   "Options.SeparatorTemplateHint": "ตัวแทน: {name} {path} {ext} {index}",
-  "Options.EnsureTrailingNewline": "เริ่มแต่ละไฟล์ที่บรรทัดใหม่",
+  "Options.EnsureTrailingNewline": "เติมการขึ้นบรรทัดใหม่ให้ไฟล์ที่ไม่ได้ลงท้ายด้วยการขึ้นบรรทัดใหม่",
   "Options.SkipRepeatedHeader": "ข้ามบรรทัดหัวตารางของทุกไฟล์หลังไฟล์แรก",
   "Options.SkipRepeatedHeaderHint": "สำหรับไฟล์ CSV และ TSV ที่มีชื่อคอลัมน์ซ้ำกัน",
   "Options.TrimTrailingBlankLines": "ลบบรรทัดว่างท้ายไฟล์ของแต่ละไฟล์",
@@ -68,12 +68,6 @@
   "Plan.Transform": "ไฟล์จะถูกอ่านเป็นข้อความและเขียนใหม่ตามตัวเลือกด้านล่าง",
   "Detect.SplitArchive": "ตรวจพบไฟล์ที่ถูกแบ่ง จะต่อกันแบบไบต์ต่อไบต์",
 
-  "Warn.MixedEncodings": "ไฟล์เหล่านี้ใช้การเข้ารหัสต่างกัน ({0}) ถ้ารวมตามเดิมข้อความบางส่วนจะอ่านไม่ได้",
-  "Warn.InnerBom": "ไฟล์หลังไฟล์แรกขึ้นต้นด้วย BOM ถ้ารวมตามเดิมจะค้างอยู่กลางข้อความเป็นอักขระที่มองไม่เห็น",
-  "Warn.NoTrailingNewline": "มีไฟล์ที่ไม่ได้ลงท้ายด้วยการขึ้นบรรทัดใหม่ ไฟล์ถัดไปจึงต่อในบรรทัดเดียวกัน",
-  "Warn.FixEncoding": "แปลงทั้งหมดเป็น UTF-8",
-  "Warn.FixBom": "เอาเครื่องหมายเหล่านั้นออก",
-  "Warn.FixNewline": "เติมการขึ้นบรรทัดใหม่",
 
   "Folder.Title": "เพิ่มโฟลเดอร์",
   "Folder.Path": "โฟลเดอร์",

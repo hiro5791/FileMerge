@@ -311,39 +311,6 @@
                                        Margin="0,8,0,0"
                                        Visibility="{Binding SplitArchiveDetected, Converter={StaticResource BoolToVis}}" />
 
-                            <!-- Advisories. Each states a fact and offers a fix; none acts on its own. -->
-                            <StackPanel Margin="0,10,0,0"
-                                        Visibility="{Binding MixedEncodingWarning, Converter={StaticResource StringToVis}}">
-                                <TextBlock Text="{Binding MixedEncodingWarning}" Style="{StaticResource WarningText}" />
-                                <Button Style="{StaticResource SubtleButton}"
-                                        HorizontalAlignment="Left"
-                                        Padding="0,4"
-                                        Foreground="{DynamicResource AccentBrush}"
-                                        Content="{loc:T Warn.FixEncoding}"
-                                        Command="{Binding ConvertToUtf8Command}" />
-                            </StackPanel>
-
-                            <StackPanel Margin="0,10,0,0"
-                                        Visibility="{Binding InnerBomWarning, Converter={StaticResource StringToVis}}">
-                                <TextBlock Text="{Binding InnerBomWarning}" Style="{StaticResource WarningText}" />
-                                <Button Style="{StaticResource SubtleButton}"
-                                        HorizontalAlignment="Left"
-                                        Padding="0,4"
-                                        Foreground="{DynamicResource AccentBrush}"
-                                        Content="{loc:T Warn.FixBom}"
-                                        Command="{Binding StripInnerBomsCommand}" />
-                            </StackPanel>
-
-                            <StackPanel Margin="0,10,0,0"
-                                        Visibility="{Binding TrailingNewlineWarning, Converter={StaticResource StringToVis}}">
-                                <TextBlock Text="{Binding TrailingNewlineWarning}" Style="{StaticResource WarningText}" />
-                                <Button Style="{StaticResource SubtleButton}"
-                                        HorizontalAlignment="Left"
-                                        Padding="0,4"
-                                        Foreground="{DynamicResource AccentBrush}"
-                                        Content="{loc:T Warn.FixNewline}"
-                                        Command="{Binding AddTrailingNewlinesCommand}" />
-                            </StackPanel>
                         </StackPanel>
                     </Border>
 

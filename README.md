@@ -27,18 +27,16 @@ Everything that would alter content is opt-in:
 | Output encoding | **Do not convert** | Re-encodes every file to one encoding |
 | Line endings | **Keep as is** | Rewrites CRLF / LF / CR |
 | Between files | **Nothing** | Inserts blank lines or file-name headers |
-| Start each file on a new line | **Off** | Adds a line break where a file lacks one |
+| Add a line break to files that do not end with one | **Off** | Stops two files running onto the same line |
 | Skip repeated header row | **Off** | Drops line 1 of every file after the first (CSV/TSV) |
 | Remove blank lines at file end | **Off** | Trims trailing blank lines |
-| Remove BOM from later files | **Off** | Strips the byte order mark from files 2..n |
+| Remove the byte order mark from files after the first | **Off** | Stops a stray BOM landing mid-text |
 
-When the defaults would produce a file you probably do not want, FileMerge **says so and
-offers a one-click fix** — it does not apply the fix on its own:
-
-- *"These files use different encodings (UTF-8 / Shift_JIS). Joined as they are, part of the
-  text will be unreadable."* → **Convert everything to UTF-8**
-- *"Files after the first start with a byte order mark…"* → **Remove those marks**
-- *"Some files do not end with a line break…"* → **Add the line breaks**
+There are no warning banners. Joining files that do not share an encoding produces garbled
+text, a BOM from a later file stays in the middle of the output, and a file that does not end
+with a line break runs into the next one — all of which is the faithful result of not
+converting anything, and all of which the options above will change if you want them to. What
+the window does show is each file's detected encoding, in the list, as plain information.
 
 ## Features
 

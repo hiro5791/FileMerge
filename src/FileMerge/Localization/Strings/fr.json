@@ -52,7 +52,7 @@
   "Options.Separator.Custom": "Texte personnalisé",
   "Options.SeparatorTemplate": "Texte de séparation",
   "Options.SeparatorTemplateHint": "Variables : {name} {path} {ext} {index}",
-  "Options.EnsureTrailingNewline": "Commencer chaque fichier sur une nouvelle ligne",
+  "Options.EnsureTrailingNewline": "Ajouter un saut de ligne aux fichiers qui n'en ont pas à la fin",
   "Options.SkipRepeatedHeader": "Ignorer la ligne d'en-tête de chaque fichier après le premier",
   "Options.SkipRepeatedHeaderHint": "Pour les fichiers CSV et TSV qui répètent les noms de colonnes.",
   "Options.TrimTrailingBlankLines": "Supprimer les lignes vides à la fin de chaque fichier",
@@ -68,12 +68,6 @@
   "Plan.Transform": "Les fichiers seront lus comme du texte et réécrits selon les options ci-dessous.",
   "Detect.SplitArchive": "Fichiers scindés détectés. Ils seront assemblés octet par octet.",
 
-  "Warn.MixedEncodings": "Ces fichiers utilisent des encodages différents ({0}). Assemblés tels quels, une partie du texte sera illisible.",
-  "Warn.InnerBom": "Les fichiers après le premier commencent par une marque BOM. Assemblés tels quels, elle reste au milieu du texte sous forme de caractère invisible.",
-  "Warn.NoTrailingNewline": "Certains fichiers ne se terminent pas par un saut de ligne ; le fichier suivant continuera sur la même ligne.",
-  "Warn.FixEncoding": "Tout convertir en UTF-8",
-  "Warn.FixBom": "Retirer ces marques",
-  "Warn.FixNewline": "Ajouter les sauts de ligne",
 
   "Folder.Title": "Ajouter un dossier",
   "Folder.Path": "Dossier",

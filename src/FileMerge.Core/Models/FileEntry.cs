@@ -23,14 +23,6 @@ public partial class FileEntry : ObservableObject
     [ObservableProperty]
     private string? _error;
 
-    /// <summary>True when the file starts with a byte order mark. Drives the stray-BOM warning.</summary>
-    [ObservableProperty]
-    private bool _hasBom;
-
-    /// <summary>Null until probed. False means the next file would start on the same line.</summary>
-    [ObservableProperty]
-    private bool? _endsWithNewline;
-
     /// <summary>True when the content looks like text rather than raw bytes.</summary>
     [ObservableProperty]
     private bool _isTextLike = true;

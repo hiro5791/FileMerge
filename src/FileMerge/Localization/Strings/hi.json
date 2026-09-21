@@ -52,7 +52,7 @@
   "Options.Separator.Custom": "अपना टेक्स्ट",
   "Options.SeparatorTemplate": "विभाजक टेक्स्ट",
   "Options.SeparatorTemplateHint": "प्लेसहोल्डर: {name} {path} {ext} {index}",
-  "Options.EnsureTrailingNewline": "हर फ़ाइल नई पंक्ति से शुरू करें",
+  "Options.EnsureTrailingNewline": "जो फ़ाइलें नई पंक्ति पर समाप्त नहीं होतीं उनमें पंक्ति विराम जोड़ें",
   "Options.SkipRepeatedHeader": "पहली के बाद हर फ़ाइल की शीर्षक पंक्ति छोड़ें",
   "Options.SkipRepeatedHeaderHint": "उन CSV और TSV फ़ाइलों के लिए जिनमें स्तंभ नाम दोहराए जाते हैं।",
   "Options.TrimTrailingBlankLines": "हर फ़ाइल के अंत की खाली पंक्तियाँ हटाएँ",
@@ -68,12 +68,6 @@
   "Plan.Transform": "फ़ाइलें टेक्स्ट के रूप में पढ़ी जाएँगी और नीचे के विकल्पों से दोबारा लिखी जाएँगी।",
   "Detect.SplitArchive": "विभाजित फ़ाइलें मिलीं। इन्हें बाइट दर बाइट जोड़ा जाएगा।",
 
-  "Warn.MixedEncodings": "इन फ़ाइलों की एन्कोडिंग अलग-अलग है ({0})। ऐसे ही जोड़ने पर कुछ पाठ पढ़ा नहीं जा सकेगा।",
-  "Warn.InnerBom": "पहली के बाद की फ़ाइलें BOM से शुरू होती हैं। ऐसे ही जोड़ने पर वह पाठ के बीच में अदृश्य अक्षर बनकर रह जाएगा।",
-  "Warn.NoTrailingNewline": "कुछ फ़ाइलें नई पंक्ति पर समाप्त नहीं होतीं, इसलिए अगली फ़ाइल उसी पंक्ति में जुड़ जाएगी।",
-  "Warn.FixEncoding": "सब कुछ UTF-8 में बदलें",
-  "Warn.FixBom": "वे चिह्न हटाएँ",
-  "Warn.FixNewline": "पंक्ति विराम जोड़ें",
 
   "Folder.Title": "फ़ोल्डर जोड़ें",
   "Folder.Path": "फ़ोल्डर",

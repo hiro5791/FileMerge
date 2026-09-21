@@ -52,7 +52,7 @@
   "Options.Separator.Custom": "Özel metin",
   "Options.SeparatorTemplate": "Ayırıcı metin",
   "Options.SeparatorTemplateHint": "Yer tutucular: {name} {path} {ext} {index}",
-  "Options.EnsureTrailingNewline": "Her dosyayı yeni bir satırda başlat",
+  "Options.EnsureTrailingNewline": "Satır sonuyla bitmeyen dosyalara satır sonu ekle",
   "Options.SkipRepeatedHeader": "İlkinden sonraki her dosyanın başlık satırını atla",
   "Options.SkipRepeatedHeaderHint": "Sütun adlarını yineleyen CSV ve TSV dosyaları için.",
   "Options.TrimTrailingBlankLines": "Her dosyanın sonundaki boş satırları kaldır",
@@ -68,12 +68,6 @@
   "Plan.Transform": "Dosyalar metin olarak okunup aşağıdaki seçeneklerle yeniden yazılacak.",
   "Detect.SplitArchive": "Bölünmüş dosya parçaları algılandı. Bayt bayt birleştirilecek.",
 
-  "Warn.MixedEncodings": "Bu dosyalar farklı kodlamalar kullanıyor ({0}). Olduğu gibi birleştirilirse metnin bir kısmı okunamaz hale gelir.",
-  "Warn.InnerBom": "İlkinden sonraki dosyalar BOM işaretiyle başlıyor. Olduğu gibi birleştirilirse metnin ortasında görünmez bir karakter olarak kalır.",
-  "Warn.NoTrailingNewline": "Bazı dosyalar satır sonu ile bitmiyor, bu yüzden sonraki dosya aynı satırdan devam edecek.",
-  "Warn.FixEncoding": "Hepsini UTF-8'e dönüştür",
-  "Warn.FixBom": "Bu işaretleri kaldır",
-  "Warn.FixNewline": "Satır sonlarını ekle",
 
   "Folder.Title": "Klasör ekle",
   "Folder.Path": "Klasör",

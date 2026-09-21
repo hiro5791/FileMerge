@@ -52,7 +52,7 @@
   "Options.Separator.Custom": "Văn bản tùy chỉnh",
   "Options.SeparatorTemplate": "Văn bản ngăn cách",
   "Options.SeparatorTemplateHint": "Biến thay thế: {name} {path} {ext} {index}",
-  "Options.EnsureTrailingNewline": "Bắt đầu mỗi tệp trên một dòng mới",
+  "Options.EnsureTrailingNewline": "Thêm dấu xuống dòng vào các tệp không kết thúc bằng dấu xuống dòng",
   "Options.SkipRepeatedHeader": "Bỏ qua dòng tiêu đề của mọi tệp sau tệp đầu tiên",
   "Options.SkipRepeatedHeaderHint": "Dành cho tệp CSV và TSV lặp lại tên cột.",
   "Options.TrimTrailingBlankLines": "Xóa các dòng trống ở cuối mỗi tệp",
@@ -68,12 +68,6 @@
   "Plan.Transform": "Các tệp sẽ được đọc dưới dạng văn bản và ghi lại theo các tùy chọn bên dưới.",
   "Detect.SplitArchive": "Đã phát hiện tệp chia nhỏ. Chúng sẽ được nối theo từng byte.",
 
-  "Warn.MixedEncodings": "Các tệp này dùng bảng mã khác nhau ({0}). Nếu gộp nguyên trạng, một phần văn bản sẽ không đọc được.",
-  "Warn.InnerBom": "Các tệp sau tệp đầu tiên bắt đầu bằng dấu BOM. Nếu gộp nguyên trạng, dấu này nằm lại giữa văn bản như một ký tự vô hình.",
-  "Warn.NoTrailingNewline": "Một số tệp không kết thúc bằng dấu xuống dòng, nên tệp kế tiếp sẽ nối vào cùng một dòng.",
-  "Warn.FixEncoding": "Chuyển tất cả sang UTF-8",
-  "Warn.FixBom": "Bỏ các dấu đó",
-  "Warn.FixNewline": "Thêm dấu xuống dòng",
 
   "Folder.Title": "Thêm thư mục",
   "Folder.Path": "Thư mục",

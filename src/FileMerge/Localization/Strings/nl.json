@@ -52,7 +52,7 @@
   "Options.Separator.Custom": "Eigen tekst",
   "Options.SeparatorTemplate": "Scheidingstekst",
   "Options.SeparatorTemplateHint": "Plaatsaanduidingen: {name} {path} {ext} {index}",
-  "Options.EnsureTrailingNewline": "Elk bestand op een nieuwe regel beginnen",
+  "Options.EnsureTrailingNewline": "Een regeleinde toevoegen aan bestanden die er niet mee eindigen",
   "Options.SkipRepeatedHeader": "Koprij overslaan in elk bestand na het eerste",
   "Options.SkipRepeatedHeaderHint": "Voor CSV- en TSV-bestanden die de kolomnamen herhalen.",
   "Options.TrimTrailingBlankLines": "Lege regels aan het eind van elk bestand verwijderen",
@@ -68,12 +68,6 @@
   "Plan.Transform": "De bestanden worden als tekst gelezen en opnieuw geschreven met de opties hieronder.",
   "Detect.SplitArchive": "Gesplitste bestanden gevonden. Ze worden byte voor byte samengevoegd.",
 
-  "Warn.MixedEncodings": "Deze bestanden gebruiken verschillende coderingen ({0}). Ongewijzigd samengevoegd wordt een deel van de tekst onleesbaar.",
-  "Warn.InnerBom": "De bestanden na het eerste beginnen met een BOM. Ongewijzigd samengevoegd blijft die midden in de tekst staan als onzichtbaar teken.",
-  "Warn.NoTrailingNewline": "Sommige bestanden eindigen niet met een regeleinde, waardoor het volgende bestand op dezelfde regel doorloopt.",
-  "Warn.FixEncoding": "Alles omzetten naar UTF-8",
-  "Warn.FixBom": "Die tekens verwijderen",
-  "Warn.FixNewline": "De regeleinden toevoegen",
 
   "Folder.Title": "Map toevoegen",
   "Folder.Path": "Map",

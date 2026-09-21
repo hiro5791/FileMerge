@@ -52,7 +52,7 @@
   "Options.Separator.Custom": "自訂文字",
   "Options.SeparatorTemplate": "分隔文字",
   "Options.SeparatorTemplateHint": "可用預留位置：{name} {path} {ext} {index}",
-  "Options.EnsureTrailingNewline": "每個檔案都從新行開始",
+  "Options.EnsureTrailingNewline": "為沒有以換行結尾的檔案補上換行",
   "Options.SkipRepeatedHeader": "略過第一個檔案之後每個檔案的標題列",
   "Options.SkipRepeatedHeaderHint": "適用於重複欄位名稱的 CSV 與 TSV 檔案。",
   "Options.TrimTrailingBlankLines": "刪除每個檔案結尾的空白行",
@@ -68,12 +68,6 @@
   "Plan.Transform": "將以文字讀取，並依下方設定重新寫出。",
   "Detect.SplitArchive": "偵測到分割檔案，將逐位元組接合。",
 
-  "Warn.MixedEncodings": "這些檔案的編碼不一致（{0}）。照原樣合併會讓部分文字無法閱讀。",
-  "Warn.InnerBom": "第一個之後的檔案以 BOM 開頭。照原樣合併會在內文中間留下看不見的字元。",
-  "Warn.NoTrailingNewline": "有檔案沒有以換行結尾，下一個檔案會接在同一行。",
-  "Warn.FixEncoding": "全部轉換為 UTF-8",
-  "Warn.FixBom": "移除這些標記",
-  "Warn.FixNewline": "補上換行",
 
   "Folder.Title": "新增資料夾",
   "Folder.Path": "資料夾",

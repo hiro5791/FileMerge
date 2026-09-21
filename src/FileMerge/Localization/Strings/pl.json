@@ -52,7 +52,7 @@
   "Options.Separator.Custom": "Własny tekst",
   "Options.SeparatorTemplate": "Tekst separatora",
   "Options.SeparatorTemplateHint": "Symbole zastępcze: {name} {path} {ext} {index}",
-  "Options.EnsureTrailingNewline": "Zaczynaj każdy plik od nowego wiersza",
+  "Options.EnsureTrailingNewline": "Dodawaj znak nowego wiersza do plików, które się nim nie kończą",
   "Options.SkipRepeatedHeader": "Pomiń wiersz nagłówka w każdym pliku poza pierwszym",
   "Options.SkipRepeatedHeaderHint": "Dla plików CSV i TSV powtarzających nazwy kolumn.",
   "Options.TrimTrailingBlankLines": "Usuwaj puste wiersze na końcu każdego pliku",
@@ -68,12 +68,6 @@
   "Plan.Transform": "Pliki zostaną odczytane jako tekst i zapisane ponownie z ustawieniami poniżej.",
   "Detect.SplitArchive": "Wykryto pliki podzielone. Zostaną sklejone bajt po bajcie.",
 
-  "Warn.MixedEncodings": "Te pliki mają różne kodowania ({0}). Sklejone bez zmian sprawią, że część tekstu będzie nieczytelna.",
-  "Warn.InnerBom": "Pliki po pierwszym zaczynają się znacznikiem BOM. Sklejone bez zmian zostawią go w środku tekstu jako niewidoczny znak.",
-  "Warn.NoTrailingNewline": "Niektóre pliki nie kończą się znakiem nowego wiersza, więc następny plik będzie kontynuowany w tym samym wierszu.",
-  "Warn.FixEncoding": "Przekonwertuj wszystko na UTF-8",
-  "Warn.FixBom": "Usuń te znaczniki",
-  "Warn.FixNewline": "Dodaj znaki nowego wiersza",
 
   "Folder.Title": "Dodaj folder",
   "Folder.Path": "Folder",

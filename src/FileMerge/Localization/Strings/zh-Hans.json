@@ -52,7 +52,7 @@
   "Options.Separator.Custom": "自定义文本",
   "Options.SeparatorTemplate": "分隔文本",
   "Options.SeparatorTemplateHint": "可用占位符：{name} {path} {ext} {index}",
-  "Options.EnsureTrailingNewline": "每个文件都从新行开始",
+  "Options.EnsureTrailingNewline": "为没有以换行结尾的文件补上换行",
   "Options.SkipRepeatedHeader": "跳过第一个文件之后每个文件的标题行",
   "Options.SkipRepeatedHeaderHint": "适用于重复列名的 CSV 和 TSV 文件。",
   "Options.TrimTrailingBlankLines": "删除每个文件末尾的空行",
@@ -68,12 +68,6 @@
   "Plan.Transform": "将按文本读取，并按下面的选项重新写出。",
   "Detect.SplitArchive": "检测到分卷文件，将逐字节拼接。",
 
-  "Warn.MixedEncodings": "这些文件的编码不一致（{0}）。照原样合并会导致部分文字无法阅读。",
-  "Warn.InnerBom": "第一个之后的文件以 BOM 开头。照原样合并会在正文中间留下不可见字符。",
-  "Warn.NoTrailingNewline": "有文件没有以换行结尾，下一个文件会接在同一行。",
-  "Warn.FixEncoding": "全部转换为 UTF-8",
-  "Warn.FixBom": "移除这些标记",
-  "Warn.FixNewline": "补上换行",
 
   "Folder.Title": "添加文件夹",
   "Folder.Path": "文件夹",

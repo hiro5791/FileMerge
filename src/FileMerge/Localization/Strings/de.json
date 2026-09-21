@@ -52,7 +52,7 @@
   "Options.Separator.Custom": "Eigener Text",
   "Options.SeparatorTemplate": "Trenntext",
   "Options.SeparatorTemplateHint": "Platzhalter: {name} {path} {ext} {index}",
-  "Options.EnsureTrailingNewline": "Jede Datei in einer neuen Zeile beginnen",
+  "Options.EnsureTrailingNewline": "Zeilenumbruch bei Dateien ergänzen, die nicht damit enden",
   "Options.SkipRepeatedHeader": "Kopfzeile jeder Datei nach der ersten überspringen",
   "Options.SkipRepeatedHeaderHint": "Für CSV- und TSV-Dateien, die die Spaltennamen wiederholen.",
   "Options.TrimTrailingBlankLines": "Leerzeilen am Ende jeder Datei entfernen",
@@ -68,12 +68,6 @@
   "Plan.Transform": "Die Dateien werden als Text gelesen und mit den Optionen unten neu geschrieben.",
   "Detect.SplitArchive": "Geteilte Dateien erkannt. Sie werden Byte für Byte zusammengefügt.",
 
-  "Warn.MixedEncodings": "Diese Dateien verwenden unterschiedliche Codierungen ({0}). Unverändert zusammengefügt wird ein Teil des Textes unlesbar.",
-  "Warn.InnerBom": "Die Dateien nach der ersten beginnen mit einer BOM. Unverändert zusammengefügt bleibt sie als unsichtbares Zeichen mitten im Text.",
-  "Warn.NoTrailingNewline": "Manche Dateien enden nicht mit einem Zeilenumbruch, die nächste Datei setzt also in derselben Zeile fort.",
-  "Warn.FixEncoding": "Alles in UTF-8 umwandeln",
-  "Warn.FixBom": "Diese Markierungen entfernen",
-  "Warn.FixNewline": "Zeilenumbrüche ergänzen",
 
   "Folder.Title": "Ordner hinzufügen",
   "Folder.Path": "Ordner",

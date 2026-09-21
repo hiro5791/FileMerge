@@ -155,25 +155,3 @@ public sealed class ContentSnifferTests
         }
     }
 }
-
-public sealed class FileProbeTests
-{
-    [Theory]
-    [InlineData("ends with newline\n", true)]
-    [InlineData("ends with crlf\r\n", true)]
-    [InlineData("no newline here", false)]
-    [InlineData("", true)]
-    public void Trailing_newlines_are_detected(string content, bool expected)
-    {
-        string path = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName() + ".txt");
-        File.WriteAllBytes(path, Encoding.UTF8.GetBytes(content));
-        try
-        {
-            Assert.Equal(expected, FileProbe.EndsWithNewline(path));
-        }
-        finally
-        {
-            File.Delete(path);
-        }
-    }
-}
