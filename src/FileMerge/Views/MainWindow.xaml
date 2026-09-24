@@ -44,6 +44,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <!-- Header. The name and version live in the title bar, so this is only the pickers. -->
@@ -285,8 +286,22 @@
             </Border>
         </Grid>
 
+        <!-- ============================================== Options
+             Both off until turned on, and neither reads a file as text: one drops a BOM, the
+             other adds CRLF. Disabled for split archives and other binary files, where either
+             would corrupt the result. -->
+        <Border Grid.Row="2" Style="{StaticResource Card}" Margin="0,14,0,0" Padding="14,10">
+            <WrapPanel IsEnabled="{Binding ShowTextOptions}">
+                <CheckBox Content="{loc:T Options.EnsureTrailingNewline}"
+                          IsChecked="{Binding EnsureTrailingNewline}"
+                          Margin="0,0,24,0" />
+                <CheckBox Content="{loc:T Options.RemoveInnerBoms}"
+                          IsChecked="{Binding RemoveInnerBoms}" />
+            </WrapPanel>
+        </Border>
+
         <!-- ============================================== Footer -->
-        <Border Grid.Row="2" Style="{StaticResource Card}" Margin="0,14,0,0">
+        <Border Grid.Row="3" Style="{StaticResource Card}" Margin="0,14,0,0">
             <StackPanel>
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -332,17 +347,6 @@
                             Command="{Binding OpenOutputFolderCommand}"
                             Margin="4,0,0,0" />
                 </Grid>
-
-                <!-- Both off until turned on, and neither reads a file as text: one drops a BOM,
-                     the other adds CRLF. Disabled for split archives and other binary files,
-                     where either would corrupt the result. -->
-                <WrapPanel Margin="0,12,0,0" IsEnabled="{Binding ShowTextOptions}">
-                    <CheckBox Content="{loc:T Options.EnsureTrailingNewline}"
-                              IsChecked="{Binding EnsureTrailingNewline}"
-                              Margin="0,0,24,0" />
-                    <CheckBox Content="{loc:T Options.RemoveInnerBoms}"
-                              IsChecked="{Binding RemoveInnerBoms}" />
-                </WrapPanel>
 
                 <Grid Margin="0,14,0,0">
                     <Grid.ColumnDefinitions>
