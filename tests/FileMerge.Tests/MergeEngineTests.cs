@@ -98,8 +98,8 @@ public sealed class MergeEngineTests : IDisposable
         string output = Out("merged.txt");
         await RunAsync(new[] { Write("a.txt", a), Write("b.txt", b) }, new MergeOptions { OutputPath = output });
 
-        // The stray inner BOM is a defect, but removing it without being asked would be a
-        // silent edit. The app warns instead; the bytes stay as they were.
+        // A stray inner BOM is awkward to read, but removing it without being asked would be
+        // a silent edit. It is left in place unless RemoveInnerBoms is turned on.
         Assert.Equal(a.Concat(b).ToArray(), File.ReadAllBytes(output));
     }
 
