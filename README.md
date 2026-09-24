@@ -74,7 +74,7 @@ Program Files is offered on the first page), adds a Start menu entry, and can be
 Settings → Apps. It is not code-signed yet, so Windows SmartScreen may warn the first time it
 is run.
 
-FileMerge is also on the **Microsoft Store**, if you would rather have automatic updates.
+A **Microsoft Store** version, with automatic updates, is on its way.
 
 ### Portable mode
 
