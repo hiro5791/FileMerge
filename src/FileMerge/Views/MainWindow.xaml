@@ -288,10 +288,10 @@
 
         <!-- ============================================== Options
              Both off until turned on, and neither reads a file as text: one drops a BOM, the
-             other adds CRLF. Disabled for split archives and other binary files, where either
-             would corrupt the result. -->
+             other adds CRLF. Always available: whether to use them is the user's call, even for
+             split archives, where either would change the rejoined bytes. -->
         <Border Grid.Row="2" Style="{StaticResource Card}" Margin="0,14,0,0" Padding="14,10">
-            <WrapPanel IsEnabled="{Binding ShowTextOptions}">
+            <WrapPanel>
                 <CheckBox Content="{loc:T Options.EnsureTrailingNewline}"
                           IsChecked="{Binding EnsureTrailingNewline}"
                           Margin="0,0,24,0" />

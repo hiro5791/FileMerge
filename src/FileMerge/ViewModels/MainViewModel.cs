@@ -105,9 +105,9 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty]
     private string _summaryText = string.Empty;
 
-    /// <summary>True when every file looks like text, so the text options are worth showing.</summary>
+    /// <summary>True when every file looks like text. Only picks the default output extension.</summary>
     [ObservableProperty]
-    private bool _showTextOptions;
+    private bool _looksLikeText;
 
     // The window deliberately carries no warnings. Joining files without converting anything
     // is the faithful result the user asked for, whether that leaves mixed encodings, a byte
@@ -459,10 +459,8 @@ public partial class MainViewModel : ObservableObject
     private MergeOptions BuildOptions(string target) => new()
     {
         OutputPath = target,
-        // The boxes are greyed out for binary files but keep their ticks, so they are ignored
-        // here too: adding CRLF to or dropping bytes from a split archive would corrupt it.
-        EnsureTrailingNewline = ShowTextOptions && EnsureTrailingNewline,
-        RemoveInnerBoms = ShowTextOptions && RemoveInnerBoms,
+        EnsureTrailingNewline = EnsureTrailingNewline,
+        RemoveInnerBoms = RemoveInnerBoms,
         ExistingFile = SelectedConflict?.Value ?? ExistingFileAction.Ask,
     };
 
@@ -531,14 +529,13 @@ public partial class MainViewModel : ObservableObject
     }
 
     /// <summary>
-    /// Decides what the options panel should offer. Text options are pointless for a split
-    /// archive and dangerous to reach for by accident, so they are hidden unless every file
-    /// in the list reads as text.
+    /// Notes whether the list is all text, which decides the default output extension. It no
+    /// longer gates the options: those stay available whatever the files are.
     /// </summary>
     private void RefreshDetection()
     {
         bool splitArchive = Files.Count > 1 && Files.All(f => ContentSniffer.LooksLikeSplitPart(f.FullPath));
-        ShowTextOptions = Files.Count > 0 && Files.All(f => f.IsTextLike) && !splitArchive;
+        LooksLikeText = Files.Count > 0 && Files.All(f => f.IsTextLike) && !splitArchive;
     }
 
     // ---------------------------------------------------------------- Settings and text
@@ -613,7 +610,7 @@ public partial class MainViewModel : ObservableObject
         string extension = Path.GetExtension(first);
         if (string.IsNullOrEmpty(extension))
         {
-            extension = ShowTextOptions ? ".txt" : ".bin";
+            extension = LooksLikeText ? ".txt" : ".bin";
         }
 
         return "merged" + extension;
