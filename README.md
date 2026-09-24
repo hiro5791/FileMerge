@@ -18,25 +18,24 @@ Run it with everything at its defaults and the output is the input files joined 
 This matters because the alternative is worse. A merge tool that "helpfully" converts
 character encodings has to *guess* what encoding each file is in, and encoding detection is a
 heuristic that is sometimes wrong. When it guesses wrong it rewrites your text incorrectly and
-the original bytes are gone. FileMerge never takes that risk unless you ask it to.
+the original bytes are gone. FileMerge never reads a file as text, so it never takes that risk.
 
-Everything that would alter content is opt-in:
+There are two options, both off by default, and both touch only the edges of a file:
 
 | Option | Default | What it does |
 | --- | --- | --- |
-| Output encoding | **Do not convert** | Re-encodes every file to one encoding |
-| Line endings | **Keep as is** | Rewrites CRLF / LF / CR |
-| Between files | **Nothing** | Inserts blank lines or file-name headers |
-| Add a line break to files that do not end with one | **Off** | Stops two files running onto the same line |
-| Skip repeated header row | **Off** | Drops line 1 of every file after the first (CSV/TSV) |
-| Remove blank lines at file end | **Off** | Trims trailing blank lines |
+| Add CRLF to files that do not end with a line break | **Off** | Stops two files running onto the same line |
 | Remove the byte order mark from files after the first | **Off** | Stops a stray BOM landing mid-text |
+
+Neither decodes anything. The first looks only at a file's last character and writes the two
+bytes CR and LF (as 2-byte units for UTF-16); the second leaves out the first few bytes of a
+file. There is no encoding conversion at all.
 
 There are no warning banners. Joining files that do not share an encoding produces garbled
 text, a BOM from a later file stays in the middle of the output, and a file that does not end
 with a line break runs into the next one — all of which is the faithful result of not
-converting anything, and all of which the options above will change if you want them to. What
-the window does show is each file's detected encoding, in the list, as plain information.
+converting anything. What the window does show is each file's detected encoding, in the list,
+as plain information.
 
 ## Features
 
@@ -59,6 +58,7 @@ Grab the latest from [Releases](../../releases):
 
 | File | Size | Requirements |
 | --- | --- | --- |
+| `FileMerge-<version>-setup-x64.exe` | ~43 MB | none — an ordinary installer: Start menu entry, uninstall from Settings |
 | `FileMerge-<version>-win-x64.exe` | ~59 MB | none — .NET is inside the executable |
 | `FileMerge-<version>-win-arm64.exe` | ~59 MB | none |
 | `FileMerge-<version>-win-x64-netdep.zip` | ~0.3 MB | [.NET Desktop Runtime 10](https://dotnet.microsoft.com/download/dotnet/10.0) |
@@ -67,6 +67,12 @@ Windows 10 version 1809 or later. Double-click and it runs.
 
 On first launch the single-file build unpacks its native WPF components into `%TEMP%`. That is
 how single-file WPF works; it needs no administrator rights and happens only once.
+
+The installer needs nothing on the target machine either — no .NET and no Inno Setup. It
+installs for the current user without administrator rights (an all-users install into
+Program Files is offered on the first page), adds a Start menu entry, and can be removed from
+Settings → Apps. It is not code-signed yet, so Windows SmartScreen may warn the first time it
+is run.
 
 FileMerge is also on the **Microsoft Store**, if you would rather have automatic updates.
 

@@ -47,6 +47,19 @@ jobs:
         shell: pwsh
         run: ./build/Build-Portable.ps1 -Runtime win-arm64 -Version ${{ steps.version.outputs.value }} -SkipFrameworkDependent
 
+      # Inno Setup is only needed here, to build setup.exe; the installer it produces runs on
+      # machines that have neither Inno Setup nor .NET.
+      - name: Install Inno Setup
+        shell: pwsh
+        run: |
+          if (-not (Test-Path "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe")) {
+            choco install innosetup --no-progress -y
+          }
+
+      - name: Build installer (x64)
+        shell: pwsh
+        run: ./packaging/installer/Build-Installer.ps1 -Architecture x64 -Version ${{ steps.version.outputs.value }}
+
       # Unsigned on purpose: Partner Center signs Store submissions with the certificate that
       # belongs to the reserved app identity. Set the repository variables to your own values.
       - name: Build MSIX for the Store
