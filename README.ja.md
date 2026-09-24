@@ -76,7 +76,7 @@ Bahasa Indonesia · Tiếng Việt · ไทย
 git clone https://github.com/hiro5791/FileMerge.git
 cd FileMerge
 
-dotnet test tests/FileMerge.Tests/FileMerge.Tests.csproj   # 38 件
+dotnet test tests/FileMerge.Tests/FileMerge.Tests.csproj   # 42 件
 dotnet run --project src/FileMerge/FileMerge.csproj
 
 ./build/Build-Portable.ps1                                  # artifacts/*.exe
