@@ -34,17 +34,7 @@
   "Options.Text.Section": "टेक्स्ट विकल्प",
   "Options.Binary.Section": "बाइनरी विकल्प",
   "Options.Binary.Note": "फ़ाइलें बिना किसी बदलाव के बाइट दर बाइट जोड़ी जाती हैं। क्रम ध्यान से जाँचें: ग़लत क्रम से फ़ाइल ख़राब हो जाएगी।",
-  "Options.Separator": "फ़ाइलों के बीच",
-  "Options.Separator.None": "कुछ नहीं",
-  "Options.Separator.BlankLine": "खाली पंक्ति",
-  "Options.Separator.FileNameHeader": "फ़ाइल नाम शीर्षक",
-  "Options.Separator.Custom": "अपना टेक्स्ट",
-  "Options.SeparatorTemplate": "विभाजक टेक्स्ट",
-  "Options.SeparatorTemplateHint": "प्लेसहोल्डर: {name} {path} {ext} {index}",
   "Options.EnsureTrailingNewline": "जो फ़ाइलें नई पंक्ति पर समाप्त नहीं होतीं उनमें पंक्ति विराम जोड़ें",
-  "Options.SkipRepeatedHeader": "पहली के बाद हर फ़ाइल की शीर्षक पंक्ति छोड़ें",
-  "Options.SkipRepeatedHeaderHint": "उन CSV और TSV फ़ाइलों के लिए जिनमें स्तंभ नाम दोहराए जाते हैं।",
-  "Options.TrimTrailingBlankLines": "हर फ़ाइल के अंत की खाली पंक्तियाँ हटाएँ",
   "Options.RemoveInnerBoms": "पहली के बाद की फ़ाइलों से BOM हटाएँ",
 
 
@@ -78,7 +68,6 @@
   "Error.NoInput": "पहले कम से कम एक फ़ाइल जोड़ें।",
   "Error.NoOutput": "जुड़ी हुई फ़ाइल सहेजने की जगह चुनें।",
   "Error.OutputIsInput": "आउटपुट फ़ाइल इनपुट फ़ाइलों में से ही एक है। कोई दूसरा नाम चुनें।",
-  "Error.EncodingGuessed": "एन्कोडिंग निश्चित रूप से तय नहीं हो सकी; {0} मानी गई।",
 
   "Settings.Language": "भाषा",
   "Settings.Theme": "थीम",

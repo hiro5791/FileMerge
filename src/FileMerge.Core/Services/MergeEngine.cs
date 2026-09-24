@@ -1,19 +1,17 @@
 using System.Diagnostics;
 using System.IO;
-using System.Text;
 using FileMerge.Models;
 
 namespace FileMerge.Services;
 
 /// <summary>
-/// Runs a merge. Which pipeline is used is decided by the options, not by a mode switch:
-/// with everything left at its default the engine copies bytes, and it only decodes text
-/// when an option asks for something that cannot be done on bytes.
+/// Runs a merge. Nothing is ever decoded: every file is copied as bytes. With the options off
+/// the output is the inputs joined byte for byte; the two options only drop a byte order mark
+/// from the front of a file or add a line break to its end.
 /// </summary>
 public sealed class MergeEngine
 {
-    private const int TextBufferChars = 64 * 1024;
-    private const int BinaryBufferBytes = 1024 * 1024;
+    private const int BufferBytes = 1024 * 1024;
 
     public async Task<MergeResult> MergeAsync(
         IReadOnlyList<string> inputs,
@@ -61,9 +59,7 @@ public sealed class MergeEngine
         try
         {
             long written = await Task.Run(
-                () => options.RequiresTextPipeline
-                    ? MergeText(inputs, tempPath, options, progress, warnings, token)
-                    : MergeBytes(inputs, tempPath, options, progress, warnings, token),
+                () => Merge(inputs, tempPath, options, progress, warnings, token),
                 token).ConfigureAwait(false);
 
             stopwatch.Stop();
@@ -85,14 +81,7 @@ public sealed class MergeEngine
         }
     }
 
-    // ---------------------------------------------------------------- Byte pipeline
-
-    /// <summary>
-    /// The default pipeline. Copies every input byte for byte, optionally skipping the byte
-    /// order mark of files after the first. Nothing else is inspected or altered, so this is
-    /// equally correct for split archives and for text.
-    /// </summary>
-    private static long MergeBytes(
+    private static long Merge(
         IReadOnlyList<string> inputs,
         string tempPath,
         MergeOptions options,
@@ -102,36 +91,38 @@ public sealed class MergeEngine
     {
         long totalBytes = MeasureTotal(inputs);
         long done = 0;
-        var buffer = new byte[BinaryBufferBytes];
+        var buffer = new byte[BufferBytes];
 
-        using var output = new FileStream(tempPath, FileMode.Create, FileAccess.Write, FileShare.None, BinaryBufferBytes, FileOptions.SequentialScan);
+        using var output = new FileStream(tempPath, FileMode.Create, FileAccess.Write, FileShare.None, BufferBytes, FileOptions.SequentialScan);
+
+        // A file with no line break of its own borrows the style of the last one that had one.
+        string? lastNewline = null;
 
         for (int i = 0; i < inputs.Count; i++)
         {
             token.ThrowIfCancellationRequested();
             string path = inputs[i];
+            int fileIndex = i;
+
+            void Report(int read)
+            {
+                done += read;
+                progress?.Report(new MergeProgress(
+                    fileIndex + 1,
+                    inputs.Count,
+                    Path.GetFileName(path),
+                    totalBytes > 0 ? Math.Min(1.0, (double)done / totalBytes) : 0));
+            }
 
             try
             {
-                using var input = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite, BinaryBufferBytes, FileOptions.SequentialScan);
+                using var input = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite, BufferBytes, FileOptions.SequentialScan);
 
-                if (options.RemoveInnerBoms && i > 0)
+                CopyRaw(input, output, buffer, options.RemoveInnerBoms && fileIndex > 0, Report, token);
+
+                if (options.EnsureTrailingNewline)
                 {
-                    SkipByteOrderMark(input);
-                }
-
-                int read;
-                while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
-                {
-                    token.ThrowIfCancellationRequested();
-                    output.Write(buffer, 0, read);
-                    done += read;
-
-                    progress?.Report(new MergeProgress(
-                        i + 1,
-                        inputs.Count,
-                        Path.GetFileName(path),
-                        totalBytes > 0 ? Math.Min(1.0, (double)done / totalBytes) : 0));
+                    lastNewline = AppendMissingNewline(input, output, lastNewline);
                 }
             }
             catch (OperationCanceledException)
@@ -148,13 +139,66 @@ public sealed class MergeEngine
         return output.Length;
     }
 
+    /// <summary>
+    /// The default path. Copies every byte, optionally skipping the byte order mark of files
+    /// after the first. Nothing else is inspected, so split archives come through intact.
+    /// </summary>
+    private static void CopyRaw(Stream input, Stream output, byte[] buffer, bool skipBom, Action<int> report, CancellationToken token)
+    {
+        if (skipBom)
+        {
+            SkipByteOrderMark(input);
+        }
+
+        int read;
+        while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
+        {
+            token.ThrowIfCancellationRequested();
+            output.Write(buffer, 0, read);
+            report(read);
+        }
+    }
+
+    /// <summary>
+    /// Adds a line break after a file whose last character is not one. Only the final code
+    /// unit of the file is read to decide, and only the break itself is written, so the file's
+    /// content is never looked at as text. Returns the line-break style to carry forward.
+    /// </summary>
+    private static string? AppendMissingNewline(FileStream input, Stream output, string? lastNewline)
+    {
+        input.Position = 0;
+        var layout = TextLayout.Detect(input);
+        string? newline = layout.Newline ?? lastNewline;
+
+        long content = input.Length - layout.BomLength;
+        if (content <= 0)
+        {
+            return newline; // Empty, or nothing but a BOM: there is no line to finish.
+        }
+
+        int width = layout.Width;
+        if (content >= width && content % width == 0)
+        {
+            Span<byte> last = stackalloc byte[4];
+            input.Position = input.Length - width;
+            input.ReadExactly(last[..width]);
+
+            if (TextLayout.IsLineBreak(layout.UnitAt(last, 0)))
+            {
+                return newline;
+            }
+        }
+
+        output.Write(layout.EncodeNewline(newline ?? "\r\n"));
+        return newline;
+    }
+
     /// <summary>Advances the stream past a byte order mark if one is present.</summary>
     private static void SkipByteOrderMark(Stream stream)
     {
         Span<byte> head = stackalloc byte[4];
         int read = stream.Read(head);
-        int bomLength = MeasureBomLength(head[..read]);
-        stream.Position = bomLength;
+        stream.Position = MeasureBomLength(head[..read]);
     }
 
     internal static int MeasureBomLength(ReadOnlySpan<byte> head)
@@ -182,214 +226,6 @@ public sealed class MergeEngine
         return 0;
     }
 
-    // ---------------------------------------------------------------- Text pipeline
-
-    private static long MergeText(
-        IReadOnlyList<string> inputs,
-        string tempPath,
-        MergeOptions options,
-        IProgress<MergeProgress>? progress,
-        List<string> warnings,
-        CancellationToken token)
-    {
-        long totalBytes = MeasureTotal(inputs);
-        long done = 0;
-
-        string? newline = options.Newline switch
-        {
-            NewlineMode.Crlf => "\r\n",
-            NewlineMode.Lf => "\n",
-            NewlineMode.Cr => "\r",
-            _ => null,
-        };
-
-        using var stream = new FileStream(tempPath, FileMode.Create, FileAccess.Write, FileShare.None, 64 * 1024, FileOptions.SequentialScan);
-
-        var normalizer = new NormalizingWriter(newline, options.TrimTrailingBlankLines);
-        var buffer = new char[TextBufferChars];
-
-        StreamWriter? writer = null;
-        int currentCodePage = -1;
-
-        try
-        {
-            for (int i = 0; i < inputs.Count; i++)
-            {
-                token.ThrowIfCancellationRequested();
-                string path = inputs[i];
-
-                try
-                {
-                    var detected = ResolveInputEncoding(path, options, warnings);
-
-                    // Preserve writes each file back in the encoding it arrived in, so a wrong
-                    // guess costs nothing: the bytes round-trip unchanged.
-                    Encoding target = options.OutputEncoding == OutputEncodingKind.Preserve
-                        ? detected.Encoding
-                        : ResolveOutputEncoding(options.OutputEncoding);
-
-                    // Only the first writer may emit a preamble; a BOM from any later writer
-                    // would land in the middle of the output.
-                    Encoding writerEncoding = i == 0 ? target : WithoutPreamble(target);
-
-                    if (writer is null || writerEncoding.CodePage != currentCodePage)
-                    {
-                        normalizer.Flush();
-                        writer?.Flush();
-                        writer = new StreamWriter(stream, writerEncoding, 64 * 1024, leaveOpen: true);
-                        normalizer.Attach(writer);
-                        currentCodePage = writerEncoding.CodePage;
-                    }
-
-                    WriteSeparator(normalizer, options, path, i);
-
-                    // The header line is only redundant from the second file onward.
-                    normalizer.BeginFile(skipFirstLine: options.SkipRepeatedHeader && i > 0);
-
-                    using var input = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite, 64 * 1024, FileOptions.SequentialScan);
-
-                    // detectEncodingFromByteOrderMarks strips this file's BOM so it never
-                    // lands in the middle of the merged output.
-                    using var reader = new StreamReader(input, detected.Encoding, detectEncodingFromByteOrderMarks: true);
-
-                    int read;
-                    while ((read = reader.Read(buffer, 0, buffer.Length)) > 0)
-                    {
-                        token.ThrowIfCancellationRequested();
-                        normalizer.Write(buffer.AsSpan(0, read));
-
-                        done = Math.Min(totalBytes, done + read);
-                        progress?.Report(new MergeProgress(
-                            i + 1,
-                            inputs.Count,
-                            Path.GetFileName(path),
-                            totalBytes > 0 ? Math.Min(1.0, (double)done / totalBytes) : 0));
-                    }
-                }
-                catch (OperationCanceledException)
-                {
-                    throw;
-                }
-                catch (Exception ex)
-                {
-                    warnings.Add($"{Path.GetFileName(path)}: {ex.Message}");
-                }
-
-                normalizer.EndFile(options.EnsureTrailingNewline);
-            }
-
-            normalizer.Flush();
-            writer?.Flush();
-            stream.Flush();
-            return stream.Length;
-        }
-        finally
-        {
-            writer?.Dispose();
-        }
-    }
-
-    private static DetectedEncoding ResolveInputEncoding(string path, MergeOptions options, List<string> warnings)
-    {
-        if (options.ForcedInputEncoding is not null)
-        {
-            return new DetectedEncoding(options.ForcedInputEncoding, 0, options.ForcedInputEncoding.WebName, Confidence.Certain);
-        }
-
-        var detected = EncodingDetector.Detect(path, options.FallbackEncoding);
-        if (detected.Confidence == Confidence.Fallback)
-        {
-            warnings.Add($"{Path.GetFileName(path)}: encoding-guessed:{detected.Label}");
-        }
-
-        return detected;
-    }
-
-    private static void WriteSeparator(NormalizingWriter writer, MergeOptions options, string path, int index)
-    {
-        switch (options.Separator)
-        {
-            case SeparatorMode.None:
-                return;
-
-            case SeparatorMode.BlankLine:
-                if (index > 0)
-                {
-                    if (!writer.AtLineStart)
-                    {
-                        writer.WriteLineBreak();
-                    }
-
-                    writer.WriteLineBreak();
-                }
-
-                return;
-
-            case SeparatorMode.FileNameHeader:
-            case SeparatorMode.Custom:
-                string template = options.Separator == SeparatorMode.FileNameHeader
-                    ? "----- {name} -----"
-                    : options.SeparatorTemplate;
-
-                if (index > 0 && !writer.AtLineStart)
-                {
-                    writer.WriteLineBreak();
-                }
-
-                writer.WriteLiteral(Expand(template, path, index));
-                writer.WriteLineBreak();
-                return;
-        }
-    }
-
-    private static string Expand(string template, string path, int index) =>
-        template
-            .Replace("{name}", Path.GetFileName(path), StringComparison.OrdinalIgnoreCase)
-            .Replace("{path}", path, StringComparison.OrdinalIgnoreCase)
-            .Replace("{ext}", Path.GetExtension(path), StringComparison.OrdinalIgnoreCase)
-            .Replace("{index}", (index + 1).ToString(), StringComparison.OrdinalIgnoreCase)
-            .Replace("\\n", "\n", StringComparison.Ordinal)
-            .Replace("\\t", "\t", StringComparison.Ordinal);
-
-    private static Encoding ResolveOutputEncoding(OutputEncodingKind kind) => kind switch
-    {
-        OutputEncodingKind.Utf8 => new UTF8Encoding(encoderShouldEmitUTF8Identifier: false),
-        OutputEncodingKind.Utf8Bom => new UTF8Encoding(encoderShouldEmitUTF8Identifier: true),
-        OutputEncodingKind.Utf16Le => new UnicodeEncoding(bigEndian: false, byteOrderMark: true),
-        OutputEncodingKind.Utf16Be => new UnicodeEncoding(bigEndian: true, byteOrderMark: true),
-        OutputEncodingKind.SystemAnsi => EncodingDetector.SystemAnsi,
-        _ => new UTF8Encoding(false),
-    };
-
-    /// <summary>Same encoding, minus the preamble, so only the first writer can emit a BOM.</summary>
-    private static Encoding WithoutPreamble(Encoding encoding) => encoding.CodePage switch
-    {
-        65001 => new UTF8Encoding(false),
-        1200 => new UnicodeEncoding(bigEndian: false, byteOrderMark: false),
-        1201 => new UnicodeEncoding(bigEndian: true, byteOrderMark: false),
-        12000 => new UTF32Encoding(bigEndian: false, byteOrderMark: false),
-        12001 => new UTF32Encoding(bigEndian: true, byteOrderMark: false),
-        _ => encoding,
-    };
-
-    private static long MeasureTotal(IReadOnlyList<string> inputs)
-    {
-        long total = 0;
-        foreach (string path in inputs)
-        {
-            try
-            {
-                total += new FileInfo(path).Length;
-            }
-            catch
-            {
-                // Size only drives the progress bar; an unreadable file is reported by the copy loop.
-            }
-        }
-
-        return total;
-    }
-
     /// <summary>
     /// Renames the finished scratch file over the output. Windows refuses this for a moment
     /// when something else holds the destination — a virus scanner that has just opened the
@@ -414,6 +250,24 @@ public sealed class MergeEngine
                 Thread.Sleep(25);
             }
         }
+    }
+
+    private static long MeasureTotal(IReadOnlyList<string> inputs)
+    {
+        long total = 0;
+        foreach (string path in inputs)
+        {
+            try
+            {
+                total += new FileInfo(path).Length;
+            }
+            catch
+            {
+                // Size only drives the progress bar; an unreadable file is reported by the copy loop.
+            }
+        }
+
+        return total;
     }
 
     private static void TryDelete(string path)

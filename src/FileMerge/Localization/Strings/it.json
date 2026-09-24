@@ -34,17 +34,7 @@
   "Options.Text.Section": "Opzioni testo",
   "Options.Binary.Section": "Opzioni binarie",
   "Options.Binary.Note": "I file vengono accodati byte per byte, senza aggiungere né modificare nulla. Controlla bene l'ordine: un ordine sbagliato produce un file danneggiato.",
-  "Options.Separator": "Tra i file",
-  "Options.Separator.None": "Niente",
-  "Options.Separator.BlankLine": "Riga vuota",
-  "Options.Separator.FileNameHeader": "Intestazione con il nome",
-  "Options.Separator.Custom": "Testo personalizzato",
-  "Options.SeparatorTemplate": "Testo separatore",
-  "Options.SeparatorTemplateHint": "Segnaposto: {name} {path} {ext} {index}",
   "Options.EnsureTrailingNewline": "Aggiungi un a capo ai file che non terminano con uno",
-  "Options.SkipRepeatedHeader": "Salta la riga di intestazione di ogni file dopo il primo",
-  "Options.SkipRepeatedHeaderHint": "Per file CSV e TSV che ripetono i nomi delle colonne.",
-  "Options.TrimTrailingBlankLines": "Rimuovi le righe vuote alla fine di ogni file",
   "Options.RemoveInnerBoms": "Rimuovi il BOM dai file successivi al primo",
 
 
@@ -78,7 +68,6 @@
   "Error.NoInput": "Aggiungi almeno un file.",
   "Error.NoOutput": "Scegli dove salvare il file unito.",
   "Error.OutputIsInput": "Il file di output è anche uno dei file di input. Scegli un altro nome.",
-  "Error.EncodingGuessed": "Non è stato possibile determinare la codifica con certezza; è stata assunta {0}.",
 
   "Settings.Language": "Lingua",
   "Settings.Theme": "Tema",

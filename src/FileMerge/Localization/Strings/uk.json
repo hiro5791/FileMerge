@@ -34,17 +34,7 @@
   "Options.Text.Section": "Параметри тексту",
   "Options.Binary.Section": "Двійкові параметри",
   "Options.Binary.Note": "Файли склеюються байт за байтом без жодних змін. Уважно перевірте порядок: хибний порядок дасть пошкоджений файл.",
-  "Options.Separator": "Між файлами",
-  "Options.Separator.None": "Нічого",
-  "Options.Separator.BlankLine": "Порожній рядок",
-  "Options.Separator.FileNameHeader": "Заголовок з назвою файлу",
-  "Options.Separator.Custom": "Власний текст",
-  "Options.SeparatorTemplate": "Текст роздільника",
-  "Options.SeparatorTemplateHint": "Підстановки: {name} {path} {ext} {index}",
   "Options.EnsureTrailingNewline": "Додавати перехід рядка у файли, які ним не закінчуються",
-  "Options.SkipRepeatedHeader": "Пропускати рядок заголовка в усіх файлах, крім першого",
-  "Options.SkipRepeatedHeaderHint": "Для файлів CSV і TSV, у яких повторюються назви стовпців.",
-  "Options.TrimTrailingBlankLines": "Видаляти порожні рядки в кінці кожного файлу",
   "Options.RemoveInnerBoms": "Вилучати BOM в усіх файлах, крім першого",
 
 
@@ -78,7 +68,6 @@
   "Error.NoInput": "Спершу додайте принаймні один файл.",
   "Error.NoOutput": "Виберіть, куди зберегти об'єднаний файл.",
   "Error.OutputIsInput": "Файл результату збігається з одним із вхідних файлів. Виберіть іншу назву.",
-  "Error.EncodingGuessed": "Кодування не вдалося визначити точно, припущено {0}.",
 
   "Settings.Language": "Мова",
   "Settings.Theme": "Тема",

@@ -34,17 +34,7 @@
   "Options.Text.Section": "Textoptionen",
   "Options.Binary.Section": "Binäroptionen",
   "Options.Binary.Note": "Die Dateien werden Byte für Byte aneinandergehängt, ohne etwas hinzuzufügen oder zu ändern. Prüfen Sie die Reihenfolge genau: Eine falsche Reihenfolge erzeugt eine beschädigte Datei.",
-  "Options.Separator": "Zwischen den Dateien",
-  "Options.Separator.None": "Nichts",
-  "Options.Separator.BlankLine": "Leerzeile",
-  "Options.Separator.FileNameHeader": "Überschrift mit Dateiname",
-  "Options.Separator.Custom": "Eigener Text",
-  "Options.SeparatorTemplate": "Trenntext",
-  "Options.SeparatorTemplateHint": "Platzhalter: {name} {path} {ext} {index}",
   "Options.EnsureTrailingNewline": "Zeilenumbruch bei Dateien ergänzen, die nicht damit enden",
-  "Options.SkipRepeatedHeader": "Kopfzeile jeder Datei nach der ersten überspringen",
-  "Options.SkipRepeatedHeaderHint": "Für CSV- und TSV-Dateien, die die Spaltennamen wiederholen.",
-  "Options.TrimTrailingBlankLines": "Leerzeilen am Ende jeder Datei entfernen",
   "Options.RemoveInnerBoms": "BOM aus allen Dateien nach der ersten entfernen",
 
 
@@ -78,7 +68,6 @@
   "Error.NoInput": "Fügen Sie zuerst mindestens eine Datei hinzu.",
   "Error.NoOutput": "Wählen Sie einen Speicherort für die zusammengeführte Datei.",
   "Error.OutputIsInput": "Die Ausgabedatei ist zugleich eine der Eingabedateien. Wählen Sie einen anderen Namen.",
-  "Error.EncodingGuessed": "Die Codierung ließ sich nicht sicher bestimmen; {0} wurde angenommen.",
 
   "Settings.Language": "Sprache",
   "Settings.Theme": "Design",

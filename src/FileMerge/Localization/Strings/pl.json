@@ -34,17 +34,7 @@
   "Options.Text.Section": "Opcje tekstu",
   "Options.Binary.Section": "Opcje binarne",
   "Options.Binary.Note": "Pliki są sklejane bajt po bajcie, bez dodawania ani zmieniania czegokolwiek. Sprawdź dokładnie kolejność: zła kolejność da uszkodzony plik.",
-  "Options.Separator": "Między plikami",
-  "Options.Separator.None": "Nic",
-  "Options.Separator.BlankLine": "Pusty wiersz",
-  "Options.Separator.FileNameHeader": "Nagłówek z nazwą pliku",
-  "Options.Separator.Custom": "Własny tekst",
-  "Options.SeparatorTemplate": "Tekst separatora",
-  "Options.SeparatorTemplateHint": "Symbole zastępcze: {name} {path} {ext} {index}",
   "Options.EnsureTrailingNewline": "Dodawaj znak nowego wiersza do plików, które się nim nie kończą",
-  "Options.SkipRepeatedHeader": "Pomiń wiersz nagłówka w każdym pliku poza pierwszym",
-  "Options.SkipRepeatedHeaderHint": "Dla plików CSV i TSV powtarzających nazwy kolumn.",
-  "Options.TrimTrailingBlankLines": "Usuwaj puste wiersze na końcu każdego pliku",
   "Options.RemoveInnerBoms": "Usuwaj znacznik BOM z plików po pierwszym",
 
 
@@ -78,7 +68,6 @@
   "Error.NoInput": "Najpierw dodaj co najmniej jeden plik.",
   "Error.NoOutput": "Wybierz miejsce zapisu połączonego pliku.",
   "Error.OutputIsInput": "Plik wynikowy jest zarazem jednym z plików wejściowych. Wybierz inną nazwę.",
-  "Error.EncodingGuessed": "Nie udało się jednoznacznie ustalić kodowania; przyjęto {0}.",
 
   "Settings.Language": "Język",
   "Settings.Theme": "Motyw",

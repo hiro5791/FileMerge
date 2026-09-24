@@ -34,17 +34,7 @@
   "Options.Text.Section": "Options de texte",
   "Options.Binary.Section": "Options binaires",
   "Options.Binary.Note": "Les fichiers sont mis bout à bout octet par octet, sans rien ajouter ni modifier. Vérifiez bien l'ordre : un mauvais ordre produit un fichier corrompu.",
-  "Options.Separator": "Entre les fichiers",
-  "Options.Separator.None": "Rien",
-  "Options.Separator.BlankLine": "Ligne vide",
-  "Options.Separator.FileNameHeader": "En-tête avec le nom",
-  "Options.Separator.Custom": "Texte personnalisé",
-  "Options.SeparatorTemplate": "Texte de séparation",
-  "Options.SeparatorTemplateHint": "Variables : {name} {path} {ext} {index}",
   "Options.EnsureTrailingNewline": "Ajouter un saut de ligne aux fichiers qui n'en ont pas à la fin",
-  "Options.SkipRepeatedHeader": "Ignorer la ligne d'en-tête de chaque fichier après le premier",
-  "Options.SkipRepeatedHeaderHint": "Pour les fichiers CSV et TSV qui répètent les noms de colonnes.",
-  "Options.TrimTrailingBlankLines": "Supprimer les lignes vides à la fin de chaque fichier",
   "Options.RemoveInnerBoms": "Retirer la marque BOM des fichiers après le premier",
 
 
@@ -78,7 +68,6 @@
   "Error.NoInput": "Ajoutez d'abord au moins un fichier.",
   "Error.NoOutput": "Choisissez où enregistrer le fichier fusionné.",
   "Error.OutputIsInput": "Le fichier de sortie est aussi l'un des fichiers d'entrée. Choisissez un autre nom.",
-  "Error.EncodingGuessed": "L'encodage n'a pas pu être déterminé avec certitude ; {0} a été supposé.",
 
   "Settings.Language": "Langue",
   "Settings.Theme": "Thème",

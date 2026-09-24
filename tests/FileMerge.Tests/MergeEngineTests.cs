@@ -122,55 +122,23 @@ public sealed class MergeEngineTests : IDisposable
     }
 
     [Fact]
-    public async Task Converting_to_utf8_reconciles_mixed_encodings()
-    {
-        Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-
-        string output = Out("merged.txt");
-        await RunAsync(
-            new[]
-            {
-                Write("sjis.txt", Encoding.GetEncoding(932).GetBytes("日本語\r\n")),
-                Write("utf8.txt", Encoding.UTF8.GetBytes("日本語\r\n")),
-            },
-            new MergeOptions { OutputPath = output, OutputEncoding = OutputEncodingKind.Utf8 });
-
-        Assert.Equal("日本語\r\n日本語\r\n", File.ReadAllText(output, Encoding.UTF8));
-    }
-
-    [Fact]
-    public async Task Newline_normalization_rewrites_only_line_endings()
+    public async Task Ensure_trailing_newline_adds_a_break_in_the_style_the_files_use()
     {
         string output = Out("merged.txt");
         await RunAsync(
             new[]
             {
-                Write("a.txt", Encoding.UTF8.GetBytes("one\r\ntwo\r\n")),
-                Write("b.txt", Encoding.UTF8.GetBytes("three\nfour\n")),
+                Write("a.txt", Encoding.UTF8.GetBytes("one\nfirst")),
+                Write("b.txt", Encoding.UTF8.GetBytes("second")),
             },
-            new MergeOptions { OutputPath = output, Newline = NewlineMode.Lf });
+            new MergeOptions { OutputPath = output, EnsureTrailingNewline = true });
 
-        Assert.Equal("one\ntwo\nthree\nfour\n", File.ReadAllText(output, Encoding.UTF8));
+        // a.txt uses LF, so LF is what gets added, and b.txt, which has none, borrows it.
+        Assert.Equal("one\nfirst\nsecond\n", File.ReadAllText(output, Encoding.UTF8));
     }
 
     [Fact]
-    public async Task Skipping_repeated_headers_drops_only_later_first_lines()
-    {
-        string output = Out("merged.csv");
-        await RunAsync(
-            new[]
-            {
-                Write("1.csv", Encoding.UTF8.GetBytes("id,name\r\n1,a\r\n")),
-                Write("2.csv", Encoding.UTF8.GetBytes("id,name\r\n2,b\r\n")),
-                Write("3.csv", Encoding.UTF8.GetBytes("id,name\r\n3,c\r\n")),
-            },
-            new MergeOptions { OutputPath = output, SkipRepeatedHeader = true });
-
-        Assert.Equal("id,name\r\n1,a\r\n2,b\r\n3,c\r\n", File.ReadAllText(output, Encoding.UTF8));
-    }
-
-    [Fact]
-    public async Task Ensure_trailing_newline_joins_files_that_do_not_end_with_one()
+    public async Task Ensure_trailing_newline_uses_crlf_when_no_file_has_a_break()
     {
         string output = Out("merged.txt");
         await RunAsync(
@@ -179,9 +147,24 @@ public sealed class MergeEngineTests : IDisposable
                 Write("a.txt", Encoding.UTF8.GetBytes("first")),
                 Write("b.txt", Encoding.UTF8.GetBytes("second")),
             },
-            new MergeOptions { OutputPath = output, EnsureTrailingNewline = true, Newline = NewlineMode.Lf });
+            new MergeOptions { OutputPath = output, EnsureTrailingNewline = true });
 
-        Assert.Equal("first\nsecond\n", File.ReadAllText(output, Encoding.UTF8));
+        Assert.Equal("first\r\nsecond\r\n", File.ReadAllText(output, Encoding.UTF8));
+    }
+
+    [Fact]
+    public async Task Ensure_trailing_newline_leaves_files_that_already_end_with_one()
+    {
+        byte[] a = Encoding.UTF8.GetBytes("first\r\n");
+        byte[] b = Encoding.UTF8.GetBytes("second\n");
+        byte[] empty = Array.Empty<byte>();
+
+        string output = Out("merged.txt");
+        await RunAsync(
+            new[] { Write("a.txt", a), Write("empty.txt", empty), Write("b.txt", b) },
+            new MergeOptions { OutputPath = output, EnsureTrailingNewline = true });
+
+        Assert.Equal(a.Concat(b).ToArray(), File.ReadAllBytes(output));
     }
 
     [Fact]
@@ -199,25 +182,79 @@ public sealed class MergeEngineTests : IDisposable
         Assert.Equal("firstsecond", File.ReadAllText(output, Encoding.UTF8));
     }
 
+    // ---------------------------------------------------------------- Nothing is decoded
+
+    /// <summary>
+    /// The point of never reading files as text: content that no decoder would accept must come
+    /// through with the options on exactly as it went in, plus the one line break asked for.
+    /// </summary>
     [Fact]
-    public async Task File_name_headers_are_inserted_before_each_file()
+    public async Task Options_never_alter_bytes_that_no_decoder_would_accept()
     {
+        // 0x80-0xFF soup with no 0x00, 0x0A or 0x0D: invalid as UTF-8, and lossy through
+        // Shift_JIS or any other code page.
+        var random = new Random(42);
+        byte[] Soup(int length) => Enumerable.Range(0, length).Select(_ => (byte)random.Next(0x80, 0x100)).ToArray();
+
+        byte[] one = Soup(5000);
+        byte[] two = Soup(5000);
+
+        string output = Out("merged.bin");
+        await RunAsync(
+            new[] { Write("one.dat", one), Write("two.dat", two) },
+            new MergeOptions { OutputPath = output, EnsureTrailingNewline = true, RemoveInnerBoms = true });
+
+        byte[] crlf = { 0x0D, 0x0A };
+        Assert.Equal(one.Concat(crlf).Concat(two).Concat(crlf).ToArray(), File.ReadAllBytes(output));
+    }
+
+    [Fact]
+    public async Task Shift_jis_content_survives_the_options_unchanged()
+    {
+        Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+        var sjis = Encoding.GetEncoding(932);
+
+        byte[] a = sjis.GetBytes("日本語の本文\r\n二行目");
+        byte[] b = sjis.GetBytes("表示されるはずの行");
+
         string output = Out("merged.txt");
         await RunAsync(
-            new[]
-            {
-                Write("a.txt", Encoding.UTF8.GetBytes("one\n")),
-                Write("b.txt", Encoding.UTF8.GetBytes("two\n")),
-            },
-            new MergeOptions
-            {
-                OutputPath = output,
-                Separator = SeparatorMode.Custom,
-                SeparatorTemplate = "== {name} ==",
-                Newline = NewlineMode.Lf,
-            });
+            new[] { Write("a.txt", a), Write("b.txt", b) },
+            new MergeOptions { OutputPath = output, EnsureTrailingNewline = true, RemoveInnerBoms = true });
 
-        Assert.Equal("== a.txt ==\none\n== b.txt ==\ntwo\n", File.ReadAllText(output, Encoding.UTF8));
+        byte[] expected = sjis.GetBytes("日本語の本文\r\n二行目\r\n表示されるはずの行\r\n");
+        Assert.Equal(expected, File.ReadAllBytes(output));
+    }
+
+    [Fact]
+    public async Task Utf16_gets_its_line_break_as_whole_code_units()
+    {
+        var utf16 = new UnicodeEncoding(bigEndian: false, byteOrderMark: true);
+        byte[] a = utf16.GetPreamble().Concat(utf16.GetBytes("line\r\n1,a")).ToArray();
+        byte[] b = utf16.GetPreamble().Concat(utf16.GetBytes("2,b")).ToArray();
+
+        string output = Out("merged.csv");
+        await RunAsync(
+            new[] { Write("a.csv", a), Write("b.csv", b) },
+            new MergeOptions { OutputPath = output, EnsureTrailingNewline = true, RemoveInnerBoms = true });
+
+        byte[] expected = utf16.GetPreamble().Concat(utf16.GetBytes("line\r\n1,a\r\n2,b\r\n")).ToArray();
+        Assert.Equal(expected, File.ReadAllBytes(output));
+    }
+
+    [Fact]
+    public async Task Utf16_big_endian_line_breaks_are_written_high_byte_first()
+    {
+        var utf16be = new UnicodeEncoding(bigEndian: true, byteOrderMark: true);
+        byte[] a = utf16be.GetPreamble().Concat(utf16be.GetBytes("one\ntwo")).ToArray();
+
+        string output = Out("merged.txt");
+        await RunAsync(
+            new[] { Write("a.txt", a) },
+            new MergeOptions { OutputPath = output, EnsureTrailingNewline = true });
+
+        byte[] expected = utf16be.GetPreamble().Concat(utf16be.GetBytes("one\ntwo\n")).ToArray();
+        Assert.Equal(expected, File.ReadAllBytes(output));
     }
 
     // ---------------------------------------------------------------- Safety
@@ -244,22 +281,13 @@ public sealed class MergeEngineTests : IDisposable
     }
 
     [Fact]
-    public async Task A_failed_run_leaves_no_temporary_file_behind()
+    public async Task A_finished_run_leaves_no_temporary_file_behind()
     {
         string output = Out("merged.txt");
         await RunAsync(
             new[] { Write("a.txt", Encoding.UTF8.GetBytes("x")) },
             new MergeOptions { OutputPath = output });
 
-        Assert.False(File.Exists(output + ".fmtmp"));
-    }
-
-    [Fact]
-    public void Default_options_do_not_ask_for_the_text_pipeline()
-    {
-        var options = new MergeOptions { OutputPath = "out.txt" };
-
-        Assert.False(options.RequiresTextPipeline);
-        Assert.Equal(MergeMode.Binary, options.ResolvedMode);
+        Assert.Empty(Directory.GetFiles(_dir, "*.fmtmp"));
     }
 }

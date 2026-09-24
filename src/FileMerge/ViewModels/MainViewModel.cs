@@ -36,13 +36,9 @@ public partial class MainViewModel : ObservableObject
 
         Files.CollectionChanged += OnFilesChanged;
 
-        SelectedSeparator = Separators.FirstOrDefault(o => o.Value == _settings.Separator) ?? Separators[0];
         SelectedConflict = Conflicts.FirstOrDefault(o => o.Value == _settings.ExistingFile) ?? Conflicts[0];
 
-        _separatorTemplate = _settings.SeparatorTemplate;
         _ensureTrailingNewline = _settings.EnsureTrailingNewline;
-        _skipRepeatedHeader = _settings.SkipRepeatedHeader;
-        _trimTrailingBlankLines = _settings.TrimTrailingBlankLines;
         _removeInnerBoms = _settings.RemoveInnerBoms;
 
         SelectedTheme = Themes.FirstOrDefault(t => t.Value == ThemeManager.Parse(_settings.Theme)) ?? Themes[0];
@@ -61,14 +57,6 @@ public partial class MainViewModel : ObservableObject
     public ObservableCollection<FileEntry> Files { get; } = new();
 
     public IReadOnlyList<LanguageInfo> Languages => Loc.Languages;
-
-    public List<EnumOption<SeparatorMode>> Separators { get; } = new()
-    {
-        new(SeparatorMode.None, "Options.Separator.None"),
-        new(SeparatorMode.BlankLine, "Options.Separator.BlankLine"),
-        new(SeparatorMode.FileNameHeader, "Options.Separator.FileNameHeader"),
-        new(SeparatorMode.Custom, "Options.Separator.Custom"),
-    };
 
     public List<EnumOption<ExistingFileAction>> Conflicts { get; } = new()
     {
@@ -93,23 +81,10 @@ public partial class MainViewModel : ObservableObject
     private EnumOption<AppTheme>? _selectedTheme;
 
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(IsCustomSeparator))]
-    private EnumOption<SeparatorMode>? _selectedSeparator;
-
-    [ObservableProperty]
     private EnumOption<ExistingFileAction>? _selectedConflict;
 
     [ObservableProperty]
-    private string _separatorTemplate = "----- {name} -----";
-
-    [ObservableProperty]
     private bool _ensureTrailingNewline;
-
-    [ObservableProperty]
-    private bool _skipRepeatedHeader;
-
-    [ObservableProperty]
-    private bool _trimTrailingBlankLines;
 
     [ObservableProperty]
     private bool _removeInnerBoms;
@@ -140,8 +115,6 @@ public partial class MainViewModel : ObservableObject
     // as information, and the options below are there for anyone who wants a different result.
 
     public bool IsIdle => !IsBusy;
-
-    public bool IsCustomSeparator => SelectedSeparator?.Value == SeparatorMode.Custom;
 
     public bool HasFiles => Files.Count > 0;
 
@@ -486,11 +459,7 @@ public partial class MainViewModel : ObservableObject
     private MergeOptions BuildOptions(string target) => new()
     {
         OutputPath = target,
-        Separator = SelectedSeparator?.Value ?? SeparatorMode.None,
-        SeparatorTemplate = SeparatorTemplate,
         EnsureTrailingNewline = EnsureTrailingNewline,
-        SkipRepeatedHeader = SkipRepeatedHeader,
-        TrimTrailingBlankLines = TrimTrailingBlankLines,
         RemoveInnerBoms = RemoveInnerBoms,
         ExistingFile = SelectedConflict?.Value ?? ExistingFileAction.Ask,
     };
@@ -603,7 +572,6 @@ public partial class MainViewModel : ObservableObject
 
         // The combo boxes hold option objects whose Display reads from the string table,
         // so they have to be told the text underneath them changed.
-        OnPropertyChanged(nameof(Separators));
         OnPropertyChanged(nameof(Conflicts));
         OnPropertyChanged(nameof(Themes));
         OnPropertyChanged(nameof(WindowTitle));
@@ -696,11 +664,7 @@ public partial class MainViewModel : ObservableObject
             return;
         }
 
-        _settings.Separator = SelectedSeparator?.Value ?? SeparatorMode.None;
-        _settings.SeparatorTemplate = SeparatorTemplate;
         _settings.EnsureTrailingNewline = EnsureTrailingNewline;
-        _settings.SkipRepeatedHeader = SkipRepeatedHeader;
-        _settings.TrimTrailingBlankLines = TrimTrailingBlankLines;
         _settings.RemoveInnerBoms = RemoveInnerBoms;
         _settings.ExistingFile = SelectedConflict?.Value ?? ExistingFileAction.Ask;
         _settings.Language = SelectedLanguage.Code;

@@ -34,17 +34,7 @@
   "Options.Text.Section": "テキストの設定",
   "Options.Binary.Section": "バイナリの設定",
   "Options.Binary.Note": "ファイルを1バイトも変えずにそのまま連結します。順序が違うとファイルが壊れるため、並び順をよく確認してください。",
-  "Options.Separator": "ファイルの区切り",
-  "Options.Separator.None": "なし",
-  "Options.Separator.BlankLine": "空行",
-  "Options.Separator.FileNameHeader": "ファイル名の見出し",
-  "Options.Separator.Custom": "任意の文字列",
-  "Options.SeparatorTemplate": "区切り文字列",
-  "Options.SeparatorTemplateHint": "使える置換子: {name} {path} {ext} {index}",
   "Options.EnsureTrailingNewline": "改行で終わっていないファイルに改行を補う",
-  "Options.SkipRepeatedHeader": "2 個目以降のファイルの見出し行を除く",
-  "Options.SkipRepeatedHeaderHint": "列名が繰り返される CSV / TSV 向けです。",
-  "Options.TrimTrailingBlankLines": "各ファイル末尾の空行を削除する",
   "Options.RemoveInnerBoms": "2 個目以降のファイルの BOM を取り除く",
 
 
@@ -78,7 +68,6 @@
   "Error.NoInput": "ファイルを 1 つ以上追加してください。",
   "Error.NoOutput": "保存先を選択してください。",
   "Error.OutputIsInput": "保存先が結合元のファイルと同じです。別の名前を指定してください。",
-  "Error.EncodingGuessed": "文字コードを確定できなかったため {0} と仮定しました。",
 
   "Settings.Language": "言語",
   "Settings.Theme": "テーマ",

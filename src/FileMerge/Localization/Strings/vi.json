@@ -34,17 +34,7 @@
   "Options.Text.Section": "Tùy chọn văn bản",
   "Options.Binary.Section": "Tùy chọn nhị phân",
   "Options.Binary.Note": "Các tệp được nối tiếp theo từng byte, không thêm hay đổi bất cứ thứ gì. Hãy kiểm tra kỹ thứ tự: sai thứ tự sẽ tạo ra tệp hỏng.",
-  "Options.Separator": "Giữa các tệp",
-  "Options.Separator.None": "Không có gì",
-  "Options.Separator.BlankLine": "Dòng trống",
-  "Options.Separator.FileNameHeader": "Tiêu đề tên tệp",
-  "Options.Separator.Custom": "Văn bản tùy chỉnh",
-  "Options.SeparatorTemplate": "Văn bản ngăn cách",
-  "Options.SeparatorTemplateHint": "Biến thay thế: {name} {path} {ext} {index}",
   "Options.EnsureTrailingNewline": "Thêm dấu xuống dòng vào các tệp không kết thúc bằng dấu xuống dòng",
-  "Options.SkipRepeatedHeader": "Bỏ qua dòng tiêu đề của mọi tệp sau tệp đầu tiên",
-  "Options.SkipRepeatedHeaderHint": "Dành cho tệp CSV và TSV lặp lại tên cột.",
-  "Options.TrimTrailingBlankLines": "Xóa các dòng trống ở cuối mỗi tệp",
   "Options.RemoveInnerBoms": "Bỏ dấu BOM ở các tệp sau tệp đầu tiên",
 
 
@@ -78,7 +68,6 @@
   "Error.NoInput": "Hãy thêm ít nhất một tệp trước.",
   "Error.NoOutput": "Hãy chọn nơi lưu tệp đã gộp.",
   "Error.OutputIsInput": "Tệp đầu ra cũng là một trong các tệp đầu vào. Hãy chọn tên khác.",
-  "Error.EncodingGuessed": "Không xác định chắc chắn được bảng mã; đã giả định là {0}.",
 
   "Settings.Language": "Ngôn ngữ",
   "Settings.Theme": "Giao diện",

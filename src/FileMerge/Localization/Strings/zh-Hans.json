@@ -34,17 +34,7 @@
   "Options.Text.Section": "文本选项",
   "Options.Binary.Section": "二进制选项",
   "Options.Binary.Note": "文件将逐字节原样拼接，不做任何修改。请仔细核对顺序，顺序错误会生成损坏的文件。",
-  "Options.Separator": "文件之间",
-  "Options.Separator.None": "不插入",
-  "Options.Separator.BlankLine": "空行",
-  "Options.Separator.FileNameHeader": "文件名标题",
-  "Options.Separator.Custom": "自定义文本",
-  "Options.SeparatorTemplate": "分隔文本",
-  "Options.SeparatorTemplateHint": "可用占位符：{name} {path} {ext} {index}",
   "Options.EnsureTrailingNewline": "为没有以换行结尾的文件补上换行",
-  "Options.SkipRepeatedHeader": "跳过第一个文件之后每个文件的标题行",
-  "Options.SkipRepeatedHeaderHint": "适用于重复列名的 CSV 和 TSV 文件。",
-  "Options.TrimTrailingBlankLines": "删除每个文件末尾的空行",
   "Options.RemoveInnerBoms": "移除第一个文件之后各文件的 BOM",
 
 
@@ -78,7 +68,6 @@
   "Error.NoInput": "请先至少添加一个文件。",
   "Error.NoOutput": "请选择合并结果的保存位置。",
   "Error.OutputIsInput": "输出文件同时也是输入文件之一。请换一个名称。",
-  "Error.EncodingGuessed": "无法确定编码，已假定为 {0}。",
 
   "Settings.Language": "语言",
   "Settings.Theme": "主题",

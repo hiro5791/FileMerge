@@ -34,17 +34,7 @@
   "Options.Text.Section": "خيارات النص",
   "Options.Binary.Section": "الخيارات الثنائية",
   "Options.Binary.Note": "تُلحق الملفات بايتًا ببايت دون إضافة أو تغيير أي شيء. تحقق من الترتيب بعناية: الترتيب الخاطئ ينتج ملفًا تالفًا.",
-  "Options.Separator": "بين الملفات",
-  "Options.Separator.None": "لا شيء",
-  "Options.Separator.BlankLine": "سطر فارغ",
-  "Options.Separator.FileNameHeader": "عنوان باسم الملف",
-  "Options.Separator.Custom": "نص مخصص",
-  "Options.SeparatorTemplate": "نص الفاصل",
-  "Options.SeparatorTemplateHint": "العناصر النائبة: {name} {path} {ext} {index}",
   "Options.EnsureTrailingNewline": "إضافة سطر جديد إلى الملفات التي لا تنتهي به",
-  "Options.SkipRepeatedHeader": "تخطي صف العناوين في كل ملف بعد الأول",
-  "Options.SkipRepeatedHeaderHint": "لملفات CSV وTSV التي تكرر أسماء الأعمدة.",
-  "Options.TrimTrailingBlankLines": "إزالة الأسطر الفارغة في نهاية كل ملف",
   "Options.RemoveInnerBoms": "إزالة علامة BOM من الملفات بعد الأول",
 
 
@@ -78,7 +68,6 @@
   "Error.NoInput": "أضف ملفًا واحدًا على الأقل أولًا.",
   "Error.NoOutput": "اختر مكان حفظ الملف المدموج.",
   "Error.OutputIsInput": "ملف الإخراج هو أيضًا أحد ملفات الإدخال. اختر اسمًا مختلفًا.",
-  "Error.EncodingGuessed": "تعذّر تحديد الترميز بشكل مؤكد، وافتُرض أنه {0}.",
 
   "Settings.Language": "اللغة",
   "Settings.Theme": "النسق",

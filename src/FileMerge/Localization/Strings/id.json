@@ -34,17 +34,7 @@
   "Options.Text.Section": "Opsi teks",
   "Options.Binary.Section": "Opsi biner",
   "Options.Binary.Note": "Berkas disambung bita demi bita tanpa ada yang ditambahkan atau diubah. Periksa urutannya dengan teliti: urutan yang salah menghasilkan berkas rusak.",
-  "Options.Separator": "Di antara berkas",
-  "Options.Separator.None": "Tidak ada",
-  "Options.Separator.BlankLine": "Baris kosong",
-  "Options.Separator.FileNameHeader": "Tajuk nama berkas",
-  "Options.Separator.Custom": "Teks khusus",
-  "Options.SeparatorTemplate": "Teks pemisah",
-  "Options.SeparatorTemplateHint": "Penampung: {name} {path} {ext} {index}",
   "Options.EnsureTrailingNewline": "Tambahkan baris baru pada berkas yang tidak diakhiri baris baru",
-  "Options.SkipRepeatedHeader": "Lewati baris tajuk pada setiap berkas setelah yang pertama",
-  "Options.SkipRepeatedHeaderHint": "Untuk berkas CSV dan TSV yang mengulang nama kolom.",
-  "Options.TrimTrailingBlankLines": "Hapus baris kosong di akhir setiap berkas",
   "Options.RemoveInnerBoms": "Hapus tanda BOM dari berkas setelah yang pertama",
 
 
@@ -78,7 +68,6 @@
   "Error.NoInput": "Tambahkan setidaknya satu berkas dahulu.",
   "Error.NoOutput": "Pilih tempat menyimpan berkas gabungan.",
   "Error.OutputIsInput": "Berkas keluaran juga merupakan salah satu berkas masukan. Pilih nama lain.",
-  "Error.EncodingGuessed": "Pengodean tidak dapat dipastikan; diasumsikan {0}.",
 
   "Settings.Language": "Bahasa",
   "Settings.Theme": "Tema",

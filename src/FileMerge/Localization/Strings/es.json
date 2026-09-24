@@ -34,17 +34,7 @@
   "Options.Text.Section": "Opciones de texto",
   "Options.Binary.Section": "Opciones binarias",
   "Options.Binary.Note": "Los archivos se unen byte a byte sin añadir ni modificar nada. Revisa bien el orden: un orden incorrecto produce un archivo dañado.",
-  "Options.Separator": "Entre archivos",
-  "Options.Separator.None": "Nada",
-  "Options.Separator.BlankLine": "Línea en blanco",
-  "Options.Separator.FileNameHeader": "Encabezado con el nombre",
-  "Options.Separator.Custom": "Texto personalizado",
-  "Options.SeparatorTemplate": "Texto separador",
-  "Options.SeparatorTemplateHint": "Marcadores: {name} {path} {ext} {index}",
   "Options.EnsureTrailingNewline": "Añadir un salto de línea a los archivos que no terminan con uno",
-  "Options.SkipRepeatedHeader": "Omitir la fila de encabezado de cada archivo salvo el primero",
-  "Options.SkipRepeatedHeaderHint": "Para archivos CSV y TSV que repiten los nombres de columna.",
-  "Options.TrimTrailingBlankLines": "Quitar las líneas en blanco del final de cada archivo",
   "Options.RemoveInnerBoms": "Quitar la marca BOM de los archivos posteriores al primero",
 
 
@@ -78,7 +68,6 @@
   "Error.NoInput": "Agrega al menos un archivo.",
   "Error.NoOutput": "Elige dónde guardar el archivo combinado.",
   "Error.OutputIsInput": "El archivo de salida también es uno de los de entrada. Elige otro nombre.",
-  "Error.EncodingGuessed": "No se pudo determinar la codificación con certeza; se supuso {0}.",
 
   "Settings.Language": "Idioma",
   "Settings.Theme": "Tema",

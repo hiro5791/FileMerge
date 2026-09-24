@@ -34,17 +34,7 @@
   "Options.Text.Section": "텍스트 옵션",
   "Options.Binary.Section": "바이너리 옵션",
   "Options.Binary.Note": "파일을 한 바이트도 바꾸지 않고 그대로 이어 붙입니다. 순서가 틀리면 손상된 파일이 만들어지므로 순서를 꼼꼼히 확인하세요.",
-  "Options.Separator": "파일 사이",
-  "Options.Separator.None": "없음",
-  "Options.Separator.BlankLine": "빈 줄",
-  "Options.Separator.FileNameHeader": "파일 이름 머리글",
-  "Options.Separator.Custom": "사용자 지정 텍스트",
-  "Options.SeparatorTemplate": "구분 텍스트",
-  "Options.SeparatorTemplateHint": "사용 가능한 자리 표시자: {name} {path} {ext} {index}",
   "Options.EnsureTrailingNewline": "줄 바꿈으로 끝나지 않는 파일에 줄 바꿈 추가",
-  "Options.SkipRepeatedHeader": "첫 번째 이후 파일의 머리글 행 건너뛰기",
-  "Options.SkipRepeatedHeaderHint": "열 이름이 반복되는 CSV, TSV 파일용입니다.",
-  "Options.TrimTrailingBlankLines": "각 파일 끝의 빈 줄 제거",
   "Options.RemoveInnerBoms": "첫 번째 이후 파일의 BOM 제거",
 
 
@@ -78,7 +68,6 @@
   "Error.NoInput": "파일을 하나 이상 추가하세요.",
   "Error.NoOutput": "병합 결과를 저장할 위치를 선택하세요.",
   "Error.OutputIsInput": "출력 파일이 입력 파일 중 하나와 같습니다. 다른 이름을 지정하세요.",
-  "Error.EncodingGuessed": "인코딩을 확정할 수 없어 {0}(으)로 가정했습니다.",
 
   "Settings.Language": "언어",
   "Settings.Theme": "테마",

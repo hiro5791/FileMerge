@@ -296,38 +296,16 @@
                           HorizontalScrollBarVisibility="Disabled">
                 <StackPanel>
 
-                    <!-- Text options. Every one of these is off until the user turns it on.
-                         Nothing here converts an encoding or rewrites line endings. -->
+                    <!-- Text options. Both are off until the user turns them on, and neither
+                         reads a file as text: one drops a BOM, the other adds a line break. -->
                     <Border Style="{StaticResource Card}"
                             Margin="0,0,0,12"
                             Visibility="{Binding ShowTextOptions, Converter={StaticResource BoolToVis}}">
                         <StackPanel>
                             <TextBlock Text="{loc:T Options.Text.Section}" Style="{StaticResource SectionText}" />
 
-                            <TextBlock Text="{loc:T Options.Separator}" Style="{StaticResource LabelText}" />
-                            <ComboBox ItemsSource="{Binding Separators}"
-                                      SelectedItem="{Binding SelectedSeparator}"
-                                      ItemTemplate="{StaticResource OptionTemplate}" />
-
-                            <StackPanel Margin="0,8,0,0"
-                                        Visibility="{Binding IsCustomSeparator, Converter={StaticResource BoolToVis}}">
-                                <TextBox Text="{Binding SeparatorTemplate, UpdateSourceTrigger=PropertyChanged}" />
-                                <TextBlock Text="{loc:T Options.SeparatorTemplateHint}"
-                                           Style="{StaticResource CaptionText}"
-                                           Margin="0,4,0,0" />
-                            </StackPanel>
-
-                            <Separator />
-
                             <CheckBox Content="{loc:T Options.EnsureTrailingNewline}"
                                       IsChecked="{Binding EnsureTrailingNewline}" />
-                            <CheckBox Content="{loc:T Options.SkipRepeatedHeader}"
-                                      IsChecked="{Binding SkipRepeatedHeader}" />
-                            <TextBlock Text="{loc:T Options.SkipRepeatedHeaderHint}"
-                                       Style="{StaticResource CaptionText}"
-                                       Margin="27,0,0,4" />
-                            <CheckBox Content="{loc:T Options.TrimTrailingBlankLines}"
-                                      IsChecked="{Binding TrimTrailingBlankLines}" />
                             <CheckBox Content="{loc:T Options.RemoveInnerBoms}"
                                       IsChecked="{Binding RemoveInnerBoms}" />
                         </StackPanel>

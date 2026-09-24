@@ -34,17 +34,7 @@
   "Options.Text.Section": "Text options",
   "Options.Binary.Section": "Binary options",
   "Options.Binary.Note": "Files are appended byte for byte with nothing added or changed. Check the order carefully: a wrong order produces a corrupt file.",
-  "Options.Separator": "Between files",
-  "Options.Separator.None": "Nothing",
-  "Options.Separator.BlankLine": "Blank line",
-  "Options.Separator.FileNameHeader": "File name header",
-  "Options.Separator.Custom": "Custom text",
-  "Options.SeparatorTemplate": "Separator text",
-  "Options.SeparatorTemplateHint": "Placeholders: {name} {path} {ext} {index}",
   "Options.EnsureTrailingNewline": "Add a line break to files that do not end with one",
-  "Options.SkipRepeatedHeader": "Skip the header row of every file after the first",
-  "Options.SkipRepeatedHeaderHint": "For CSV and TSV files that repeat their column names.",
-  "Options.TrimTrailingBlankLines": "Remove blank lines at the end of each file",
   "Options.RemoveInnerBoms": "Remove the byte order mark from files after the first",
 
 
@@ -78,7 +68,6 @@
   "Error.NoInput": "Add at least one file first.",
   "Error.NoOutput": "Choose where to save the merged file.",
   "Error.OutputIsInput": "The output file is also one of the input files. Choose a different name.",
-  "Error.EncodingGuessed": "Encoding could not be determined with certainty; {0} was assumed.",
 
   "Settings.Language": "Language",
   "Settings.Theme": "Theme",

@@ -34,17 +34,7 @@
   "Options.Text.Section": "ตัวเลือกข้อความ",
   "Options.Binary.Section": "ตัวเลือกไบนารี",
   "Options.Binary.Note": "ไฟล์จะถูกต่อกันแบบไบต์ต่อไบต์โดยไม่เพิ่มหรือแก้ไขสิ่งใด ตรวจสอบลำดับให้ดี เพราะลำดับที่ผิดจะทำให้ได้ไฟล์ที่เสียหาย",
-  "Options.Separator": "ระหว่างไฟล์",
-  "Options.Separator.None": "ไม่ใส่",
-  "Options.Separator.BlankLine": "บรรทัดว่าง",
-  "Options.Separator.FileNameHeader": "หัวข้อชื่อไฟล์",
-  "Options.Separator.Custom": "ข้อความที่กำหนดเอง",
-  "Options.SeparatorTemplate": "ข้อความคั่น",
-  "Options.SeparatorTemplateHint": "ตัวแทน: {name} {path} {ext} {index}",
   "Options.EnsureTrailingNewline": "เติมการขึ้นบรรทัดใหม่ให้ไฟล์ที่ไม่ได้ลงท้ายด้วยการขึ้นบรรทัดใหม่",
-  "Options.SkipRepeatedHeader": "ข้ามบรรทัดหัวตารางของทุกไฟล์หลังไฟล์แรก",
-  "Options.SkipRepeatedHeaderHint": "สำหรับไฟล์ CSV และ TSV ที่มีชื่อคอลัมน์ซ้ำกัน",
-  "Options.TrimTrailingBlankLines": "ลบบรรทัดว่างท้ายไฟล์ของแต่ละไฟล์",
   "Options.RemoveInnerBoms": "เอา BOM ออกจากไฟล์ที่อยู่หลังไฟล์แรก",
 
 
@@ -78,7 +68,6 @@
   "Error.NoInput": "กรุณาเพิ่มไฟล์อย่างน้อยหนึ่งไฟล์ก่อน",
   "Error.NoOutput": "กรุณาเลือกที่สำหรับบันทึกไฟล์ที่รวมแล้ว",
   "Error.OutputIsInput": "ไฟล์ผลลัพธ์เป็นไฟล์ต้นทางไฟล์หนึ่งด้วย กรุณาใช้ชื่ออื่น",
-  "Error.EncodingGuessed": "ไม่สามารถระบุการเข้ารหัสได้แน่ชัด จึงถือว่าเป็น {0}",
 
   "Settings.Language": "ภาษา",
   "Settings.Theme": "ธีม",

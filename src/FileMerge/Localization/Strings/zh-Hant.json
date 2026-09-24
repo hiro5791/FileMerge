@@ -34,17 +34,7 @@
   "Options.Text.Section": "文字選項",
   "Options.Binary.Section": "二進位選項",
   "Options.Binary.Note": "檔案會逐位元組原樣接合，不做任何更動。請仔細確認順序，順序錯誤會產生損毀的檔案。",
-  "Options.Separator": "檔案之間",
-  "Options.Separator.None": "不插入",
-  "Options.Separator.BlankLine": "空白行",
-  "Options.Separator.FileNameHeader": "檔名標題",
-  "Options.Separator.Custom": "自訂文字",
-  "Options.SeparatorTemplate": "分隔文字",
-  "Options.SeparatorTemplateHint": "可用預留位置：{name} {path} {ext} {index}",
   "Options.EnsureTrailingNewline": "為沒有以換行結尾的檔案補上換行",
-  "Options.SkipRepeatedHeader": "略過第一個檔案之後每個檔案的標題列",
-  "Options.SkipRepeatedHeaderHint": "適用於重複欄位名稱的 CSV 與 TSV 檔案。",
-  "Options.TrimTrailingBlankLines": "刪除每個檔案結尾的空白行",
   "Options.RemoveInnerBoms": "移除第一個檔案之後各檔案的 BOM",
 
 
@@ -78,7 +68,6 @@
   "Error.NoInput": "請先至少新增一個檔案。",
   "Error.NoOutput": "請選擇合併結果的儲存位置。",
   "Error.OutputIsInput": "輸出檔案同時也是輸入檔案之一。請改用其他名稱。",
-  "Error.EncodingGuessed": "無法確定編碼，已假定為 {0}。",
 
   "Settings.Language": "語言",
   "Settings.Theme": "佈景主題",

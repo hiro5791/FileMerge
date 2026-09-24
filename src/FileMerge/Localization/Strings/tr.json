@@ -34,17 +34,7 @@
   "Options.Text.Section": "Metin seçenekleri",
   "Options.Binary.Section": "İkili seçenekler",
   "Options.Binary.Note": "Dosyalar hiçbir şey eklenmeden veya değiştirilmeden bayt bayt uç uca eklenir. Sırayı dikkatle denetleyin: yanlış sıra bozuk bir dosya üretir.",
-  "Options.Separator": "Dosyalar arasına",
-  "Options.Separator.None": "Hiçbir şey",
-  "Options.Separator.BlankLine": "Boş satır",
-  "Options.Separator.FileNameHeader": "Dosya adı başlığı",
-  "Options.Separator.Custom": "Özel metin",
-  "Options.SeparatorTemplate": "Ayırıcı metin",
-  "Options.SeparatorTemplateHint": "Yer tutucular: {name} {path} {ext} {index}",
   "Options.EnsureTrailingNewline": "Satır sonuyla bitmeyen dosyalara satır sonu ekle",
-  "Options.SkipRepeatedHeader": "İlkinden sonraki her dosyanın başlık satırını atla",
-  "Options.SkipRepeatedHeaderHint": "Sütun adlarını yineleyen CSV ve TSV dosyaları için.",
-  "Options.TrimTrailingBlankLines": "Her dosyanın sonundaki boş satırları kaldır",
   "Options.RemoveInnerBoms": "İlkinden sonraki dosyalardan BOM işaretini kaldır",
 
 
@@ -78,7 +68,6 @@
   "Error.NoInput": "Önce en az bir dosya ekleyin.",
   "Error.NoOutput": "Birleştirilmiş dosyanın kaydedileceği yeri seçin.",
   "Error.OutputIsInput": "Çıktı dosyası aynı zamanda girdi dosyalarından biri. Farklı bir ad seçin.",
-  "Error.EncodingGuessed": "Kodlama kesin olarak belirlenemedi; {0} varsayıldı.",
 
   "Settings.Language": "Dil",
   "Settings.Theme": "Tema",

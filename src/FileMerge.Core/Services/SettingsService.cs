@@ -11,17 +11,9 @@ public sealed class AppSettings
 
     public string Theme { get; set; } = "System";
 
-    public SeparatorMode Separator { get; set; } = SeparatorMode.None;
-
-    public string SeparatorTemplate { get; set; } = "----- {name} -----";
-
     public bool EnsureTrailingNewline { get; set; }
 
     public bool RemoveInnerBoms { get; set; }
-
-    public bool SkipRepeatedHeader { get; set; }
-
-    public bool TrimTrailingBlankLines { get; set; }
 
     public ExistingFileAction ExistingFile { get; set; } = ExistingFileAction.Ask;
 
