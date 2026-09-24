@@ -36,16 +36,6 @@ public partial class MainViewModel : ObservableObject
 
         Files.CollectionChanged += OnFilesChanged;
 
-        InputEncodings = EncodingOption.BuildInputList();
-        FallbackEncodings = EncodingOption.BuildFallbackList();
-
-        SelectedInputEncoding = InputEncodings[0];
-        SelectedFallbackEncoding =
-            FallbackEncodings.FirstOrDefault(e => e.CodePage == _settings.FallbackCodePage) ?? FallbackEncodings[0];
-
-        SelectedOutputEncoding =
-            OutputEncodings.FirstOrDefault(o => o.Value == _settings.OutputEncoding) ?? OutputEncodings[0];
-        SelectedNewline = Newlines.FirstOrDefault(o => o.Value == _settings.Newline) ?? Newlines[0];
         SelectedSeparator = Separators.FirstOrDefault(o => o.Value == _settings.Separator) ?? Separators[0];
         SelectedConflict = Conflicts.FirstOrDefault(o => o.Value == _settings.ExistingFile) ?? Conflicts[0];
 
@@ -71,29 +61,6 @@ public partial class MainViewModel : ObservableObject
     public ObservableCollection<FileEntry> Files { get; } = new();
 
     public IReadOnlyList<LanguageInfo> Languages => Loc.Languages;
-
-    public List<EncodingOption> InputEncodings { get; }
-
-    public List<EncodingOption> FallbackEncodings { get; }
-
-    /// <summary>Preserve is first so the default never rewrites anything.</summary>
-    public List<EnumOption<OutputEncodingKind>> OutputEncodings { get; } = new()
-    {
-        new(OutputEncodingKind.Preserve, "Options.Encoding.Preserve"),
-        new(OutputEncodingKind.Utf8, "Options.Encoding.Utf8"),
-        new(OutputEncodingKind.Utf8Bom, "Options.Encoding.Utf8Bom"),
-        new(OutputEncodingKind.Utf16Le, "Options.Encoding.Utf16Le"),
-        new(OutputEncodingKind.Utf16Be, "Options.Encoding.Utf16Be"),
-        new(OutputEncodingKind.SystemAnsi, "Options.Encoding.SystemAnsi"),
-    };
-
-    public List<EnumOption<NewlineMode>> Newlines { get; } = new()
-    {
-        new(NewlineMode.Keep, "Options.Newline.Keep"),
-        new(NewlineMode.Crlf, "Options.Newline.Crlf"),
-        new(NewlineMode.Lf, "Options.Newline.Lf"),
-        new(NewlineMode.Cr, "Options.Newline.Cr"),
-    };
 
     public List<EnumOption<SeparatorMode>> Separators { get; } = new()
     {
@@ -126,22 +93,7 @@ public partial class MainViewModel : ObservableObject
     private EnumOption<AppTheme>? _selectedTheme;
 
     [ObservableProperty]
-    private EncodingOption? _selectedInputEncoding;
-
-    [ObservableProperty]
-    private EncodingOption? _selectedFallbackEncoding;
-
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(PlanText))]
-    private EnumOption<OutputEncodingKind>? _selectedOutputEncoding;
-
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(PlanText))]
-    private EnumOption<NewlineMode>? _selectedNewline;
-
-    [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsCustomSeparator))]
-    [NotifyPropertyChangedFor(nameof(PlanText))]
     private EnumOption<SeparatorMode>? _selectedSeparator;
 
     [ObservableProperty]
@@ -151,15 +103,12 @@ public partial class MainViewModel : ObservableObject
     private string _separatorTemplate = "----- {name} -----";
 
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(PlanText))]
     private bool _ensureTrailingNewline;
 
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(PlanText))]
     private bool _skipRepeatedHeader;
 
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(PlanText))]
     private bool _trimTrailingBlankLines;
 
     [ObservableProperty]
@@ -185,9 +134,6 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty]
     private bool _showTextOptions;
 
-    [ObservableProperty]
-    private bool _splitArchiveDetected;
-
     // The window deliberately carries no warnings. Joining files without converting anything
     // is the faithful result the user asked for, whether that leaves mixed encodings, a byte
     // order mark mid-file, or two files on the same line. The list shows each file's encoding
@@ -204,11 +150,6 @@ public partial class MainViewModel : ObservableObject
     /// language picker rather than being set once at startup.
     /// </summary>
     public string WindowTitle => $"{Loc.Current["App.Title"]} {AppInfo.DisplayVersion}".TrimEnd();
-
-    /// <summary>One line telling the user what a merge would do right now.</summary>
-    public string PlanText => BuildOptions(string.Empty).RequiresTextPipeline
-        ? Loc.Current["Plan.Transform"]
-        : Loc.Current["Plan.Preserve"];
 
     // ---------------------------------------------------------------- Commands
 
@@ -545,10 +486,6 @@ public partial class MainViewModel : ObservableObject
     private MergeOptions BuildOptions(string target) => new()
     {
         OutputPath = target,
-        OutputEncoding = SelectedOutputEncoding?.Value ?? OutputEncodingKind.Preserve,
-        FallbackEncoding = SelectedFallbackEncoding?.ToEncoding(),
-        ForcedInputEncoding = SelectedInputEncoding?.ToEncoding(),
-        Newline = SelectedNewline?.Value ?? NewlineMode.Keep,
         Separator = SelectedSeparator?.Value ?? SeparatorMode.None,
         SeparatorTemplate = SeparatorTemplate,
         EnsureTrailingNewline = EnsureTrailingNewline,
@@ -580,22 +517,17 @@ public partial class MainViewModel : ObservableObject
         _ = ProbeFilesAsync();
     }
 
-    partial void OnSelectedInputEncodingChanged(EncodingOption? value) => OnPropertyChanged(nameof(PlanText));
-
-    partial void OnSelectedFallbackEncodingChanged(EncodingOption? value) => _ = ProbeFilesAsync(force: true);
-
     /// <summary>
     /// Reads the head of each file off the UI thread to fill in the Encoding column.
     /// Nothing here changes a file.
     /// </summary>
-    private async Task ProbeFilesAsync(bool force = false)
+    private async Task ProbeFilesAsync()
     {
         _probeCts?.Cancel();
         var cts = new CancellationTokenSource();
         _probeCts = cts;
 
-        var pending = Files.Where(f => force || (f.EncodingLabel is null && f.Error is null)).ToList();
-        var fallback = SelectedFallbackEncoding?.ToEncoding();
+        var pending = Files.Where(f => f.EncodingLabel is null && f.Error is null).ToList();
 
         foreach (var entry in pending)
         {
@@ -607,7 +539,7 @@ public partial class MainViewModel : ObservableObject
             string path = entry.FullPath;
             try
             {
-                var probe = await Task.Run(() => FileProbe.Probe(path, fallback), cts.Token);
+                var probe = await Task.Run(() => FileProbe.Probe(path, null), cts.Token);
                 entry.EncodingLabel = probe.EncodingLabel;
                 entry.IsTextLike = probe.IsTextLike;
             }
@@ -634,10 +566,8 @@ public partial class MainViewModel : ObservableObject
     /// </summary>
     private void RefreshDetection()
     {
-        SplitArchiveDetected = Files.Count > 1 && Files.All(f => ContentSniffer.LooksLikeSplitPart(f.FullPath));
-        ShowTextOptions = Files.Count > 0 && Files.All(f => f.IsTextLike) && !SplitArchiveDetected;
-
-        OnPropertyChanged(nameof(PlanText));
+        bool splitArchive = Files.Count > 1 && Files.All(f => ContentSniffer.LooksLikeSplitPart(f.FullPath));
+        ShowTextOptions = Files.Count > 0 && Files.All(f => f.IsTextLike) && !splitArchive;
     }
 
     // ---------------------------------------------------------------- Settings and text
@@ -673,14 +603,9 @@ public partial class MainViewModel : ObservableObject
 
         // The combo boxes hold option objects whose Display reads from the string table,
         // so they have to be told the text underneath them changed.
-        OnPropertyChanged(nameof(OutputEncodings));
-        OnPropertyChanged(nameof(Newlines));
         OnPropertyChanged(nameof(Separators));
         OnPropertyChanged(nameof(Conflicts));
         OnPropertyChanged(nameof(Themes));
-        OnPropertyChanged(nameof(InputEncodings));
-        OnPropertyChanged(nameof(FallbackEncodings));
-        OnPropertyChanged(nameof(PlanText));
         OnPropertyChanged(nameof(WindowTitle));
     }
 
@@ -771,9 +696,6 @@ public partial class MainViewModel : ObservableObject
             return;
         }
 
-        _settings.OutputEncoding = SelectedOutputEncoding?.Value ?? OutputEncodingKind.Preserve;
-        _settings.FallbackCodePage = SelectedFallbackEncoding?.CodePage ?? 0;
-        _settings.Newline = SelectedNewline?.Value ?? NewlineMode.Keep;
         _settings.Separator = SelectedSeparator?.Value ?? SeparatorMode.None;
         _settings.SeparatorTemplate = SeparatorTemplate;
         _settings.EnsureTrailingNewline = EnsureTrailingNewline;

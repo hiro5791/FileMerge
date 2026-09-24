@@ -296,55 +296,13 @@
                           HorizontalScrollBarVisibility="Disabled">
                 <StackPanel>
 
-                    <!-- What a merge would do right now, plus anything worth knowing first -->
-                    <Border Style="{StaticResource Card}" Margin="0,0,0,12">
-                        <StackPanel>
-                            <TextBlock Text="{Binding PlanText}"
-                                       Style="{StaticResource CaptionText}"
-                                       Foreground="{DynamicResource TextPrimaryBrush}" />
-
-                            <TextBlock Text="{loc:T Detect.SplitArchive}"
-                                       Style="{StaticResource CaptionText}"
-                                       Margin="0,8,0,0"
-                                       Visibility="{Binding SplitArchiveDetected, Converter={StaticResource BoolToVis}}" />
-
-                        </StackPanel>
-                    </Border>
-
-                    <!-- Text options. Every one of these is off until the user turns it on. -->
+                    <!-- Text options. Every one of these is off until the user turns it on.
+                         Nothing here converts an encoding or rewrites line endings. -->
                     <Border Style="{StaticResource Card}"
                             Margin="0,0,0,12"
                             Visibility="{Binding ShowTextOptions, Converter={StaticResource BoolToVis}}">
                         <StackPanel>
                             <TextBlock Text="{loc:T Options.Text.Section}" Style="{StaticResource SectionText}" />
-
-                            <TextBlock Text="{loc:T Options.OutputEncoding}" Style="{StaticResource LabelText}" />
-                            <ComboBox ItemsSource="{Binding OutputEncodings}"
-                                      SelectedItem="{Binding SelectedOutputEncoding}"
-                                      ItemTemplate="{StaticResource OptionTemplate}"
-                                      Margin="0,0,0,12" />
-
-                            <TextBlock Text="{loc:T Options.InputEncoding}" Style="{StaticResource LabelText}" />
-                            <ComboBox ItemsSource="{Binding InputEncodings}"
-                                      SelectedItem="{Binding SelectedInputEncoding}"
-                                      ItemTemplate="{StaticResource OptionTemplate}"
-                                      MaxDropDownHeight="360"
-                                      Margin="0,0,0,12" />
-
-                            <TextBlock Text="{loc:T Options.FallbackEncoding}" Style="{StaticResource LabelText}" />
-                            <ComboBox ItemsSource="{Binding FallbackEncodings}"
-                                      SelectedItem="{Binding SelectedFallbackEncoding}"
-                                      ItemTemplate="{StaticResource OptionTemplate}"
-                                      MaxDropDownHeight="360" />
-                            <TextBlock Text="{loc:T Options.FallbackEncodingHint}"
-                                       Style="{StaticResource CaptionText}"
-                                       Margin="0,4,0,12" />
-
-                            <TextBlock Text="{loc:T Options.Newline}" Style="{StaticResource LabelText}" />
-                            <ComboBox ItemsSource="{Binding Newlines}"
-                                      SelectedItem="{Binding SelectedNewline}"
-                                      ItemTemplate="{StaticResource OptionTemplate}"
-                                      Margin="0,0,0,12" />
 
                             <TextBlock Text="{loc:T Options.Separator}" Style="{StaticResource LabelText}" />
                             <ComboBox ItemsSource="{Binding Separators}"

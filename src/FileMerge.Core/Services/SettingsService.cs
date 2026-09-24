@@ -11,12 +11,6 @@ public sealed class AppSettings
 
     public string Theme { get; set; } = "System";
 
-    public OutputEncodingKind OutputEncoding { get; set; } = OutputEncodingKind.Preserve;
-
-    public int FallbackCodePage { get; set; }
-
-    public NewlineMode Newline { get; set; } = NewlineMode.Keep;
-
     public SeparatorMode Separator { get; set; } = SeparatorMode.None;
 
     public string SeparatorTemplate { get; set; } = "----- {name} -----";
