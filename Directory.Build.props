@@ -4,7 +4,7 @@
     <Company>FileMerge</Company>
     <Product>FileMerge</Product>
     <Copyright>Copyright (c) 2026 FileMerge contributors</Copyright>
-    <RepositoryUrl>https://github.com/OWNER/FileMerge</RepositoryUrl>
+    <RepositoryUrl>https://github.com/hiro5791/FileMerge</RepositoryUrl>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <AccelerateBuildsInVisualStudio>true</AccelerateBuildsInVisualStudio>
   </PropertyGroup>

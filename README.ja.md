@@ -73,10 +73,10 @@ Bahasa Indonesia · Tiếng Việt · ไทย
 [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0) が必要です。
 
 ```powershell
-git clone https://github.com/OWNER/FileMerge.git
+git clone https://github.com/hiro5791/FileMerge.git
 cd FileMerge
 
-dotnet test tests/FileMerge.Tests/FileMerge.Tests.csproj   # 42 件
+dotnet test tests/FileMerge.Tests/FileMerge.Tests.csproj   # 38 件
 dotnet run --project src/FileMerge/FileMerge.csproj
 
 ./build/Build-Portable.ps1                                  # artifacts/*.exe
