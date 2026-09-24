@@ -20,6 +20,8 @@
   "Action.OpenFolder": "開啟所在資料夾",
   "Action.Close": "關閉",
   "Action.Add": "新增",
+  "Action.Donate": "贊助",
+  "Action.DonateHint": "在瀏覽器中開啟開發者的 Ko-fi 頁面。贊助完全自願，所有功能永遠免費。",
 
   "List.DropHint": "將檔案拖放到這裡",
   "List.DropHintSub": "也可使用「新增檔案」或「新增資料夾」。拖曳列可調整合併順序。",

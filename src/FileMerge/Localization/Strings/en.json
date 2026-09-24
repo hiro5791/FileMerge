@@ -20,6 +20,8 @@
   "Action.OpenFolder": "Open containing folder",
   "Action.Close": "Close",
   "Action.Add": "Add",
+  "Action.Donate": "Donate",
+  "Action.DonateHint": "Opens the developer's Ko-fi page in your browser. Donations are entirely optional; every feature stays free.",
 
   "List.DropHint": "Drop files here",
   "List.DropHintSub": "or use Add files / Add folder. Drag rows to set the merge order.",

@@ -371,6 +371,19 @@ public partial class MainViewModel : ObservableObject
     }
 
     [RelayCommand]
+    private void OpenDonatePage()
+    {
+        try
+        {
+            Process.Start(new ProcessStartInfo(AppInfo.DonateUrl) { UseShellExecute = true });
+        }
+        catch (Exception ex)
+        {
+            _dialogs.ShowError(ex.Message);
+        }
+    }
+
+    [RelayCommand]
     private void Cancel() => _mergeCts?.Cancel();
 
     [RelayCommand]

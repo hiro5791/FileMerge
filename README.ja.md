@@ -35,7 +35,7 @@
 - 大きなファイルでも**進捗表示とキャンセル**が可能。いったん一時ファイルに書くため、中断・失敗しても中途半端なファイルが残りません
 - **入力ファイル自身への上書きを拒否**します
 - **ライト / ダークテーマ**（Windows 連動または固定）
-- **20言語対応**。実行中に切り替え可能。アラビア語では右から左のレイアウトになります
+- **21言語対応**。実行中に切り替え可能。アラビア語では右から左のレイアウトになります
 
 ## ダウンロード
 
@@ -63,7 +63,7 @@ Windows 10 バージョン 1809 以降。ダブルクリックで起動します
 ## 対応言語
 
 English · 日本語 · 简体中文 · 繁體中文 · 한국어 · Español · Português (Brasil) · Français ·
-Deutsch · Italiano · Русский · Українська · Polski · Nederlands · Türkçe · العربية · हिन्दी ·
+Deutsch · Italiano · Русский · Українська · Polski · Nederlands · Svenska · Türkçe · العربية · हिन्दी ·
 Bahasa Indonesia · Tiếng Việt · ไทย
 
 初回起動時に Windows の言語から自動選択され、画面上部でいつでも変更できます。文字列はすべて [`src/FileMerge/Localization/Strings`](src/FileMerge/Localization/Strings) に言語ごとの JSON ファイルとして置かれ、EXE に埋め込まれます（ポータブル版を単一ファイルに保つため）。`en.json` にあるキーが欠けている言語があると CI が失敗します。
@@ -85,7 +85,7 @@ dotnet run --project src/FileMerge/FileMerge.csproj
 | プロジェクト | 内容 |
 | --- | --- |
 | `src/FileMerge.Core` | 結合エンジン、文字コード判定、フォルダー走査。UI に依存しません |
-| `src/FileMerge` | WPF の画面、ビューモデル、テーマ、20言語の文字列 |
+| `src/FileMerge` | WPF の画面、ビューモデル、テーマ、21言語の文字列 |
 | `tests/FileMerge.Tests` | xUnit テスト。大半は「バイト列が変化しないこと」の検証です |
 
 アイコンの元画像は [`artwork/`](artwork) にあります。`icon.png` は 32px 以上用、`icon-small.png` は 16px・24px 用の簡略版です。どちらかを差し替えたら `./build/New-Icons.ps1` を実行すると、.ico とストア用タイルが作り直されます。
@@ -100,6 +100,13 @@ dotnet run --project src/FileMerge/FileMerge.csproj
 ```
 
 この3つの値は、Partner Center で予約したアプリ名の **製品 ID（Product identity）** に表示されるものです。パッケージは意図的に未署名のままにします。ストア提出物には Partner Center 側が署名するためです。提出手順の全体は [docs/STORE.md](docs/STORE.md) を参照してください。
+
+## 寄付
+
+てくてくファイル結合は無料で、これからも無料です。役に立ったらお礼の気持ちとして寄付していただけるとうれしいです。寄付は任意で、寄付によって使える機能が増えることはありません。
+
+- [Ko-fi](https://ko-fi.com/hiro5791)（1回だけ・毎月。アプリの「♥ 寄付」ボタンからも開けます）
+- [GitHub Sponsors](https://github.com/sponsors/hiro5791)
 
 ## ライセンス
 

@@ -20,6 +20,8 @@
   "Action.OpenFolder": "Ouvrir le dossier du fichier",
   "Action.Close": "Fermer",
   "Action.Add": "Ajouter",
+  "Action.Donate": "Faire un don",
+  "Action.DonateHint": "Ouvre la page Ko-fi du développeur dans le navigateur. Les dons sont facultatifs : toutes les fonctionnalités restent gratuites.",
 
   "List.DropHint": "Déposez les fichiers ici",
   "List.DropHintSub": "ou utilisez Ajouter des fichiers / Ajouter un dossier. Faites glisser les lignes pour définir l'ordre de fusion.",

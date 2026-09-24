@@ -20,6 +20,8 @@
   "Action.OpenFolder": "Dosyanın klasörünü aç",
   "Action.Close": "Kapat",
   "Action.Add": "Ekle",
+  "Action.Donate": "Bağış yap",
+  "Action.DonateHint": "Geliştiricinin Ko-fi sayfasını tarayıcıda açar. Bağış tamamen isteğe bağlıdır; tüm özellikler ücretsiz kalır.",
 
   "List.DropHint": "Dosyaları buraya bırakın",
   "List.DropHintSub": "ya da Dosya ekle / Klasör ekle düğmelerini kullanın. Birleştirme sırasını belirlemek için satırları sürükleyin.",

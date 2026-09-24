@@ -50,7 +50,7 @@ as plain information.
   or failed run never leaves a half-written file where you expect a complete one
 - **Refuses to write over one of its own inputs**
 - **Light / dark theme**, following Windows or pinned
-- **20 languages**, switchable at runtime, with right-to-left layout for Arabic
+- **21 languages**, switchable at runtime, with right-to-left layout for Arabic
 
 ## Download
 
@@ -85,7 +85,7 @@ its own configuration. On read-only media nothing is written and the app still r
 ## Languages
 
 English · 日本語 · 简体中文 · 繁體中文 · 한국어 · Español · Português (Brasil) · Français ·
-Deutsch · Italiano · Русский · Українська · Polski · Nederlands · Türkçe · العربية · हिन्दी ·
+Deutsch · Italiano · Русский · Українська · Polski · Nederlands · Svenska · Türkçe · العربية · हिन्दी ·
 Bahasa Indonesia · Tiếng Việt · ไทย
 
 The language is picked from Windows on first run and can be changed at any time from the
@@ -110,7 +110,7 @@ dotnet run --project src/FileMerge/FileMerge.csproj
 | Project | Contents |
 | --- | --- |
 | `src/FileMerge.Core` | Merge engine, encoding detection, folder scanning. No UI dependency. |
-| `src/FileMerge` | WPF window, view models, themes, the 20 string tables. |
+| `src/FileMerge` | WPF window, view models, themes, the 21 string tables. |
 | `tests/FileMerge.Tests` | xUnit tests, most of them asserting that bytes survive unchanged. |
 
 The icon artwork lives in [`artwork/`](artwork): `icon.png` for 32 px and up, and a simplified
@@ -129,6 +129,14 @@ regenerate the `.ico` and the Store tiles.
 Those three values come from Partner Center, under **Product identity** for your reserved app
 name. The package is left unsigned on purpose: Partner Center signs Store submissions itself.
 See [docs/STORE.md](docs/STORE.md) for the full submission checklist.
+
+## Support
+
+TekuTeku File Merge is free and stays free. If it saves you time and you would like to say
+thanks, you can leave a tip. It is entirely optional and unlocks nothing.
+
+- [Ko-fi](https://ko-fi.com/hiro5791) (one-time or monthly; the ♥ Donate button in the app opens this page)
+- [GitHub Sponsors](https://github.com/sponsors/hiro5791)
 
 ## License
 

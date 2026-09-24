@@ -20,6 +20,8 @@
   "Action.OpenFolder": "Otwórz folder pliku",
   "Action.Close": "Zamknij",
   "Action.Add": "Dodaj",
+  "Action.Donate": "Wesprzyj",
+  "Action.DonateHint": "Otwiera stronę dewelopera w serwisie Ko-fi w przeglądarce. Darowizny są dobrowolne — wszystkie funkcje pozostają bezpłatne.",
 
   "List.DropHint": "Upuść pliki tutaj",
   "List.DropHintSub": "albo użyj przycisków Dodaj pliki / Dodaj folder. Przeciągaj wiersze, aby ustalić kolejność łączenia.",

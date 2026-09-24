@@ -20,6 +20,8 @@
   "Action.OpenFolder": "Map met het bestand openen",
   "Action.Close": "Sluiten",
   "Action.Add": "Toevoegen",
+  "Action.Donate": "Doneren",
+  "Action.DonateHint": "Opent de Ko-fi-pagina van de ontwikkelaar in je browser. Doneren is vrijwillig; alle functies blijven gratis.",
 
   "List.DropHint": "Sleep bestanden hierheen",
   "List.DropHintSub": "of gebruik Bestanden toevoegen / Map toevoegen. Sleep rijen om de volgorde te bepalen.",

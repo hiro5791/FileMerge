@@ -101,6 +101,9 @@ Name: "pl"; MessagesFile: "compiler:Languages\Polish.isl"
 #if FileExists(LangDir + "Dutch.isl")
 Name: "nl"; MessagesFile: "compiler:Languages\Dutch.isl"
 #endif
+#if FileExists(LangDir + "Swedish.isl")
+Name: "sv"; MessagesFile: "compiler:Languages\Swedish.isl"
+#endif
 #if FileExists(LangDir + "Turkish.isl")
 Name: "tr"; MessagesFile: "compiler:Languages\Turkish.isl"
 #endif

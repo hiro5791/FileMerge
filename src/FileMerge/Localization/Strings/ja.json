@@ -20,6 +20,8 @@
   "Action.OpenFolder": "保存先フォルダーを開く",
   "Action.Close": "閉じる",
   "Action.Add": "追加",
+  "Action.Donate": "寄付",
+  "Action.DonateHint": "開発者の Ko-fi ページをブラウザーで開きます。寄付は任意で、すべての機能は無料のまま使えます。",
 
   "List.DropHint": "ここにファイルをドロップ",
   "List.DropHintSub": "または「ファイルを追加」「フォルダーを追加」から。行をドラッグすると結合順を変えられます。",

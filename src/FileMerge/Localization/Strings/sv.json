@@ -1,0 +1,82 @@
+{
+  "App.Title": "TekuTeku Filsammanslagning",
+
+  "Action.AddFiles": "Lägg till filer",
+  "Action.AddFolder": "Lägg till mapp",
+  "Action.Remove": "Ta bort",
+  "Action.ClearAll": "Rensa alla",
+  "Action.MoveUp": "Flytta upp",
+  "Action.MoveDown": "Flytta ned",
+  "Action.Sort": "Sortera",
+  "Action.SortByName": "Efter namn",
+  "Action.SortByDate": "Efter ändringsdatum",
+  "Action.SortBySize": "Efter storlek",
+  "Action.SortByPath": "Efter fullständig sökväg",
+  "Action.Reverse": "Vänd på nuvarande ordning",
+  "Action.ReverseHint": "Vänder listan uppochned. Den sista filen hamnar först.",
+  "Action.Merge": "Slå ihop",
+  "Action.Cancel": "Avbryt",
+  "Action.Browse": "Bläddra...",
+  "Action.OpenFolder": "Öppna mappen",
+  "Action.Close": "Stäng",
+  "Action.Add": "Lägg till",
+  "Action.Donate": "Donera",
+  "Action.DonateHint": "Öppnar utvecklarens Ko-fi-sida i webbläsaren. Donationer är helt frivilliga – alla funktioner förblir gratis.",
+
+  "List.DropHint": "Släpp filer här",
+  "List.DropHintSub": "eller använd Lägg till filer / Lägg till mapp. Dra rader för att bestämma ordningen.",
+  "List.Column.Name": "Namn",
+  "List.Column.Size": "Storlek",
+  "List.Column.Modified": "Ändrad",
+  "List.Column.Kind": "Teckenkodning",
+  "List.Summary": "{0} filer, {1}",
+
+
+  "Options.EnsureTrailingNewline": "Lägg till CRLF i filer som inte slutar med en radbrytning",
+  "Options.RemoveInnerBoms": "Ta bort byte order mark (BOM) från filerna efter den första",
+
+
+
+  "Folder.Title": "Lägg till mapp",
+  "Folder.Path": "Mapp",
+  "Folder.Filter": "Filnamnsfilter",
+  "Folder.FilterHint": "Separera flera mönster med semikolon, till exempel *.log; *.txt",
+  "Folder.Recursive": "Inkludera undermappar",
+  "Folder.IncludeHidden": "Inkludera dolda filer och systemfiler",
+  "Folder.Found": "{0} filer hittades",
+
+  "Output.Label": "Spara den sammanslagna filen i",
+  "Output.Placeholder": "Välj var resultatet ska sparas",
+  "Output.OnConflict": "Om filen redan finns",
+  "Output.Conflict.Ask": "Fråga mig",
+  "Output.Conflict.Overwrite": "Skriv över",
+  "Output.Conflict.AutoRename": "Spara med ett nytt namn",
+  "Output.ConfirmOverwrite": "{0} finns redan. Vill du ersätta den?",
+
+  "Status.Ready": "Klar",
+  "Status.Merging": "Slår ihop {0} av {1}: {2}",
+  "Status.Done": "Färdigt",
+  "Status.Cancelled": "Avbrutet",
+  "Status.Failed": "Sammanslagningen misslyckades",
+
+  "Result.Title": "Sammanslagningen är klar",
+  "Result.Summary": "{0} filer slogs ihop till {1} på {2}",
+  "Result.Warnings": "Varningar",
+
+  "Error.NoInput": "Lägg först till minst en fil.",
+  "Error.NoOutput": "Välj var den sammanslagna filen ska sparas.",
+  "Error.OutputIsInput": "Utdatafilen är också en av indatafilerna. Välj ett annat namn.",
+
+  "Settings.Language": "Språk",
+  "Settings.Theme": "Tema",
+  "Settings.Theme.System": "Följ systemet",
+  "Settings.Theme.Light": "Ljust",
+  "Settings.Theme.Dark": "Mörkt",
+  "Settings.About": "Om",
+
+  "Common.Yes": "Ja",
+  "Common.No": "Nej",
+  "Common.Cancel": "Avbryt",
+  "Common.Ok": "OK",
+  "Common.Files": "Filer"
+}

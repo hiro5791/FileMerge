@@ -20,6 +20,8 @@
   "Action.OpenFolder": "打开所在文件夹",
   "Action.Close": "关闭",
   "Action.Add": "添加",
+  "Action.Donate": "捐赠",
+  "Action.DonateHint": "在浏览器中打开开发者的 Ko-fi 页面。捐赠完全自愿，所有功能始终免费。",
 
   "List.DropHint": "将文件拖放到此处",
   "List.DropHintSub": "也可使用“添加文件”或“添加文件夹”。拖动行可调整合并顺序。",

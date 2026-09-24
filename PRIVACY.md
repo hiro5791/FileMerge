@@ -8,7 +8,8 @@ TekuTeku File Merge (FileMerge) does not collect, store, transmit or share any p
 information or usage data.
 
 - **No network access.** The app never connects to the internet. It sends nothing anywhere and
-  receives nothing.
+  receives nothing. The optional Donate button only opens <https://ko-fi.com/hiro5791> in
+  your web browser; the app itself sends nothing.
 - **No telemetry, analytics, advertising or accounts.**
 - **Your files stay on your computer.** The app reads only the files you add to its list and
   writes only the output file you choose.
@@ -30,7 +31,7 @@ Questions: open an issue at <https://github.com/hiro5791/FileMerge/issues>.
 
 てくてくファイル結合（FileMerge）は、個人情報や利用状況のデータを一切収集・保存・送信・共有しません。
 
-- **通信を行いません。** アプリはインターネットに接続せず、何も送信・受信しません。
+- **通信を行いません。** アプリはインターネットに接続せず、何も送信・受信しません。任意の「寄付」ボタンは、Webブラウザーで <https://ko-fi.com/hiro5791> を開くだけで、アプリ自体は何も送信しません。
 - **テレメトリー、アクセス解析、広告、アカウント登録はありません。**
 - **ファイルはお使いのパソコンの中だけで扱います。** 読み込むのは一覧に追加したファイルだけで、書き込むのは保存先に指定したファイルだけです。
 - **設定はお使いのパソコンの中にだけ保存します。** 言語・テーマ・オプションの選択は `%LOCALAPPDATA%\FileMerge\FileMerge.settings.json`（ポータブルモードでは実行ファイルと同じ場所）に保存されます。個人情報は含まず、どこにも送信しません。このファイルを削除すると設定も消えます。

@@ -20,6 +20,8 @@
   "Action.OpenFolder": "Zielordner öffnen",
   "Action.Close": "Schließen",
   "Action.Add": "Hinzufügen",
+  "Action.Donate": "Spenden",
+  "Action.DonateHint": "Öffnet die Ko-fi-Seite des Entwicklers im Browser. Spenden sind freiwillig – alle Funktionen bleiben kostenlos.",
 
   "List.DropHint": "Dateien hier ablegen",
   "List.DropHintSub": "oder Dateien bzw. Ordner hinzufügen. Zeilen ziehen, um die Reihenfolge festzulegen.",

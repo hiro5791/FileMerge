@@ -20,6 +20,8 @@
   "Action.OpenFolder": "Buka folder berkas",
   "Action.Close": "Tutup",
   "Action.Add": "Tambah",
+  "Action.Donate": "Donasi",
+  "Action.DonateHint": "Membuka halaman Ko-fi pengembang di browser. Donasi bersifat sukarela; semua fitur tetap gratis.",
 
   "List.DropHint": "Letakkan berkas di sini",
   "List.DropHintSub": "atau gunakan Tambah berkas / Tambah folder. Seret baris untuk menentukan urutan penggabungan.",

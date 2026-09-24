@@ -50,6 +50,17 @@
         <!-- Header. The name and version live in the title bar, so this is only the pickers. -->
         <Grid Grid.Row="0" Margin="0,0,0,8">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <!-- Opens the Ko-fi page in the browser. Purely optional; nothing is unlocked. -->
+                <Button Style="{StaticResource SubtleButton}"
+                        Command="{Binding OpenDonatePageCommand}"
+                        ToolTip="{loc:T Action.DonateHint}"
+                        Margin="0,0,18,0">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="&#x2665;" Foreground="#E0245E" Margin="0,0,6,0" VerticalAlignment="Center" />
+                        <TextBlock Text="{loc:T Action.Donate}" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button>
+
                 <TextBlock Text="{loc:T Settings.Theme}"
                            Style="{StaticResource CaptionText}"
                            VerticalAlignment="Center"

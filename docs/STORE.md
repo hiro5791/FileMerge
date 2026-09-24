@@ -76,7 +76,7 @@ refuses the install. Remove the test certificate from the Trusted Root store whe
 - **Privacy policy** — required whenever a submission declares any capability. FileMerge only
   declares `runFullTrust` and sends nothing anywhere, but a URL is still required. A page
   stating that the app collects and transmits no data is enough; GitHub Pages works.
-- **Store listing** — needed per language you list. The app itself ships 20 languages; you can
+- **Store listing** — needed per language you list. The app itself ships 21 languages; you can
   start with one listing and add more later.
 - **Screenshots** — at least one, 1366x768 or larger. There are usable ones in
   [`docs/images`](images).

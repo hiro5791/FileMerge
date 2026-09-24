@@ -13,6 +13,9 @@ public static class AppInfo
 
     public static string DisplayVersion => Version.Length == 0 ? string.Empty : "v" + Version;
 
+    /// <summary>Where the donate button points. Donations are optional and unlock nothing.</summary>
+    public const string DonateUrl = "https://ko-fi.com/hiro5791";
+
     private static string ReadVersion()
     {
         var assembly = Assembly.GetExecutingAssembly();

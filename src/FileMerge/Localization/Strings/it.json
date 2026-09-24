@@ -20,6 +20,8 @@
   "Action.OpenFolder": "Apri la cartella del file",
   "Action.Close": "Chiudi",
   "Action.Add": "Aggiungi",
+  "Action.Donate": "Dona",
+  "Action.DonateHint": "Apre la pagina Ko-fi dello sviluppatore nel browser. Le donazioni sono facoltative: tutte le funzioni restano gratuite.",
 
   "List.DropHint": "Trascina qui i file",
   "List.DropHintSub": "oppure usa Aggiungi file / Aggiungi cartella. Trascina le righe per stabilire l'ordine di unione.",

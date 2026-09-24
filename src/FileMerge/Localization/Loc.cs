@@ -18,7 +18,7 @@ public sealed class Loc : INotifyPropertyChanged
 {
     public const string FallbackLanguage = "en";
 
-    /// <summary>The twenty languages the app ships with, in the order shown in the picker.</summary>
+    /// <summary>The twenty-one languages the app ships with, in the order shown in the picker.</summary>
     public static readonly IReadOnlyList<LanguageInfo> Languages = new[]
     {
         new LanguageInfo("en", "English", "English", false),
@@ -35,6 +35,7 @@ public sealed class Loc : INotifyPropertyChanged
         new LanguageInfo("uk", "Українська", "Ukrainian", false),
         new LanguageInfo("pl", "Polski", "Polish", false),
         new LanguageInfo("nl", "Nederlands", "Dutch", false),
+        new LanguageInfo("sv", "Svenska", "Swedish", false),
         new LanguageInfo("tr", "Türkçe", "Turkish", false),
         new LanguageInfo("ar", "العربية", "Arabic", true),
         new LanguageInfo("hi", "हिन्दी", "Hindi", false),

@@ -20,6 +20,8 @@
   "Action.OpenFolder": "Mở thư mục chứa tệp",
   "Action.Close": "Đóng",
   "Action.Add": "Thêm",
+  "Action.Donate": "Ủng hộ",
+  "Action.DonateHint": "Mở trang Ko-fi của nhà phát triển trong trình duyệt. Ủng hộ hoàn toàn tự nguyện; mọi tính năng vẫn miễn phí.",
 
   "List.DropHint": "Thả tệp vào đây",
   "List.DropHintSub": "hoặc dùng Thêm tệp / Thêm thư mục. Kéo các hàng để đặt thứ tự gộp.",

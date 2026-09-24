@@ -20,6 +20,8 @@
   "Action.OpenFolder": "Abrir a pasta do arquivo",
   "Action.Close": "Fechar",
   "Action.Add": "Adicionar",
+  "Action.Donate": "Doar",
+  "Action.DonateHint": "Abre a página do Ko-fi do desenvolvedor no navegador. Doações são opcionais: todos os recursos continuam gratuitos.",
 
   "List.DropHint": "Solte os arquivos aqui",
   "List.DropHintSub": "ou use Adicionar arquivos / Adicionar pasta. Arraste as linhas para definir a ordem da combinação.",

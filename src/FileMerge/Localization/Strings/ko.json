@@ -20,6 +20,8 @@
   "Action.OpenFolder": "저장 폴더 열기",
   "Action.Close": "닫기",
   "Action.Add": "추가",
+  "Action.Donate": "후원하기",
+  "Action.DonateHint": "브라우저에서 개발자의 Ko-fi 페이지를 엽니다. 후원은 선택 사항이며 모든 기능은 계속 무료입니다.",
 
   "List.DropHint": "여기에 파일을 놓으세요",
   "List.DropHintSub": "또는 파일 추가 / 폴더 추가를 사용하세요. 행을 끌어서 병합 순서를 바꿀 수 있습니다.",

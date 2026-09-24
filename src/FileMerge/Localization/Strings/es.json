@@ -20,6 +20,8 @@
   "Action.OpenFolder": "Abrir la carpeta contenedora",
   "Action.Close": "Cerrar",
   "Action.Add": "Agregar",
+  "Action.Donate": "Donar",
+  "Action.DonateHint": "Abre la página de Ko-fi del desarrollador en el navegador. Las donaciones son opcionales: todas las funciones siguen siendo gratuitas.",
 
   "List.DropHint": "Suelta los archivos aquí",
   "List.DropHintSub": "o usa Agregar archivos / Agregar carpeta. Arrastra las filas para fijar el orden de combinación.",
