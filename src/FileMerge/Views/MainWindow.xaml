@@ -28,7 +28,6 @@
         <conv:StringToVisibilityConverter x:Key="StringToVis" />
         <conv:FileSizeConverter x:Key="SizeFormat" />
         <conv:DateTimeConverter x:Key="DateFormat" />
-        <conv:FolderDisplayConverter x:Key="FolderFormat" />
 
         <!-- DisplayMemberPath does not reach the closed combo box through this custom
              template, so every list binds an explicit item template instead. -->
@@ -204,24 +203,25 @@
                                       Margin="2">
                                 <ListView.View>
                                     <GridView AllowsColumnReorder="False">
-                                        <GridViewColumn Header="{loc:T List.Column.Name}" Width="230">
+                                        <GridViewColumn Header="{loc:T List.Column.Name}" Width="345">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <StackPanel Orientation="Horizontal" Margin="4,0,0,0" ToolTip="{Binding FullPath}">
-                                                        <TextBlock Text="{Binding FileName}"
+                                                    <!-- The full path, with folders dropped from the middle when the
+                                                         column is too narrow, so the drive and the file name stay. -->
+                                                    <Grid Margin="4,0,0,0" ToolTip="{Binding FullPath}">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Grid.Column="0"
+                                                                   conv:PathEllipsis.Path="{Binding FullPath}"
                                                                    TextTrimming="CharacterEllipsis" />
-                                                        <!-- Only appears when another file shares this name, and then
-                                                             carries just enough of the folder path to tell them apart. -->
-                                                        <TextBlock Text="{Binding DuplicateHint}"
-                                                                   Foreground="{DynamicResource TextSecondaryBrush}"
-                                                                   TextTrimming="CharacterEllipsis"
-                                                                   Margin="8,0,0,0"
-                                                                   Visibility="{Binding DuplicateHint, Converter={StaticResource StringToVis}}" />
-                                                        <TextBlock Text="{Binding Error}"
+                                                        <TextBlock Grid.Column="1"
+                                                                   Text="{Binding Error}"
                                                                    Foreground="{DynamicResource DangerBrush}"
                                                                    Margin="8,0,0,0"
                                                                    Visibility="{Binding Error, Converter={StaticResource StringToVis}}" />
-                                                    </StackPanel>
+                                                    </Grid>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
@@ -248,17 +248,6 @@
                                                 <DataTemplate>
                                                     <TextBlock Text="{Binding EncodingLabel}"
                                                                Foreground="{DynamicResource TextSecondaryBrush}"
-                                                               Margin="4,0,0,0" />
-                                                </DataTemplate>
-                                            </GridViewColumn.CellTemplate>
-                                        </GridViewColumn>
-                                        <GridViewColumn Header="{loc:T List.Column.Folder}" Width="115">
-                                            <GridViewColumn.CellTemplate>
-                                                <DataTemplate>
-                                                    <TextBlock Text="{Binding DirectoryName, Converter={StaticResource FolderFormat}}"
-                                                               Foreground="{DynamicResource TextSecondaryBrush}"
-                                                               TextTrimming="CharacterEllipsis"
-                                                               ToolTip="{Binding DirectoryName}"
                                                                Margin="4,0,0,0" />
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>

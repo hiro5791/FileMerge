@@ -577,7 +577,6 @@ public partial class MainViewModel : ObservableObject
     {
         OnPropertyChanged(nameof(HasFiles));
         UpdateSummary();
-        DuplicateNameResolver.Apply(Files);
         _ = ProbeFilesAsync();
     }
 
