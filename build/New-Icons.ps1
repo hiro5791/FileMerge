@@ -1,16 +1,25 @@
-﻿<#
+<#
 .SYNOPSIS
-    Generates the application icon and the Microsoft Store tile assets.
+    Generates the application icon and the Microsoft Store tile assets from the artwork.
 
 .DESCRIPTION
-    The artwork is drawn in code rather than checked in as binaries, so the icon can be
-    regenerated at any size and the repository stays free of opaque image blobs.
+    Two source images live in artwork\:
+      icon.png         the full mark, used for every size of 32 px and up
+      icon-small.png   a simplified mark (one footprint, a blank sheet) for 16 and 24 px,
+                       where the full one blurs into noise
 
-    Run it after changing the palette or the mark:
-        pwsh -File build\New-Icons.ps1
+    Both are cleaned before use: pixels that are almost transparent are made fully transparent
+    and pixels that are almost opaque are made fully opaque. The generated source had a faint
+    halo just outside the tile and a tile that was about 1% see-through; neither is visible at
+    a glance, but both show up as a fringe on dark backgrounds.
+
+    Run it after replacing either image:
+        powershell -File build\New-Icons.ps1
 #>
 [CmdletBinding()]
 param(
+    [string] $Artwork,
+    [string] $SmallArtwork,
     [string] $IconPath,
     [string] $StoreImageDir
 )
@@ -20,117 +29,101 @@ $ErrorActionPreference = 'Stop'
 # $PSScriptRoot is not reliably populated inside param defaults, so the repo root is
 # resolved here instead.
 $repoRoot = Split-Path -Parent $MyInvocation.MyCommand.Path | Split-Path -Parent
+if (-not $Artwork)       { $Artwork = Join-Path $repoRoot 'artwork\icon.png' }
+if (-not $SmallArtwork)  { $SmallArtwork = Join-Path $repoRoot 'artwork\icon-small.png' }
 if (-not $IconPath)      { $IconPath = Join-Path $repoRoot 'src\FileMerge\Assets\app.ico' }
 if (-not $StoreImageDir) { $StoreImageDir = Join-Path $repoRoot 'packaging\msix\Images' }
 
 Add-Type -AssemblyName System.Drawing
 
+# Touching 1.5 million pixels one at a time is far too slow in PowerShell, so the clean-up
+# pass is a few lines of C#.
+Add-Type -ReferencedAssemblies System.Drawing -TypeDefinition @'
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.Runtime.InteropServices;
 
-# Green, for walking: てくてく is the sound of someone going along on foot.
-$TileLight = [System.Drawing.Color]::FromArgb(255, 72, 199, 142)
-$TileDark  = [System.Drawing.Color]::FromArgb(255, 22, 150, 110)
-$Ink       = [System.Drawing.Color]::White
+public static class ArtworkCleaner
+{
+    public static void Clean(Bitmap bitmap, int floor, int ceiling)
+    {
+        var rect = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
+        var data = bitmap.LockBits(rect, ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
+        int length = data.Stride * bitmap.Height;
+        var pixels = new byte[length];
+        Marshal.Copy(data.Scan0, pixels, 0, length);
 
-function New-RoundedPath {
-    param([float] $X, [float] $Y, [float] $W, [float] $H, [float] $R)
-
-    $path = New-Object System.Drawing.Drawing2D.GraphicsPath
-    $d = $R * 2
-    $path.AddArc($X, $Y, $d, $d, 180, 90)
-    $path.AddArc($X + $W - $d, $Y, $d, $d, 270, 90)
-    $path.AddArc($X + $W - $d, $Y + $H - $d, $d, $d, 0, 90)
-    $path.AddArc($X, $Y + $H - $d, $d, $d, 90, 90)
-    $path.CloseFigure()
-    return $path
-}
-
-<#
-    One footprint: a sole and, when there is room for them, three toes. Drawn around its own
-    centre and tilted, so a pair of them reads as a step toward the upper right.
-#>
-function Draw-Foot {
-    param($G, $Brush, [float] $Cx, [float] $Cy, [float] $Unit, [float] $Angle, [bool] $Toes)
-
-    $state = $G.Save()
-    $G.TranslateTransform($Cx, $Cy)
-    $G.RotateTransform($Angle)
-
-    $soleW = [float] (0.11 * $Unit)
-    $soleH = [float] (0.16 * $Unit)
-    $G.FillEllipse($Brush, [float] (-$soleW / 2), [float] (-$soleH / 2), $soleW, $soleH)
-
-    if ($Toes) {
-        $r = [float] (0.022 * $Unit)
-        foreach ($toe in @(@(-0.045, -0.125), @(0.0, -0.142), @(0.045, -0.125))) {
-            $tx = [float] ($toe[0] * $Unit - $r)
-            $ty = [float] ($toe[1] * $Unit - $r)
-            $G.FillEllipse($Brush, $tx, $ty, [float] (2 * $r), [float] (2 * $r))
+        for (int i = 0; i < length; i += 4)
+        {
+            byte alpha = pixels[i + 3];
+            if (alpha <= floor)
+            {
+                pixels[i] = 0; pixels[i + 1] = 0; pixels[i + 2] = 0; pixels[i + 3] = 0;
+            }
+            else if (alpha >= ceiling)
+            {
+                pixels[i + 3] = 255;
+            }
         }
-    }
 
-    $G.Restore($state)
+        Marshal.Copy(pixels, 0, data.Scan0, length);
+        bitmap.UnlockBits(data);
+    }
 }
+'@
 
 <#
-    Draws the mark: footprints walking up to a sheet of paper, for てくてく and for the file
-    they arrive at. Small sizes drop detail rather than shrink it into noise: the toes go
-    below 48 px, and below 24 px a single sole stands in for the pair.
+    Loads a source image, cleans its alpha, and returns it premultiplied. Scaling a
+    premultiplied bitmap keeps the transparent surround from bleeding a dark fringe into the
+    tile's edge as it shrinks.
+#>
+function Import-Artwork {
+    param([string] $Path)
+
+    if (-not (Test-Path $Path)) { throw "artwork not found: $Path" }
+
+    $loaded = [System.Drawing.Bitmap]::FromFile($Path)
+    $clean = New-Object System.Drawing.Bitmap($loaded.Width, $loaded.Height, [System.Drawing.Imaging.PixelFormat]::Format32bppArgb)
+    $g = [System.Drawing.Graphics]::FromImage($clean)
+    $g.DrawImage($loaded, 0, 0, $loaded.Width, $loaded.Height)
+    $g.Dispose()
+    $loaded.Dispose()
+
+    [ArtworkCleaner]::Clean($clean, 16, 240)
+
+    $rect = [System.Drawing.Rectangle]::new(0, 0, $clean.Width, $clean.Height)
+    $premultiplied = $clean.Clone($rect, [System.Drawing.Imaging.PixelFormat]::Format32bppPArgb)
+    $clean.Dispose()
+    return $premultiplied
+}
+
+$MainArt = Import-Artwork $Artwork
+$SmallArt = Import-Artwork $SmallArtwork
+
+<#
+    The mark at one size. 24 px and below use the simplified artwork; from 32 px up the full
+    one holds together.
 #>
 function New-IconBitmap {
-    param(
-        [int] $Size,
-        [switch] $Transparent
-    )
+    param([int] $Size)
+
+    $source = if ($Size -le 24) { $SmallArt } else { $MainArt }
 
     $bitmap = New-Object System.Drawing.Bitmap($Size, $Size, [System.Drawing.Imaging.PixelFormat]::Format32bppArgb)
     $g = [System.Drawing.Graphics]::FromImage($bitmap)
-    $g.SmoothingMode = [System.Drawing.Drawing2D.SmoothingMode]::AntiAlias
-    $g.InterpolationMode = [System.Drawing.Drawing2D.InterpolationMode]::HighQualityBicubic
     $g.Clear([System.Drawing.Color]::Transparent)
+    $g.InterpolationMode = [System.Drawing.Drawing2D.InterpolationMode]::HighQualityBicubic
+    $g.PixelOffsetMode = [System.Drawing.Drawing2D.PixelOffsetMode]::HighQuality
+    $g.CompositingQuality = [System.Drawing.Drawing2D.CompositingQuality]::HighQuality
 
-    $s = [float] $Size
+    # Mirroring at the border stops the resampler pulling in black from outside the image.
+    $attributes = New-Object System.Drawing.Imaging.ImageAttributes
+    $attributes.SetWrapMode([System.Drawing.Drawing2D.WrapMode]::TileFlipXY)
 
-    if (-not $Transparent) {
-        $radius = [float] [Math]::Max(2.0, $s * 0.22)
-        $shape = New-RoundedPath -X 0 -Y 0 -W $s -H $s -R $radius
-        $brush = New-Object System.Drawing.Drawing2D.LinearGradientBrush(
-            [System.Drawing.PointF]::new(0, 0),
-            [System.Drawing.PointF]::new($s, $s),
-            $TileLight,
-            $TileDark)
-        $g.FillPath($brush, $shape)
-        $brush.Dispose()
-        $shape.Dispose()
-    }
+    $target = [System.Drawing.Rectangle]::new(0, 0, $Size, $Size)
+    $g.DrawImage($source, $target, 0, 0, $source.Width, $source.Height, [System.Drawing.GraphicsUnit]::Pixel, $attributes)
 
-    $white = New-Object System.Drawing.SolidBrush($Ink)
-
-    if ($Size -lt 24) {
-        # One sole and a larger sheet: the most a 16 px square can say.
-        Draw-Foot -G $g -Brush $white -Cx ([float] (0.30 * $s)) -Cy ([float] (0.64 * $s)) -Unit ([float] (1.5 * $s)) -Angle 20 -Toes $false
-        $sheet = New-RoundedPath -X ([float] (0.50 * $s)) -Y ([float] (0.16 * $s)) -W ([float] (0.36 * $s)) -H ([float] (0.50 * $s)) -R ([float] [Math]::Max(1.0, 0.06 * $s))
-        $g.FillPath($white, $sheet)
-        $sheet.Dispose()
-    }
-    else {
-        $toes = $Size -ge 48
-        Draw-Foot -G $g -Brush $white -Cx ([float] (0.25 * $s)) -Cy ([float] (0.73 * $s)) -Unit $s -Angle 20 -Toes $toes
-        Draw-Foot -G $g -Brush $white -Cx ([float] (0.41 * $s)) -Cy ([float] (0.53 * $s)) -Unit $s -Angle 20 -Toes $toes
-
-        $sheet = New-RoundedPath -X ([float] (0.56 * $s)) -Y ([float] (0.19 * $s)) -W ([float] (0.27 * $s)) -H ([float] (0.36 * $s)) -R ([float] [Math]::Max(1.0, 0.04 * $s))
-        $g.FillPath($white, $sheet)
-        $sheet.Dispose()
-
-        $pen = New-Object System.Drawing.Pen($TileDark, [float] [Math]::Max(1.0, 0.03 * $s))
-        $rows = if ($Size -ge 48) { @(0.29, 0.36, 0.43) } else { @(0.31, 0.41) }
-        foreach ($row in $rows) {
-            $y = [float] ($row * $s)
-            $g.DrawLine($pen, [float] (0.61 * $s), $y, [float] (0.78 * $s), $y)
-        }
-        $pen.Dispose()
-    }
-
-    $white.Dispose()
+    $attributes.Dispose()
     $g.Dispose()
     return $bitmap
 }
@@ -143,10 +136,6 @@ function Save-Png {
     $Bitmap.Save($Path, [System.Drawing.Imaging.ImageFormat]::Png)
 }
 
-<#
-    Writes a multi-resolution .ico. Each frame is stored as PNG, which Windows has
-    accepted inside .ico since Vista and which keeps the file small at 256 px.
-#>
 function ConvertTo-PngBytes {
     param([System.Drawing.Bitmap] $Bitmap)
 
@@ -211,12 +200,14 @@ function ConvertTo-DibBytes {
     return , $bytes
 }
 
+<#
+    Writes a multi-resolution .ico. 256 px is stored as PNG, which keeps the file small;
+    everything smaller is a classic 32-bit DIB. Explorer reads PNG at any size, but not every
+    consumer of .ico does, and the small frames are the ones the title bar and taskbar ask for.
+#>
 function Save-Ico {
     param([int[]] $Sizes, [string] $Path)
 
-    # 256 px is stored as PNG, which keeps the file small; everything smaller is a classic
-    # 32-bit DIB. Explorer reads PNG at any size, but not every consumer of .ico does, and the
-    # small frames are exactly the ones the title bar and taskbar ask for.
     $frames = foreach ($size in $Sizes) {
         $bitmap = New-IconBitmap -Size $size
         $bytes = if ($size -ge 256) { ConvertTo-PngBytes $bitmap } else { ConvertTo-DibBytes $bitmap }
@@ -259,7 +250,7 @@ function Save-Ico {
 }
 
 <#
-    Store tiles are a logo centred on a transparent canvas of the exact required size,
+    Store tiles are the logo centred on a transparent canvas of the exact required size,
     which lets Windows apply its own tile background.
 #>
 function Save-Tile {
@@ -267,13 +258,11 @@ function Save-Tile {
 
     $canvas = New-Object System.Drawing.Bitmap($Width, $Height, [System.Drawing.Imaging.PixelFormat]::Format32bppArgb)
     $g = [System.Drawing.Graphics]::FromImage($canvas)
-    $g.SmoothingMode = [System.Drawing.Drawing2D.SmoothingMode]::AntiAlias
-    $g.InterpolationMode = [System.Drawing.Drawing2D.InterpolationMode]::HighQualityBicubic
     $g.Clear([System.Drawing.Color]::Transparent)
 
     $logoSize = [int] ([Math]::Min($Width, $Height) * $Scale)
     $logo = New-IconBitmap -Size $logoSize
-    $g.DrawImage($logo, [int](($Width - $logoSize) / 2), [int](($Height - $logoSize) / 2), $logoSize, $logoSize)
+    $g.DrawImageUnscaled($logo, [int](($Width - $logoSize) / 2), [int](($Height - $logoSize) / 2))
 
     $logo.Dispose()
     $g.Dispose()
@@ -311,3 +300,6 @@ foreach ($tile in $tiles) {
 }
 
 Write-Output "tiles -> $StoreImageDir ($($tiles.Count) files)"
+
+$MainArt.Dispose()
+$SmallArt.Dispose()

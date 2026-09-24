@@ -88,7 +88,7 @@ dotnet run --project src/FileMerge/FileMerge.csproj
 | `src/FileMerge` | WPF の画面、ビューモデル、テーマ、20言語の文字列 |
 | `tests/FileMerge.Tests` | xUnit テスト。大半は「バイト列が変化しないこと」の検証です |
 
-アイコンとストア用タイルは `./build/New-Icons.ps1` で再生成できます。画像はバイナリとしてコミットせず、コードで描画しています。
+アイコンの元画像は [`artwork/`](artwork) にあります。`icon.png` は 32px 以上用、`icon-small.png` は 16px・24px 用の簡略版です。どちらかを差し替えたら `./build/New-Icons.ps1` を実行すると、.ico とストア用タイルが作り直されます。
 
 ## Microsoft Store
 

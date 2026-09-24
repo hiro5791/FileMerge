@@ -107,8 +107,9 @@ dotnet run --project src/FileMerge/FileMerge.csproj
 | `src/FileMerge` | WPF window, view models, themes, the 20 string tables. |
 | `tests/FileMerge.Tests` | xUnit tests, most of them asserting that bytes survive unchanged. |
 
-Regenerate the icon and the Store tiles with `./build/New-Icons.ps1` — the artwork is drawn in
-code rather than checked in as binaries.
+The icon artwork lives in [`artwork/`](artwork): `icon.png` for 32 px and up, and a simplified
+`icon-small.png` for 16 and 24 px. After replacing either, run `./build/New-Icons.ps1` to
+regenerate the `.ico` and the Store tiles.
 
 ## Microsoft Store
 
