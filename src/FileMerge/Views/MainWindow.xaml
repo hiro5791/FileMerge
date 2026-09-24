@@ -369,10 +369,13 @@
                                 Command="{Binding CancelCommand}"
                                 Visibility="{Binding IsBusy, Converter={StaticResource BoolToVis}}"
                                 Margin="0,0,8,0" />
+                        <!-- The default button: Enter anywhere in the window merges. While a merge
+                             runs it is disabled, so a second Enter cannot start another. -->
                         <Button Style="{StaticResource AccentButton}"
                                 Content="{loc:T Action.Merge}"
                                 Command="{Binding MergeCommand}"
                                 IsEnabled="{Binding IsIdle}"
+                                IsDefault="True"
                                 MinWidth="150" />
                     </StackPanel>
                 </Grid>
