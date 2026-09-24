@@ -65,7 +65,9 @@
                             BorderThickness="{TemplateBinding BorderThickness}"
                             CornerRadius="{StaticResource ControlCorner}"
                             Padding="{TemplateBinding Padding}">
-                        <ContentPresenter HorizontalAlignment="Center"
+                        <!-- Follows HorizontalContentAlignment so a menu-style button can put
+                             its label on the left instead of centring it. -->
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           VerticalAlignment="Center"
                                           RecognizesAccessKey="True" />
                     </Border>

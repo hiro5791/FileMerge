@@ -7,14 +7,18 @@ public sealed record FolderPickResult(string Folder, string Filter, bool Recursi
 /// <summary>
 /// Everything the view model needs from the window layer. Keeps file pickers and message boxes
 /// out of the view model so its logic stays testable.
+/// <para>
+/// The pickers take the folder to open in. Windows would otherwise drop the user somewhere
+/// unrelated, so the app remembers where they were last working and starts there.
+/// </para>
 /// </summary>
 public interface IDialogService
 {
-    IReadOnlyList<string> PickFiles();
+    IReadOnlyList<string> PickFiles(string? initialDirectory);
 
-    FolderPickResult? PickFolder(string initialFilter, bool initialRecursive, bool initialIncludeHidden);
+    FolderPickResult? PickFolder(string initialFolder, string initialFilter, bool initialRecursive, bool initialIncludeHidden);
 
-    string? PickOutputFile(string suggestedFileName, bool binary);
+    string? PickOutputFile(string? initialDirectory, string suggestedFileName);
 
     bool ConfirmOverwrite(string path);
 

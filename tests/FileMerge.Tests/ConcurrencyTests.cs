@@ -87,14 +87,12 @@ public sealed class ConcurrencyTests : IDisposable
     }
 
     /// <summary>
-    /// The interesting case: two merges aimed at one path. Both build into the same
-    /// "<c>.fmtmp</c>" scratch file, which is opened with <see cref="FileShare.None"/>, so one
-    /// of them is locked out and reports a failure instead of interleaving its bytes with the
-    /// other. Whichever wins, the file left behind is a complete result of one merge and never
-    /// a mixture of the two.
+    /// The interesting case: two merges aimed at one path. Each builds into its own scratch
+    /// file and renames it into place at the end, so both get through and the file left behind
+    /// is whichever finished last — a complete result of one merge, never a mixture of the two.
     /// </summary>
     [Fact]
-    public async Task Two_merges_racing_for_one_output_never_produce_a_mixed_file()
+    public async Task Two_merges_racing_for_one_output_both_finish_and_neither_output_is_mixed()
     {
         byte[] a = Encoding.UTF8.GetBytes(new string('a', 400_000));
         byte[] b = Encoding.UTF8.GetBytes(new string('b', 400_000));
@@ -125,8 +123,10 @@ public sealed class ConcurrencyTests : IDisposable
 
             var results = await Task.WhenAll(first, second);
 
-            // At least one must have got through; a failure is an honest report, not a crash.
-            Assert.Contains(results, r => r.Succeeded);
+            // Neither run may be starved by the other.
+            Assert.All(results, r => Assert.True(
+                r.Succeeded,
+                $"attempt {attempt}: a run failed with [{string.Join("; ", r.Warnings)}]"));
 
             byte[] actual = File.ReadAllBytes(output);
             bool isOneOrTheOther = actual.SequenceEqual(fromA) || actual.SequenceEqual(fromB);
@@ -134,17 +134,20 @@ public sealed class ConcurrencyTests : IDisposable
             Assert.True(
                 isOneOrTheOther,
                 $"attempt {attempt}: output was neither merge in full ({actual.Length} bytes), so the two runs interleaved");
+
+            // Nothing may be left lying beside the output.
+            Assert.Empty(Directory.GetFiles(_dir, "*.fmtmp"));
         }
     }
 
     [Fact]
-    public async Task A_locked_output_is_reported_rather_than_throwing()
+    public async Task A_locked_output_file_is_reported_rather_than_throwing()
     {
         string source = Write("in.txt", Encoding.UTF8.GetBytes("payload"));
         string output = Path.Combine(_dir, "locked.txt");
 
-        // Hold the scratch file open the way a competing instance would.
-        using var hold = new FileStream(output + ".fmtmp", FileMode.Create, FileAccess.Write, FileShare.None);
+        // Something else is holding the destination, so the final rename cannot happen.
+        using var hold = new FileStream(output, FileMode.Create, FileAccess.Write, FileShare.None);
 
         var result = await new MergeEngine().MergeAsync(
             new[] { source },
@@ -154,6 +157,27 @@ public sealed class ConcurrencyTests : IDisposable
 
         Assert.False(result.Succeeded);
         Assert.NotEmpty(result.Warnings);
-        Assert.False(File.Exists(output));
+
+        // The scratch file must not survive a failure.
+        Assert.Empty(Directory.GetFiles(_dir, "*.fmtmp"));
+    }
+
+    /// <summary>A scratch file orphaned by an earlier crash must not block later merges.</summary>
+    [Fact]
+    public async Task A_leftover_scratch_file_does_not_block_a_new_merge()
+    {
+        string source = Write("in.txt", Encoding.UTF8.GetBytes("payload"));
+        string output = Path.Combine(_dir, "out.txt");
+
+        File.WriteAllText(output + ".fmtmp", "rubbish from a run that died");
+
+        var result = await new MergeEngine().MergeAsync(
+            new[] { source },
+            new MergeOptions { OutputPath = output },
+            null,
+            CancellationToken.None);
+
+        Assert.True(result.Succeeded);
+        Assert.Equal("payload", File.ReadAllText(output));
     }
 }

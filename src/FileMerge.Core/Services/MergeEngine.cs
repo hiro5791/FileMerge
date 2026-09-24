@@ -51,8 +51,11 @@ public sealed class MergeEngine
         }
 
         // Build into a sibling temp file so a cancelled or failed run never leaves a
-        // half-written file where the user expects a complete one.
-        string tempPath = outputFull + ".fmtmp";
+        // half-written file where the user expects a complete one. The name carries a fresh
+        // id: two runs aimed at one output would otherwise fight over the same scratch file
+        // and both lose, and a leftover from an earlier crash would block every later run.
+        // It stays beside the output so the rename at the end is a same-volume move.
+        string tempPath = $"{outputFull}.{Guid.NewGuid():N}.fmtmp";
         var stopwatch = Stopwatch.StartNew();
 
         try
@@ -65,7 +68,7 @@ public sealed class MergeEngine
 
             stopwatch.Stop();
 
-            File.Move(tempPath, outputFull, overwrite: true);
+            MoveIntoPlace(tempPath, outputFull);
 
             return new MergeResult(true, outputFull, inputs.Count, written, stopwatch.Elapsed, warnings);
         }
@@ -385,6 +388,32 @@ public sealed class MergeEngine
         }
 
         return total;
+    }
+
+    /// <summary>
+    /// Renames the finished scratch file over the output. Windows refuses this for a moment
+    /// when something else holds the destination — a virus scanner that has just opened the
+    /// file, Explorer generating a preview, or a second merge replacing the same path — so a
+    /// short retry is the difference between working and failing for no lasting reason. A
+    /// destination that is genuinely locked still ends up reported, just a quarter of a second
+    /// later.
+    /// </summary>
+    private static void MoveIntoPlace(string tempPath, string outputPath)
+    {
+        const int attempts = 10;
+
+        for (int attempt = 1; ; attempt++)
+        {
+            try
+            {
+                File.Move(tempPath, outputPath, overwrite: true);
+                return;
+            }
+            catch (Exception ex) when (attempt < attempts && ex is IOException or UnauthorizedAccessException)
+            {
+                Thread.Sleep(25);
+            }
+        }
     }
 
     private static void TryDelete(string path)

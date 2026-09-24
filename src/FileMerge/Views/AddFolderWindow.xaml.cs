@@ -9,26 +9,35 @@ namespace FileMerge.Views;
 
 public partial class AddFolderWindow : Window
 {
-    private readonly DispatcherTimer _previewTimer;
+    /// <summary>
+    /// Counting matches means walking the tree, so it runs after typing settles. Built in the
+    /// field initializer because filling the boxes below raises TextChanged straight away, and
+    /// the handler reaches for this timer before the constructor body would have created it.
+    /// </summary>
+    private readonly DispatcherTimer _previewTimer = new() { Interval = TimeSpan.FromMilliseconds(350) };
+
     private CancellationTokenSource? _previewCts;
 
-    public AddFolderWindow(string filter, bool recursive, bool includeHidden)
+    public AddFolderWindow(string folder, string filter, bool recursive, bool includeHidden)
     {
-        InitializeComponent();
-
-        FilterBox.Text = filter;
-        RecursiveBox.IsChecked = recursive;
-        HiddenBox.IsChecked = includeHidden;
-
-        // Counting matches means walking the tree, so it runs after typing settles.
-        _previewTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(350) };
         _previewTimer.Tick += (_, _) =>
         {
             _previewTimer.Stop();
             _ = RefreshPreviewAsync();
         };
 
-        Loaded += (_, _) => FolderBox.Focus();
+        InitializeComponent();
+
+        FolderBox.Text = folder;
+        FilterBox.Text = filter;
+        RecursiveBox.IsChecked = recursive;
+        HiddenBox.IsChecked = includeHidden;
+
+        Loaded += (_, _) =>
+        {
+            FolderBox.Focus();
+            FolderBox.CaretIndex = FolderBox.Text.Length;
+        };
     }
 
     public FolderPickResult? Result { get; private set; }

@@ -95,7 +95,7 @@ Requires the [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0).
 git clone https://github.com/hiro5791/FileMerge.git
 cd FileMerge
 
-dotnet test tests/FileMerge.Tests/FileMerge.Tests.csproj   # 42 tests
+dotnet test tests/FileMerge.Tests/FileMerge.Tests.csproj   # 43 tests
 dotnet run --project src/FileMerge/FileMerge.csproj
 
 ./build/Build-Portable.ps1                                  # artifacts/*.exe

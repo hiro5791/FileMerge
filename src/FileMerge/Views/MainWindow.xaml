@@ -50,7 +50,13 @@
         <!-- ============================================== Header -->
         <Grid Grid.Row="0" Margin="0,0,0,14">
             <StackPanel VerticalAlignment="Center">
-                <TextBlock Text="{loc:T App.Title}" Style="{StaticResource TitleText}" />
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{loc:T App.Title}" Style="{StaticResource TitleText}" />
+                    <TextBlock Text="{Binding AppVersion}"
+                               Style="{StaticResource CaptionText}"
+                               VerticalAlignment="Bottom"
+                               Margin="8,0,0,3" />
+                </StackPanel>
                 <TextBlock Text="{loc:T App.Tagline}" Style="{StaticResource CaptionText}" Margin="0,2,0,0" />
             </StackPanel>
 
@@ -145,35 +151,42 @@
                                 BorderThickness="1"
                                 CornerRadius="6"
                                 Margin="0,4,10,10"
-                                Padding="4">
+                                Padding="3">
                             <Border.Effect>
                                 <DropShadowEffect BlurRadius="14" ShadowDepth="2" Opacity="0.22" Direction="270" />
                             </Border.Effect>
-                            <StackPanel MinWidth="190">
-                                <Button Style="{StaticResource SubtleButton}"
-                                        HorizontalContentAlignment="Left"
+                            <!-- Sized to the longest label rather than to a fixed width, so the
+                                 menu is not mostly empty space. -->
+                            <StackPanel>
+                                <StackPanel.Resources>
+                                    <Style x:Key="MenuItemButton" TargetType="Button" BasedOn="{StaticResource SubtleButton}">
+                                        <Setter Property="HorizontalContentAlignment" Value="Left" />
+                                        <Setter Property="HorizontalAlignment" Value="Stretch" />
+                                        <Setter Property="Padding" Value="10,7" />
+                                        <Setter Property="MinWidth" Value="0" />
+                                    </Style>
+                                </StackPanel.Resources>
+
+                                <Button Style="{StaticResource MenuItemButton}"
                                         Content="{loc:T Action.SortByName}"
                                         Command="{Binding SortCommand}" CommandParameter="Name"
                                         Click="OnSortItemClick" />
-                                <Button Style="{StaticResource SubtleButton}"
-                                        HorizontalContentAlignment="Left"
+                                <Button Style="{StaticResource MenuItemButton}"
                                         Content="{loc:T Action.SortByDate}"
                                         Command="{Binding SortCommand}" CommandParameter="Date"
                                         Click="OnSortItemClick" />
-                                <Button Style="{StaticResource SubtleButton}"
-                                        HorizontalContentAlignment="Left"
+                                <Button Style="{StaticResource MenuItemButton}"
                                         Content="{loc:T Action.SortBySize}"
                                         Command="{Binding SortCommand}" CommandParameter="Size"
                                         Click="OnSortItemClick" />
-                                <Button Style="{StaticResource SubtleButton}"
-                                        HorizontalContentAlignment="Left"
+                                <Button Style="{StaticResource MenuItemButton}"
                                         Content="{loc:T Action.SortByPath}"
                                         Command="{Binding SortCommand}" CommandParameter="Path"
                                         Click="OnSortItemClick" />
-                                <Separator />
-                                <Button Style="{StaticResource SubtleButton}"
-                                        HorizontalContentAlignment="Left"
+                                <Separator Margin="6,4" />
+                                <Button Style="{StaticResource MenuItemButton}"
                                         Content="{loc:T Action.Reverse}"
+                                        ToolTip="{loc:T Action.ReverseHint}"
                                         Command="{Binding SortCommand}" CommandParameter="Reverse"
                                         Click="OnSortItemClick" />
                             </StackPanel>

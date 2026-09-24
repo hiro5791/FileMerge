@@ -199,6 +199,9 @@ public partial class MainViewModel : ObservableObject
 
     public bool HasFiles => Files.Count > 0;
 
+    /// <summary>Shown next to the title, so the running build is never a mystery.</summary>
+    public static string AppVersion => AppInfo.DisplayVersion;
+
     /// <summary>One line telling the user what a merge would do right now.</summary>
     public string PlanText => BuildOptions(string.Empty).RequiresTextPipeline
         ? Loc.Current["Plan.Transform"]
@@ -207,12 +210,17 @@ public partial class MainViewModel : ObservableObject
     // ---------------------------------------------------------------- Commands
 
     [RelayCommand]
-    private void AddFiles() => AddPaths(_dialogs.PickFiles());
+    private void AddFiles() => AddPaths(_dialogs.PickFiles(CurrentFolder));
 
     [RelayCommand]
     private void AddFolder()
     {
-        var pick = _dialogs.PickFolder(_settings.FolderFilter, _settings.FolderRecursive, _settings.FolderIncludeHidden);
+        var pick = _dialogs.PickFolder(
+            CurrentFolder ?? string.Empty,
+            _settings.FolderFilter,
+            _settings.FolderRecursive,
+            _settings.FolderIncludeHidden);
+
         if (pick is null)
         {
             return;
@@ -221,6 +229,7 @@ public partial class MainViewModel : ObservableObject
         _settings.FolderFilter = pick.Filter;
         _settings.FolderRecursive = pick.Recursive;
         _settings.FolderIncludeHidden = pick.IncludeHidden;
+        _settings.LastFolder = pick.Folder;
 
         AddPaths(FolderScanner.Scan(pick.Folder, new FolderScanOptions
         {
@@ -228,6 +237,24 @@ public partial class MainViewModel : ObservableObject
             Recursive = pick.Recursive,
             IncludeHidden = pick.IncludeHidden,
         }));
+    }
+
+    /// <summary>
+    /// Where a picker should open: the folder of the files already in the list, else wherever
+    /// the user was last working, else nowhere in particular and Windows decides.
+    /// </summary>
+    private string? CurrentFolder
+    {
+        get
+        {
+            string? fromList = Files.LastOrDefault()?.DirectoryName;
+            if (!string.IsNullOrEmpty(fromList) && Directory.Exists(fromList))
+            {
+                return fromList;
+            }
+
+            return string.IsNullOrEmpty(_settings.LastFolder) ? null : _settings.LastFolder;
+        }
     }
 
     /// <summary>Adds dropped or picked paths, expanding any folders and skipping duplicates.</summary>
@@ -275,6 +302,7 @@ public partial class MainViewModel : ObservableObject
 
         if (added.Count > 0)
         {
+            _settings.LastFolder = added[^1].DirectoryName;
             SuggestOutputPath();
         }
     }
@@ -393,7 +421,12 @@ public partial class MainViewModel : ObservableObject
             ? SuggestFileName()
             : Path.GetFileName(OutputPath);
 
-        string? picked = _dialogs.PickOutputFile(suggested, !ShowTextOptions);
+        // Open where the output already points, if it points anywhere real.
+        string? directory = string.IsNullOrWhiteSpace(OutputPath)
+            ? CurrentFolder
+            : Path.GetDirectoryName(Path.GetFullPath(OutputPath));
+
+        string? picked = _dialogs.PickOutputFile(directory, suggested);
         if (picked is not null)
         {
             OutputPath = picked;

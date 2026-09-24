@@ -31,6 +31,9 @@ public sealed class AppSettings
 
     public ExistingFileAction ExistingFile { get; set; } = ExistingFileAction.Ask;
 
+    /// <summary>Where the file and folder pickers open. Follows wherever the user last worked.</summary>
+    public string LastFolder { get; set; } = string.Empty;
+
     public string FolderFilter { get; set; } = "*.*";
 
     public bool FolderRecursive { get; set; } = true;
