@@ -31,6 +31,11 @@ param(
 
     [string] $PublisherDisplayName = 'FileMerge',
 
+    # Must be one of the names reserved for the app in Partner Center.
+    [string] $DisplayName = 'TekuTeku File Merge',
+
+    [string] $Description = 'Combine multiple files into one, byte for byte.',
+
     [ValidateSet('x64', 'arm64', 'x86')]
     [string] $Architecture = 'x64',
 
@@ -118,7 +123,9 @@ Copy-Item (Join-Path $packagingDir 'Images') (Join-Path $layout 'Images') -Recur
 $manifest = Get-Content (Join-Path $packagingDir 'AppxManifest.xml') -Raw -Encoding UTF8
 $manifest = $manifest.Replace('__IDENTITY_NAME__', $IdentityName)
 $manifest = $manifest.Replace('__PUBLISHER__', $Publisher)
-$manifest = $manifest.Replace('__PUBLISHER_DISPLAY_NAME__', $PublisherDisplayName)
+$manifest = $manifest.Replace('__PUBLISHER_DISPLAY_NAME__', [System.Security.SecurityElement]::Escape($PublisherDisplayName))
+$manifest = $manifest.Replace('__DISPLAY_NAME__', [System.Security.SecurityElement]::Escape($DisplayName))
+$manifest = $manifest.Replace('__DESCRIPTION__', [System.Security.SecurityElement]::Escape($Description))
 $manifest = $manifest.Replace('__VERSION__', $packageVersion)
 $manifest = $manifest.Replace('__ARCH__', $Architecture)
 

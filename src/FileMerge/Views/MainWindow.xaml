@@ -238,7 +238,7 @@
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
-                                        <GridViewColumn Header="{loc:T List.Column.Kind}" Width="95">
+                                        <GridViewColumn Header="{loc:T List.Column.Kind}" Width="130">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <TextBlock Text="{Binding EncodingLabel}"

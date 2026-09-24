@@ -3,8 +3,9 @@
   Template for the Microsoft Store package.
 
   Identity/Name, Identity/Publisher and Properties/PublisherDisplayName must match the values
-  Partner Center shows under "Product identity" for the reserved app name. Build-Msix.ps1
-  substitutes them, so this file is never edited by hand for a release.
+  Partner Center shows under "Product identity", and DisplayName must be one of the app names
+  reserved there. Build-Msix.ps1 substitutes all of them, so this file is never edited by hand
+  for a release.
 -->
 <Package
   xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
@@ -19,10 +20,10 @@
     ProcessorArchitecture="__ARCH__" />
 
   <Properties>
-    <DisplayName>FileMerge</DisplayName>
+    <DisplayName>__DISPLAY_NAME__</DisplayName>
     <PublisherDisplayName>__PUBLISHER_DISPLAY_NAME__</PublisherDisplayName>
     <Logo>Images\StoreLogo.png</Logo>
-    <Description>Combine multiple files into one.</Description>
+    <Description>__DESCRIPTION__</Description>
   </Properties>
 
   <Dependencies>
@@ -56,8 +57,8 @@
   <Applications>
     <Application Id="FileMerge" Executable="FileMerge.exe" EntryPoint="Windows.FullTrustApplication">
       <uap:VisualElements
-        DisplayName="FileMerge"
-        Description="Combine multiple files into one."
+        DisplayName="__DISPLAY_NAME__"
+        Description="__DESCRIPTION__"
         BackgroundColor="transparent"
         Square150x150Logo="Images\Square150x150Logo.png"
         Square44x44Logo="Images\Square44x44Logo.png">
