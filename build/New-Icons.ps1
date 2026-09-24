@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
     Generates the application icon and the Microsoft Store tile assets.
 
@@ -25,9 +25,11 @@ if (-not $StoreImageDir) { $StoreImageDir = Join-Path $repoRoot 'packaging\msix\
 
 Add-Type -AssemblyName System.Drawing
 
-$Accent      = [System.Drawing.Color]::FromArgb(255, 15, 108, 189)
-$AccentLight = [System.Drawing.Color]::FromArgb(255, 71, 158, 245)
-$Ink         = [System.Drawing.Color]::White
+
+# Green, for walking: てくてく is the sound of someone going along on foot.
+$TileLight = [System.Drawing.Color]::FromArgb(255, 72, 199, 142)
+$TileDark  = [System.Drawing.Color]::FromArgb(255, 22, 150, 110)
+$Ink       = [System.Drawing.Color]::White
 
 function New-RoundedPath {
     param([float] $X, [float] $Y, [float] $W, [float] $H, [float] $R)
@@ -43,8 +45,36 @@ function New-RoundedPath {
 }
 
 <#
-    Draws the mark: two strands entering from the left that converge in the middle and
-    leave as one. It stays legible down to 16 px because it is only three strokes.
+    One footprint: a sole and, when there is room for them, three toes. Drawn around its own
+    centre and tilted, so a pair of them reads as a step toward the upper right.
+#>
+function Draw-Foot {
+    param($G, $Brush, [float] $Cx, [float] $Cy, [float] $Unit, [float] $Angle, [bool] $Toes)
+
+    $state = $G.Save()
+    $G.TranslateTransform($Cx, $Cy)
+    $G.RotateTransform($Angle)
+
+    $soleW = [float] (0.11 * $Unit)
+    $soleH = [float] (0.16 * $Unit)
+    $G.FillEllipse($Brush, [float] (-$soleW / 2), [float] (-$soleH / 2), $soleW, $soleH)
+
+    if ($Toes) {
+        $r = [float] (0.022 * $Unit)
+        foreach ($toe in @(@(-0.045, -0.125), @(0.0, -0.142), @(0.045, -0.125))) {
+            $tx = [float] ($toe[0] * $Unit - $r)
+            $ty = [float] ($toe[1] * $Unit - $r)
+            $G.FillEllipse($Brush, $tx, $ty, [float] (2 * $r), [float] (2 * $r))
+        }
+    }
+
+    $G.Restore($state)
+}
+
+<#
+    Draws the mark: footprints walking up to a sheet of paper, for てくてく and for the file
+    they arrive at. Small sizes drop detail rather than shrink it into noise: the toes go
+    below 48 px, and below 24 px a single sole stands in for the pair.
 #>
 function New-IconBitmap {
     param(
@@ -61,53 +91,46 @@ function New-IconBitmap {
     $s = [float] $Size
 
     if (-not $Transparent) {
-        $radius = [Math]::Max(2.0, $s * 0.22)
+        $radius = [float] [Math]::Max(2.0, $s * 0.22)
         $shape = New-RoundedPath -X 0 -Y 0 -W $s -H $s -R $radius
         $brush = New-Object System.Drawing.Drawing2D.LinearGradientBrush(
-            (New-Object System.Drawing.PointF(0, 0)),
-            (New-Object System.Drawing.PointF($s, $s)),
-            $AccentLight,
-            $Accent)
+            [System.Drawing.PointF]::new(0, 0),
+            [System.Drawing.PointF]::new($s, $s),
+            $TileLight,
+            $TileDark)
         $g.FillPath($brush, $shape)
         $brush.Dispose()
         $shape.Dispose()
     }
 
-    $stroke = [Math]::Max(1.0, $s * 0.085)
-    $pen = New-Object System.Drawing.Pen($Ink, $stroke)
-    $pen.StartCap = [System.Drawing.Drawing2D.LineCap]::Round
-    $pen.EndCap = [System.Drawing.Drawing2D.LineCap]::Round
-    $pen.LineJoin = [System.Drawing.Drawing2D.LineJoin]::Round
+    $white = New-Object System.Drawing.SolidBrush($Ink)
 
-    $left   = $s * 0.24
-    $mid    = $s * 0.52
-    $right  = $s * 0.78
-    $top    = $s * 0.28
-    $bottom = $s * 0.72
-    $center = $s * 0.50
+    if ($Size -lt 24) {
+        # One sole and a larger sheet: the most a 16 px square can say.
+        Draw-Foot -G $g -Brush $white -Cx ([float] (0.30 * $s)) -Cy ([float] (0.64 * $s)) -Unit ([float] (1.5 * $s)) -Angle 20 -Toes $false
+        $sheet = New-RoundedPath -X ([float] (0.50 * $s)) -Y ([float] (0.16 * $s)) -W ([float] (0.36 * $s)) -H ([float] (0.50 * $s)) -R ([float] [Math]::Max(1.0, 0.06 * $s))
+        $g.FillPath($white, $sheet)
+        $sheet.Dispose()
+    }
+    else {
+        $toes = $Size -ge 48
+        Draw-Foot -G $g -Brush $white -Cx ([float] (0.25 * $s)) -Cy ([float] (0.73 * $s)) -Unit $s -Angle 20 -Toes $toes
+        Draw-Foot -G $g -Brush $white -Cx ([float] (0.41 * $s)) -Cy ([float] (0.53 * $s)) -Unit $s -Angle 20 -Toes $toes
 
-    # The comma binds tighter than + in PowerShell, so every coordinate is computed first.
-    $joinX = [float] ($center + $s * 0.10)
-    $tailX = [float] ($center + $s * 0.02)
+        $sheet = New-RoundedPath -X ([float] (0.56 * $s)) -Y ([float] (0.19 * $s)) -W ([float] (0.27 * $s)) -H ([float] (0.36 * $s)) -R ([float] [Math]::Max(1.0, 0.04 * $s))
+        $g.FillPath($white, $sheet)
+        $sheet.Dispose()
 
-    $junction = [System.Drawing.PointF]::new($joinX, $center)
+        $pen = New-Object System.Drawing.Pen($TileDark, [float] [Math]::Max(1.0, 0.03 * $s))
+        $rows = if ($Size -ge 48) { @(0.29, 0.36, 0.43) } else { @(0.31, 0.41) }
+        foreach ($row in $rows) {
+            $y = [float] ($row * $s)
+            $g.DrawLine($pen, [float] (0.61 * $s), $y, [float] (0.78 * $s), $y)
+        }
+        $pen.Dispose()
+    }
 
-    # Upper strand, lower strand, then the single merged strand leaving to the right.
-    $g.DrawLines($pen, @(
-        [System.Drawing.PointF]::new($left, $top),
-        [System.Drawing.PointF]::new($mid, $top),
-        $junction
-    ))
-    $g.DrawLines($pen, @(
-        [System.Drawing.PointF]::new($left, $bottom),
-        [System.Drawing.PointF]::new($mid, $bottom),
-        $junction
-    ))
-    $g.DrawLine($pen,
-        [System.Drawing.PointF]::new($tailX, $center),
-        [System.Drawing.PointF]::new($right, $center))
-
-    $pen.Dispose()
+    $white.Dispose()
     $g.Dispose()
     return $bitmap
 }
@@ -124,16 +147,81 @@ function Save-Png {
     Writes a multi-resolution .ico. Each frame is stored as PNG, which Windows has
     accepted inside .ico since Vista and which keeps the file small at 256 px.
 #>
+function ConvertTo-PngBytes {
+    param([System.Drawing.Bitmap] $Bitmap)
+
+    $stream = New-Object System.IO.MemoryStream
+    $Bitmap.Save($stream, [System.Drawing.Imaging.ImageFormat]::Png)
+    $bytes = $stream.ToArray()
+    $stream.Dispose()
+    return , $bytes
+}
+
+<#
+    An .ico image entry in the old format: a BITMAPINFOHEADER whose height is doubled, the
+    BGRA pixels bottom row first, then a 1-bit AND mask. With 32-bit colour the alpha channel
+    does the real work, so the mask only marks the fully transparent pixels.
+#>
+function ConvertTo-DibBytes {
+    param([System.Drawing.Bitmap] $Bitmap)
+
+    $w = $Bitmap.Width
+    $h = $Bitmap.Height
+    $maskStride = [int] ([Math]::Ceiling($w / 32.0) * 4)
+
+    $out = New-Object System.IO.MemoryStream
+    $writer = New-Object System.IO.BinaryWriter($out)
+
+    $writer.Write([uint32] 40)          # header size
+    $writer.Write([int32] $w)
+    $writer.Write([int32] ($h * 2))     # colour rows plus mask rows
+    $writer.Write([uint16] 1)           # planes
+    $writer.Write([uint16] 32)          # bits per pixel
+    $writer.Write([uint32] 0)           # BI_RGB
+    $writer.Write([uint32] (($w * $h * 4) + ($maskStride * $h)))
+    $writer.Write([int32] 0)
+    $writer.Write([int32] 0)
+    $writer.Write([uint32] 0)
+    $writer.Write([uint32] 0)
+
+    for ($y = $h - 1; $y -ge 0; $y--) {
+        for ($x = 0; $x -lt $w; $x++) {
+            $c = $Bitmap.GetPixel($x, $y)
+            $writer.Write([byte] $c.B)
+            $writer.Write([byte] $c.G)
+            $writer.Write([byte] $c.R)
+            $writer.Write([byte] $c.A)
+        }
+    }
+
+    for ($y = $h - 1; $y -ge 0; $y--) {
+        $row = New-Object byte[] $maskStride
+        for ($x = 0; $x -lt $w; $x++) {
+            if ($Bitmap.GetPixel($x, $y).A -eq 0) {
+                $row[[int][Math]::Floor($x / 8)] = $row[[int][Math]::Floor($x / 8)] -bor (0x80 -shr ($x % 8))
+            }
+        }
+        $writer.Write($row)
+    }
+
+    $writer.Flush()
+    $bytes = $out.ToArray()
+    $writer.Dispose()
+    $out.Dispose()
+    return , $bytes
+}
+
 function Save-Ico {
     param([int[]] $Sizes, [string] $Path)
 
+    # 256 px is stored as PNG, which keeps the file small; everything smaller is a classic
+    # 32-bit DIB. Explorer reads PNG at any size, but not every consumer of .ico does, and the
+    # small frames are exactly the ones the title bar and taskbar ask for.
     $frames = foreach ($size in $Sizes) {
         $bitmap = New-IconBitmap -Size $size
-        $stream = New-Object System.IO.MemoryStream
-        $bitmap.Save($stream, [System.Drawing.Imaging.ImageFormat]::Png)
+        $bytes = if ($size -ge 256) { ConvertTo-PngBytes $bitmap } else { ConvertTo-DibBytes $bitmap }
         $bitmap.Dispose()
-        [pscustomobject]@{ Size = $size; Bytes = $stream.ToArray() }
-        $stream.Dispose()
+        [pscustomobject]@{ Size = $size; Bytes = $bytes }
     }
 
     $dir = Split-Path -Parent $Path
