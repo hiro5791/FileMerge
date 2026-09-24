@@ -1,6 +1,5 @@
 {
-  "App.Title": "FileMerge",
-  "App.Tagline": "Birden çok dosyayı tek dosyada birleştirin",
+  "App.Title": "TekuTeku Dosya Birleştirme",
 
   "Action.AddFiles": "Dosya ekle",
   "Action.AddFolder": "Klasör ekle",

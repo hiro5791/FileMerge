@@ -199,8 +199,11 @@ public partial class MainViewModel : ObservableObject
 
     public bool HasFiles => Files.Count > 0;
 
-    /// <summary>Shown next to the title, so the running build is never a mystery.</summary>
-    public static string AppVersion => AppInfo.DisplayVersion;
+    /// <summary>
+    /// The caption. It is the only place the name and version appear, so it has to follow the
+    /// language picker rather than being set once at startup.
+    /// </summary>
+    public string WindowTitle => $"{Loc.Current["App.Title"]} {AppInfo.DisplayVersion}".TrimEnd();
 
     /// <summary>One line telling the user what a merge would do right now.</summary>
     public string PlanText => BuildOptions(string.Empty).RequiresTextPipeline
@@ -574,6 +577,7 @@ public partial class MainViewModel : ObservableObject
     {
         OnPropertyChanged(nameof(HasFiles));
         UpdateSummary();
+        DuplicateNameResolver.Apply(Files);
         _ = ProbeFilesAsync();
     }
 
@@ -678,6 +682,7 @@ public partial class MainViewModel : ObservableObject
         OnPropertyChanged(nameof(InputEncodings));
         OnPropertyChanged(nameof(FallbackEncodings));
         OnPropertyChanged(nameof(PlanText));
+        OnPropertyChanged(nameof(WindowTitle));
     }
 
     private void UpdateSummary() =>

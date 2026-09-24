@@ -1,6 +1,5 @@
 {
-  "App.Title": "FileMerge",
-  "App.Tagline": "여러 파일을 하나로 병합",
+  "App.Title": "TekuTeku 파일 병합",
 
   "Action.AddFiles": "파일 추가",
   "Action.AddFolder": "폴더 추가",

@@ -1,4 +1,4 @@
-# FileMerge
+# てくてくファイル結合
 
 複数のファイルを1つに結合する Windows アプリです。EXE 1個だけ。インストール不要、.NET のインストールも不要、レジストリも常駐も使いません。
 
@@ -76,7 +76,7 @@ Bahasa Indonesia · Tiếng Việt · ไทย
 git clone https://github.com/hiro5791/FileMerge.git
 cd FileMerge
 
-dotnet test tests/FileMerge.Tests/FileMerge.Tests.csproj   # 43 件
+dotnet test tests/FileMerge.Tests/FileMerge.Tests.csproj   # 50 件
 dotnet run --project src/FileMerge/FileMerge.csproj
 
 ./build/Build-Portable.ps1                                  # artifacts/*.exe

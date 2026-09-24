@@ -8,7 +8,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="FileMerge"
+        Title="{Binding WindowTitle}"
         Width="1080" Height="720"
         MinWidth="880" MinHeight="600"
         WindowStartupLocation="CenterScreen"
@@ -47,19 +47,8 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <!-- ============================================== Header -->
-        <Grid Grid.Row="0" Margin="0,0,0,14">
-            <StackPanel VerticalAlignment="Center">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="{loc:T App.Title}" Style="{StaticResource TitleText}" />
-                    <TextBlock Text="{Binding AppVersion}"
-                               Style="{StaticResource CaptionText}"
-                               VerticalAlignment="Bottom"
-                               Margin="8,0,0,3" />
-                </StackPanel>
-                <TextBlock Text="{loc:T App.Tagline}" Style="{StaticResource CaptionText}" Margin="0,2,0,0" />
-            </StackPanel>
-
+        <!-- Header. The name and version live in the title bar, so this is only the pickers. -->
+        <Grid Grid.Row="0" Margin="0,0,0,10">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
                 <TextBlock Text="{loc:T Settings.Theme}"
                            Style="{StaticResource CaptionText}"
@@ -215,13 +204,19 @@
                                       Margin="2">
                                 <ListView.View>
                                     <GridView AllowsColumnReorder="False">
-                                        <GridViewColumn Header="{loc:T List.Column.Name}" Width="300">
+                                        <GridViewColumn Header="{loc:T List.Column.Name}" Width="230">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <StackPanel Orientation="Horizontal" Margin="4,0,0,0">
+                                                    <StackPanel Orientation="Horizontal" Margin="4,0,0,0" ToolTip="{Binding FullPath}">
                                                         <TextBlock Text="{Binding FileName}"
+                                                                   TextTrimming="CharacterEllipsis" />
+                                                        <!-- Only appears when another file shares this name, and then
+                                                             carries just enough of the folder path to tell them apart. -->
+                                                        <TextBlock Text="{Binding DuplicateHint}"
+                                                                   Foreground="{DynamicResource TextSecondaryBrush}"
                                                                    TextTrimming="CharacterEllipsis"
-                                                                   ToolTip="{Binding FullPath}" />
+                                                                   Margin="8,0,0,0"
+                                                                   Visibility="{Binding DuplicateHint, Converter={StaticResource StringToVis}}" />
                                                         <TextBlock Text="{Binding Error}"
                                                                    Foreground="{DynamicResource DangerBrush}"
                                                                    Margin="8,0,0,0"
@@ -230,7 +225,7 @@
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
-                                        <GridViewColumn Header="{loc:T List.Column.Size}" Width="90">
+                                        <GridViewColumn Header="{loc:T List.Column.Size}" Width="75">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <TextBlock Text="{Binding Size, Converter={StaticResource SizeFormat}}"
@@ -239,7 +234,7 @@
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
-                                        <GridViewColumn Header="{loc:T List.Column.Modified}" Width="140">
+                                        <GridViewColumn Header="{loc:T List.Column.Modified}" Width="125">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <TextBlock Text="{Binding Modified, Converter={StaticResource DateFormat}}"
@@ -248,7 +243,7 @@
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
-                                        <GridViewColumn Header="{loc:T List.Column.Kind}" Width="110">
+                                        <GridViewColumn Header="{loc:T List.Column.Kind}" Width="95">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <TextBlock Text="{Binding EncodingLabel}"
@@ -257,7 +252,7 @@
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
-                                        <GridViewColumn Header="{loc:T List.Column.Folder}" Width="150">
+                                        <GridViewColumn Header="{loc:T List.Column.Folder}" Width="115">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <TextBlock Text="{Binding DirectoryName, Converter={StaticResource FolderFormat}}"

@@ -1,6 +1,5 @@
 {
-  "App.Title": "FileMerge",
-  "App.Tagline": "Meerdere bestanden samenvoegen tot één",
+  "App.Title": "TekuTeku Bestanden samenvoegen",
 
   "Action.AddFiles": "Bestanden toevoegen",
   "Action.AddFolder": "Map toevoegen",

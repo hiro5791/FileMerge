@@ -424,13 +424,37 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="GridViewColumnHeader">
-                    <Border Background="Transparent"
-                            BorderBrush="{DynamicResource BorderBrushSoft}"
-                            BorderThickness="0,0,0,1"
-                            Height="30"
-                            Padding="{TemplateBinding Padding}">
-                        <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Left" />
-                    </Border>
+                    <Grid>
+                        <Border x:Name="Root"
+                                Background="Transparent"
+                                BorderBrush="{DynamicResource BorderBrushSoft}"
+                                BorderThickness="0,0,0,1"
+                                Height="30"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Left" />
+                        </Border>
+
+                        <!-- GridViewColumnHeader looks for a Thumb with this exact name to
+                             drive column resizing. Without it the columns are fixed. -->
+                        <Thumb x:Name="PART_HeaderGripper"
+                               HorizontalAlignment="Right"
+                               Width="10"
+                               Margin="0,0,-5,0"
+                               Cursor="SizeWE">
+                            <Thumb.Template>
+                                <ControlTemplate TargetType="Thumb">
+                                    <Border Background="Transparent" Padding="4,0">
+                                        <Rectangle Width="1" Fill="{DynamicResource BorderBrushSoft}" />
+                                    </Border>
+                                </ControlTemplate>
+                            </Thumb.Template>
+                        </Thumb>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Root" Property="Background" Value="{DynamicResource ControlHoverBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

@@ -1,6 +1,5 @@
 {
-  "App.Title": "FileMerge",
-  "App.Tagline": "Gabungkan beberapa berkas menjadi satu",
+  "App.Title": "TekuTeku Gabung Berkas",
 
   "Action.AddFiles": "Tambah berkas",
   "Action.AddFolder": "Tambah folder",

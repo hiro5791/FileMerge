@@ -65,19 +65,16 @@ public sealed class DateTimeConverter : IValueConverter
         throw new NotSupportedException();
 }
 
-/// <summary>Shortens a folder path so the column stays readable.</summary>
+/// <summary>
+/// Shortens a folder path to its last couple of names. A full path would be mostly a shared
+/// prefix, and the column trims from the end, which would hide the part that differs.
+/// </summary>
 public sealed class FolderDisplayConverter : IValueConverter
 {
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        if (value is not string path || path.Length == 0)
-        {
-            return string.Empty;
-        }
-
-        string? parent = Path.GetFileName(path);
-        return string.IsNullOrEmpty(parent) ? path : parent;
-    }
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture) =>
+        value is string path && path.Length > 0
+            ? FileMerge.Services.DuplicateNameResolver.TrailingSegments(path, 2)
+            : string.Empty;
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) =>
         throw new NotSupportedException();

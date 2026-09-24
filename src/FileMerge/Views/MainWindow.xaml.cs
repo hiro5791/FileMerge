@@ -24,9 +24,6 @@ public partial class MainWindow : Window
         _viewModel = new MainViewModel(new DialogService(this), settingsService);
         DataContext = _viewModel;
 
-        // Puts the version in the taskbar and Alt+Tab as well as in the header.
-        Title = $"FileMerge {AppInfo.DisplayVersion}".TrimEnd();
-
         // The caption bar can only be restyled once the window has a handle.
         SourceInitialized += (_, _) => WindowChrome.ApplyTitleBarTheme(this, ThemeManager.IsDark);
         ThemeManager.ThemeChanged += dark => WindowChrome.ApplyTitleBarTheme(this, dark);

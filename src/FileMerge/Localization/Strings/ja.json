@@ -1,6 +1,5 @@
 {
-  "App.Title": "FileMerge",
-  "App.Tagline": "複数のファイルを1つに結合",
+  "App.Title": "てくてくファイル結合",
 
   "Action.AddFiles": "ファイルを追加",
   "Action.AddFolder": "フォルダーを追加",

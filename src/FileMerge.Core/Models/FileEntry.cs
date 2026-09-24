@@ -27,6 +27,13 @@ public partial class FileEntry : ObservableObject
     [ObservableProperty]
     private bool _isTextLike = true;
 
+    /// <summary>
+    /// Set only when another file in the list has the same name: the shortest tail of this
+    /// file's folder path that tells it apart from the others. Null when the name is unique.
+    /// </summary>
+    [ObservableProperty]
+    private string? _duplicateHint;
+
     public string FileName => Path.GetFileName(FullPath);
 
     public string DirectoryName => Path.GetDirectoryName(FullPath) ?? string.Empty;

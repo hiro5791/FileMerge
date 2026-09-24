@@ -1,6 +1,5 @@
 {
-  "App.Title": "FileMerge",
-  "App.Tagline": "รวมไฟล์หลายไฟล์ให้เป็นไฟล์เดียว",
+  "App.Title": "TekuTeku รวมไฟล์",
 
   "Action.AddFiles": "เพิ่มไฟล์",
   "Action.AddFolder": "เพิ่มโฟลเดอร์",
