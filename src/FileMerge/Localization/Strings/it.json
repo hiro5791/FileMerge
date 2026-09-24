@@ -30,11 +30,7 @@
   "List.Summary": "{0} file, {1}",
 
 
-  "Options.Title": "Opzioni",
-  "Options.Text.Section": "Opzioni testo",
-  "Options.Binary.Section": "Opzioni binarie",
-  "Options.Binary.Note": "I file vengono accodati byte per byte, senza aggiungere né modificare nulla. Controlla bene l'ordine: un ordine sbagliato produce un file danneggiato.",
-  "Options.EnsureTrailingNewline": "Aggiungi un a capo ai file che non terminano con uno",
+  "Options.EnsureTrailingNewline": "Aggiungi CRLF ai file che non terminano con un a capo",
   "Options.RemoveInnerBoms": "Rimuovi il BOM dai file successivi al primo",
 
 

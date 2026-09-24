@@ -30,11 +30,7 @@
   "List.Summary": "{0} Dateien, {1}",
 
 
-  "Options.Title": "Optionen",
-  "Options.Text.Section": "Textoptionen",
-  "Options.Binary.Section": "Binäroptionen",
-  "Options.Binary.Note": "Die Dateien werden Byte für Byte aneinandergehängt, ohne etwas hinzuzufügen oder zu ändern. Prüfen Sie die Reihenfolge genau: Eine falsche Reihenfolge erzeugt eine beschädigte Datei.",
-  "Options.EnsureTrailingNewline": "Zeilenumbruch bei Dateien ergänzen, die nicht damit enden",
+  "Options.EnsureTrailingNewline": "CRLF bei Dateien ergänzen, die nicht mit einem Zeilenumbruch enden",
   "Options.RemoveInnerBoms": "BOM aus allen Dateien nach der ersten entfernen",
 
 

@@ -30,11 +30,7 @@
   "List.Summary": "{0} tệp, {1}",
 
 
-  "Options.Title": "Tùy chọn",
-  "Options.Text.Section": "Tùy chọn văn bản",
-  "Options.Binary.Section": "Tùy chọn nhị phân",
-  "Options.Binary.Note": "Các tệp được nối tiếp theo từng byte, không thêm hay đổi bất cứ thứ gì. Hãy kiểm tra kỹ thứ tự: sai thứ tự sẽ tạo ra tệp hỏng.",
-  "Options.EnsureTrailingNewline": "Thêm dấu xuống dòng vào các tệp không kết thúc bằng dấu xuống dòng",
+  "Options.EnsureTrailingNewline": "Thêm CRLF vào các tệp không kết thúc bằng dấu xuống dòng",
   "Options.RemoveInnerBoms": "Bỏ dấu BOM ở các tệp sau tệp đầu tiên",
 
 

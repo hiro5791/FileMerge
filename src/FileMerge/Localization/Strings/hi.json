@@ -30,11 +30,7 @@
   "List.Summary": "{0} फ़ाइलें, {1}",
 
 
-  "Options.Title": "विकल्प",
-  "Options.Text.Section": "टेक्स्ट विकल्प",
-  "Options.Binary.Section": "बाइनरी विकल्प",
-  "Options.Binary.Note": "फ़ाइलें बिना किसी बदलाव के बाइट दर बाइट जोड़ी जाती हैं। क्रम ध्यान से जाँचें: ग़लत क्रम से फ़ाइल ख़राब हो जाएगी।",
-  "Options.EnsureTrailingNewline": "जो फ़ाइलें नई पंक्ति पर समाप्त नहीं होतीं उनमें पंक्ति विराम जोड़ें",
+  "Options.EnsureTrailingNewline": "जो फ़ाइलें पंक्ति विराम पर समाप्त नहीं होतीं उनमें CRLF जोड़ें",
   "Options.RemoveInnerBoms": "पहली के बाद की फ़ाइलों से BOM हटाएँ",
 
 

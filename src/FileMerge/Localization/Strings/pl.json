@@ -30,11 +30,7 @@
   "List.Summary": "Plików: {0}, {1}",
 
 
-  "Options.Title": "Opcje",
-  "Options.Text.Section": "Opcje tekstu",
-  "Options.Binary.Section": "Opcje binarne",
-  "Options.Binary.Note": "Pliki są sklejane bajt po bajcie, bez dodawania ani zmieniania czegokolwiek. Sprawdź dokładnie kolejność: zła kolejność da uszkodzony plik.",
-  "Options.EnsureTrailingNewline": "Dodawaj znak nowego wiersza do plików, które się nim nie kończą",
+  "Options.EnsureTrailingNewline": "Dodawaj CRLF do plików, które nie kończą się znakiem nowego wiersza",
   "Options.RemoveInnerBoms": "Usuwaj znacznik BOM z plików po pierwszym",
 
 

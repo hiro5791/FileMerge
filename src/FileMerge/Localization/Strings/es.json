@@ -30,11 +30,7 @@
   "List.Summary": "{0} archivos, {1}",
 
 
-  "Options.Title": "Opciones",
-  "Options.Text.Section": "Opciones de texto",
-  "Options.Binary.Section": "Opciones binarias",
-  "Options.Binary.Note": "Los archivos se unen byte a byte sin añadir ni modificar nada. Revisa bien el orden: un orden incorrecto produce un archivo dañado.",
-  "Options.EnsureTrailingNewline": "Añadir un salto de línea a los archivos que no terminan con uno",
+  "Options.EnsureTrailingNewline": "Añadir CRLF a los archivos que no terminan con un salto de línea",
   "Options.RemoveInnerBoms": "Quitar la marca BOM de los archivos posteriores al primero",
 
 

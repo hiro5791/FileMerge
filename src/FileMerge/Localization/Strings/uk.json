@@ -30,11 +30,7 @@
   "List.Summary": "Файлів: {0}, {1}",
 
 
-  "Options.Title": "Параметри",
-  "Options.Text.Section": "Параметри тексту",
-  "Options.Binary.Section": "Двійкові параметри",
-  "Options.Binary.Note": "Файли склеюються байт за байтом без жодних змін. Уважно перевірте порядок: хибний порядок дасть пошкоджений файл.",
-  "Options.EnsureTrailingNewline": "Додавати перехід рядка у файли, які ним не закінчуються",
+  "Options.EnsureTrailingNewline": "Додавати CRLF у файли, які не закінчуються переходом рядка",
   "Options.RemoveInnerBoms": "Вилучати BOM в усіх файлах, крім першого",
 
 

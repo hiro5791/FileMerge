@@ -30,11 +30,7 @@
   "List.Summary": "{0} 个文件，{1}",
 
 
-  "Options.Title": "选项",
-  "Options.Text.Section": "文本选项",
-  "Options.Binary.Section": "二进制选项",
-  "Options.Binary.Note": "文件将逐字节原样拼接，不做任何修改。请仔细核对顺序，顺序错误会生成损坏的文件。",
-  "Options.EnsureTrailingNewline": "为没有以换行结尾的文件补上换行",
+  "Options.EnsureTrailingNewline": "为没有以换行结尾的文件补上 CRLF",
   "Options.RemoveInnerBoms": "移除第一个文件之后各文件的 BOM",
 
 

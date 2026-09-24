@@ -30,11 +30,7 @@
   "List.Summary": "{0} 個のファイル、{1}",
 
 
-  "Options.Title": "オプション",
-  "Options.Text.Section": "テキストの設定",
-  "Options.Binary.Section": "バイナリの設定",
-  "Options.Binary.Note": "ファイルを1バイトも変えずにそのまま連結します。順序が違うとファイルが壊れるため、並び順をよく確認してください。",
-  "Options.EnsureTrailingNewline": "改行で終わっていないファイルに改行を補う",
+  "Options.EnsureTrailingNewline": "改行で終わっていないファイルに CRLF を補う",
   "Options.RemoveInnerBoms": "2 個目以降のファイルの BOM を取り除く",
 
 

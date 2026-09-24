@@ -30,11 +30,7 @@
   "List.Summary": "{0} ملفات، {1}",
 
 
-  "Options.Title": "الخيارات",
-  "Options.Text.Section": "خيارات النص",
-  "Options.Binary.Section": "الخيارات الثنائية",
-  "Options.Binary.Note": "تُلحق الملفات بايتًا ببايت دون إضافة أو تغيير أي شيء. تحقق من الترتيب بعناية: الترتيب الخاطئ ينتج ملفًا تالفًا.",
-  "Options.EnsureTrailingNewline": "إضافة سطر جديد إلى الملفات التي لا تنتهي به",
+  "Options.EnsureTrailingNewline": "إضافة CRLF إلى الملفات التي لا تنتهي بسطر جديد",
   "Options.RemoveInnerBoms": "إزالة علامة BOM من الملفات بعد الأول",
 
 

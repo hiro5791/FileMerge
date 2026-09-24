@@ -30,11 +30,7 @@
   "List.Summary": "{0} berkas, {1}",
 
 
-  "Options.Title": "Opsi",
-  "Options.Text.Section": "Opsi teks",
-  "Options.Binary.Section": "Opsi biner",
-  "Options.Binary.Note": "Berkas disambung bita demi bita tanpa ada yang ditambahkan atau diubah. Periksa urutannya dengan teliti: urutan yang salah menghasilkan berkas rusak.",
-  "Options.EnsureTrailingNewline": "Tambahkan baris baru pada berkas yang tidak diakhiri baris baru",
+  "Options.EnsureTrailingNewline": "Tambahkan CRLF pada berkas yang tidak diakhiri baris baru",
   "Options.RemoveInnerBoms": "Hapus tanda BOM dari berkas setelah yang pertama",
 
 

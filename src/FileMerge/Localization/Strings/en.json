@@ -30,11 +30,7 @@
   "List.Summary": "{0} files, {1}",
 
 
-  "Options.Title": "Options",
-  "Options.Text.Section": "Text options",
-  "Options.Binary.Section": "Binary options",
-  "Options.Binary.Note": "Files are appended byte for byte with nothing added or changed. Check the order carefully: a wrong order produces a corrupt file.",
-  "Options.EnsureTrailingNewline": "Add a line break to files that do not end with one",
+  "Options.EnsureTrailingNewline": "Add CRLF to files that do not end with a line break",
   "Options.RemoveInnerBoms": "Remove the byte order mark from files after the first",
 
 

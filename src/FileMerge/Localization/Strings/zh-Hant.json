@@ -30,11 +30,7 @@
   "List.Summary": "{0} 個檔案，{1}",
 
 
-  "Options.Title": "選項",
-  "Options.Text.Section": "文字選項",
-  "Options.Binary.Section": "二進位選項",
-  "Options.Binary.Note": "檔案會逐位元組原樣接合，不做任何更動。請仔細確認順序，順序錯誤會產生損毀的檔案。",
-  "Options.EnsureTrailingNewline": "為沒有以換行結尾的檔案補上換行",
+  "Options.EnsureTrailingNewline": "為沒有以換行結尾的檔案補上 CRLF",
   "Options.RemoveInnerBoms": "移除第一個檔案之後各檔案的 BOM",
 
 

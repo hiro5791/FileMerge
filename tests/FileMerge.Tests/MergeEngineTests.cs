@@ -122,7 +122,7 @@ public sealed class MergeEngineTests : IDisposable
     }
 
     [Fact]
-    public async Task Ensure_trailing_newline_adds_a_break_in_the_style_the_files_use()
+    public async Task Ensure_trailing_newline_always_adds_crlf_even_after_lf_files()
     {
         string output = Out("merged.txt");
         await RunAsync(
@@ -133,8 +133,8 @@ public sealed class MergeEngineTests : IDisposable
             },
             new MergeOptions { OutputPath = output, EnsureTrailingNewline = true });
 
-        // a.txt uses LF, so LF is what gets added, and b.txt, which has none, borrows it.
-        Assert.Equal("one\nfirst\nsecond\n", File.ReadAllText(output, Encoding.UTF8));
+        // a.txt uses LF internally, but what gets added is CRLF all the same.
+        Assert.Equal("one\nfirst\r\nsecond\r\n", File.ReadAllText(output, Encoding.UTF8));
     }
 
     [Fact]
@@ -243,7 +243,7 @@ public sealed class MergeEngineTests : IDisposable
     }
 
     [Fact]
-    public async Task Utf16_big_endian_line_breaks_are_written_high_byte_first()
+    public async Task Utf16_big_endian_crlf_is_written_high_byte_first()
     {
         var utf16be = new UnicodeEncoding(bigEndian: true, byteOrderMark: true);
         byte[] a = utf16be.GetPreamble().Concat(utf16be.GetBytes("one\ntwo")).ToArray();
@@ -253,7 +253,7 @@ public sealed class MergeEngineTests : IDisposable
             new[] { Write("a.txt", a) },
             new MergeOptions { OutputPath = output, EnsureTrailingNewline = true });
 
-        byte[] expected = utf16be.GetPreamble().Concat(utf16be.GetBytes("one\ntwo\n")).ToArray();
+        byte[] expected = utf16be.GetPreamble().Concat(utf16be.GetBytes("one\ntwo\r\n")).ToArray();
         Assert.Equal(expected, File.ReadAllBytes(output));
     }
 

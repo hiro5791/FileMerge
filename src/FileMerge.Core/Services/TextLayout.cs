@@ -1,16 +1,15 @@
 using System.IO;
-using System.Text;
 
 namespace FileMerge.Services;
 
 /// <summary>
 /// How a file's bytes are laid out, as far as line breaks are concerned. This is all the
-/// trailing-newline option needs, and it deliberately stops short of decoding anything.
+/// CRLF option needs, and it deliberately stops short of decoding anything.
 /// <para>
 /// In every encoding in common use other than UTF-16 and UTF-32 — UTF-8, Shift_JIS, EUC-JP,
 /// GBK, Big5, EUC-KR, the Windows and ISO single-byte pages — the bytes 0x0A (LF) and 0x0D
 /// (CR) only ever mean those characters: no multi-byte character uses them as a trailing
-/// byte. So a line break can be recognised, and written, as plain bytes, and a file whose
+/// byte. So a line break can be recognised, and CRLF written, as plain bytes, and a file whose
 /// encoding was guessed wrong is still handled correctly. UTF-16 and UTF-32 are the exception,
 /// and there the same check runs over 2- or 4-byte code units instead.
 /// </para>
@@ -27,6 +26,7 @@ internal sealed class TextLayout
         Width = width;
         BigEndian = bigEndian;
         BomLength = bomLength;
+        Crlf = BuildCrlf(width, bigEndian);
     }
 
     /// <summary>Bytes per code unit: 1 for byte-oriented encodings, 2 for UTF-16, 4 for UTF-32.</summary>
@@ -36,8 +36,11 @@ internal sealed class TextLayout
 
     public int BomLength { get; }
 
-    /// <summary>The first line break found in the file, or null if the sample had none.</summary>
-    public string? Newline { get; private set; }
+    /// <summary>
+    /// CRLF as bytes in this layout: 0D 0A, or 0D 00 0A 00 for UTF-16 LE, and so on. Built from
+    /// the two control codes directly, so no code page is involved, not even a guessed one.
+    /// </summary>
+    public byte[] Crlf { get; }
 
     /// <summary>Samples the start of the stream and puts the position back where it was.</summary>
     public static TextLayout Detect(Stream stream)
@@ -59,8 +62,10 @@ internal sealed class TextLayout
 
         stream.Position = origin;
 
-        var span = sample.AsSpan(0, read);
-        var detected = EncodingDetector.Detect(span, sampleWasTruncated: read == SampleBytes, EncodingDetector.SystemAnsi);
+        var detected = EncodingDetector.Detect(
+            sample.AsSpan(0, read),
+            sampleWasTruncated: read == SampleBytes,
+            EncodingDetector.SystemAnsi);
 
         (int width, bool bigEndian) = detected.Encoding.CodePage switch
         {
@@ -71,9 +76,7 @@ internal sealed class TextLayout
             _ => (1, false),
         };
 
-        var layout = new TextLayout(width, bigEndian, detected.BomLength);
-        layout.Newline = layout.FindNewline(span[Math.Min(detected.BomLength, span.Length)..]);
-        return layout;
+        return new TextLayout(width, bigEndian, detected.BomLength);
     }
 
     public int UnitAt(ReadOnlySpan<byte> bytes, int offset) => Width switch
@@ -89,43 +92,12 @@ internal sealed class TextLayout
 
     public static bool IsLineBreak(int unit) => unit is Lf or Cr;
 
-    /// <summary>
-    /// A line break as bytes in this layout. Built from the two ASCII control codes directly,
-    /// so no code page is involved, not even a guessed one.
-    /// </summary>
-    public byte[] EncodeNewline(string newline)
+    private static byte[] BuildCrlf(int width, bool bigEndian)
     {
-        var bytes = new byte[newline.Length * Width];
-        for (int i = 0; i < newline.Length; i++)
-        {
-            int at = i * Width;
-            int unit = newline[i];
-            int low = BigEndian ? at + Width - 1 : at;
-            bytes[low] = (byte)unit;
-        }
-
+        var bytes = new byte[2 * width];
+        int low = bigEndian ? width - 1 : 0;
+        bytes[low] = Cr;
+        bytes[width + low] = Lf;
         return bytes;
-    }
-
-    private string? FindNewline(ReadOnlySpan<byte> bytes)
-    {
-        int end = bytes.Length - (bytes.Length % Width);
-
-        for (int i = 0; i < end; i += Width)
-        {
-            int unit = UnitAt(bytes, i);
-
-            if (unit == Lf)
-            {
-                return "\n";
-            }
-
-            if (unit == Cr)
-            {
-                return i + Width < end && UnitAt(bytes, i + Width) == Lf ? "\r\n" : "\r";
-            }
-        }
-
-        return null;
     }
 }

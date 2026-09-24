@@ -30,11 +30,7 @@
   "List.Summary": "{0} fichiers, {1}",
 
 
-  "Options.Title": "Options",
-  "Options.Text.Section": "Options de texte",
-  "Options.Binary.Section": "Options binaires",
-  "Options.Binary.Note": "Les fichiers sont mis bout à bout octet par octet, sans rien ajouter ni modifier. Vérifiez bien l'ordre : un mauvais ordre produit un fichier corrompu.",
-  "Options.EnsureTrailingNewline": "Ajouter un saut de ligne aux fichiers qui n'en ont pas à la fin",
+  "Options.EnsureTrailingNewline": "Ajouter CRLF aux fichiers qui ne se terminent pas par un saut de ligne",
   "Options.RemoveInnerBoms": "Retirer la marque BOM des fichiers après le premier",
 
 

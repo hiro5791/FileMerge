@@ -95,9 +95,6 @@ public sealed class MergeEngine
 
         using var output = new FileStream(tempPath, FileMode.Create, FileAccess.Write, FileShare.None, BufferBytes, FileOptions.SequentialScan);
 
-        // A file with no line break of its own borrows the style of the last one that had one.
-        string? lastNewline = null;
-
         for (int i = 0; i < inputs.Count; i++)
         {
             token.ThrowIfCancellationRequested();
@@ -122,7 +119,7 @@ public sealed class MergeEngine
 
                 if (options.EnsureTrailingNewline)
                 {
-                    lastNewline = AppendMissingNewline(input, output, lastNewline);
+                    AppendMissingCrlf(input, output);
                 }
             }
             catch (OperationCanceledException)
@@ -160,20 +157,19 @@ public sealed class MergeEngine
     }
 
     /// <summary>
-    /// Adds a line break after a file whose last character is not one. Only the final code
-    /// unit of the file is read to decide, and only the break itself is written, so the file's
-    /// content is never looked at as text. Returns the line-break style to carry forward.
+    /// Adds CRLF after a file whose last character is not a line break. Only the final code
+    /// unit of the file is read to decide, and only CRLF itself is written, so the file's
+    /// content is never looked at as text. It is always CRLF, whatever the file uses elsewhere.
     /// </summary>
-    private static string? AppendMissingNewline(FileStream input, Stream output, string? lastNewline)
+    private static void AppendMissingCrlf(FileStream input, Stream output)
     {
         input.Position = 0;
         var layout = TextLayout.Detect(input);
-        string? newline = layout.Newline ?? lastNewline;
 
         long content = input.Length - layout.BomLength;
         if (content <= 0)
         {
-            return newline; // Empty, or nothing but a BOM: there is no line to finish.
+            return; // Empty, or nothing but a BOM: there is no line to finish.
         }
 
         int width = layout.Width;
@@ -185,12 +181,11 @@ public sealed class MergeEngine
 
             if (TextLayout.IsLineBreak(layout.UnitAt(last, 0)))
             {
-                return newline;
+                return;
             }
         }
 
-        output.Write(layout.EncodeNewline(newline ?? "\r\n"));
-        return newline;
+        output.Write(layout.Crlf);
     }
 
     /// <summary>Advances the stream past a byte order mark if one is present.</summary>

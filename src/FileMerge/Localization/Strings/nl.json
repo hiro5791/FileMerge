@@ -30,11 +30,7 @@
   "List.Summary": "{0} bestanden, {1}",
 
 
-  "Options.Title": "Opties",
-  "Options.Text.Section": "Tekstopties",
-  "Options.Binary.Section": "Binaire opties",
-  "Options.Binary.Note": "De bestanden worden byte voor byte aan elkaar geplakt, zonder iets toe te voegen of te wijzigen. Controleer de volgorde goed: een verkeerde volgorde levert een beschadigd bestand op.",
-  "Options.EnsureTrailingNewline": "Een regeleinde toevoegen aan bestanden die er niet mee eindigen",
+  "Options.EnsureTrailingNewline": "CRLF toevoegen aan bestanden die niet op een regeleinde eindigen",
   "Options.RemoveInnerBoms": "De BOM verwijderen uit bestanden na het eerste",
 
 

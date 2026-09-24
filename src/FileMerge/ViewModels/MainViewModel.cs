@@ -459,8 +459,10 @@ public partial class MainViewModel : ObservableObject
     private MergeOptions BuildOptions(string target) => new()
     {
         OutputPath = target,
-        EnsureTrailingNewline = EnsureTrailingNewline,
-        RemoveInnerBoms = RemoveInnerBoms,
+        // The boxes are greyed out for binary files but keep their ticks, so they are ignored
+        // here too: adding CRLF to or dropping bytes from a split archive would corrupt it.
+        EnsureTrailingNewline = ShowTextOptions && EnsureTrailingNewline,
+        RemoveInnerBoms = ShowTextOptions && RemoveInnerBoms,
         ExistingFile = SelectedConflict?.Value ?? ExistingFileAction.Ask,
     };
 

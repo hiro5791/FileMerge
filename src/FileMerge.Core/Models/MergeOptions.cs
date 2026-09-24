@@ -4,8 +4,8 @@ namespace FileMerge.Models;
 /// Everything the merge engine needs, snapshotted before a run starts.
 /// <para>
 /// Nothing here converts or decodes anything. A default run is the inputs joined byte for
-/// byte. The two options touch only the edges of a file: a few bytes left off the front, or a
-/// line break added to the end.
+/// byte. The two options touch only the edges of a file: a few bytes left off the front, or
+/// CRLF added to the end.
 /// </para>
 /// </summary>
 public sealed class MergeOptions
@@ -13,8 +13,8 @@ public sealed class MergeOptions
     public string OutputPath { get; init; } = string.Empty;
 
     /// <summary>
-    /// Adds a line break to a file that does not end with one, so the next file starts on its
-    /// own line. The break matches the file's own style; CRLF when it has none.
+    /// Adds CRLF to a file that does not end with a line break, so the next file starts on its
+    /// own line. Always CRLF, whatever line breaks the file uses elsewhere.
     /// </summary>
     public bool EnsureTrailingNewline { get; init; }
 

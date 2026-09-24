@@ -30,11 +30,7 @@
   "List.Summary": "{0} dosya, {1}",
 
 
-  "Options.Title": "Seçenekler",
-  "Options.Text.Section": "Metin seçenekleri",
-  "Options.Binary.Section": "İkili seçenekler",
-  "Options.Binary.Note": "Dosyalar hiçbir şey eklenmeden veya değiştirilmeden bayt bayt uç uca eklenir. Sırayı dikkatle denetleyin: yanlış sıra bozuk bir dosya üretir.",
-  "Options.EnsureTrailingNewline": "Satır sonuyla bitmeyen dosyalara satır sonu ekle",
+  "Options.EnsureTrailingNewline": "Satır sonuyla bitmeyen dosyalara CRLF ekle",
   "Options.RemoveInnerBoms": "İlkinden sonraki dosyalardan BOM işaretini kaldır",
 
 
