@@ -44,9 +44,9 @@
 | ファイル | サイズ | 必要なもの |
 | --- | --- | --- |
 | `FileMerge-<version>-setup-x64.exe` | 約 43 MB | なし（普通のインストーラー。スタートメニューに登録され、「設定」からアンインストールできます） |
-| `FileMerge-<version>-win-x64.exe` | 約 59 MB | なし（.NET は EXE の中に同梱） |
-| `FileMerge-<version>-win-arm64.exe` | 約 59 MB | なし |
-| `FileMerge-<version>-win-x64-netdep.zip` | 約 0.3 MB | [.NET Desktop Runtime 10](https://dotnet.microsoft.com/download/dotnet/10.0) |
+| `FileMerge-<version>-win-x64.zip` | 約 54 MB | なし（中身は .NET を同梱した EXE 1つ。展開してダブルクリック） |
+| `FileMerge-<version>-win-arm64.zip` | 約 50 MB | なし（ARM 版 Windows 用） |
+| `FileMerge-<version>-win-x64-netdep.zip` | 約 0.6 MB | [.NET Desktop Runtime 10](https://dotnet.microsoft.com/download/dotnet/10.0) |
 
 Windows 10 バージョン 1809 以降。ダブルクリックで起動します。
 

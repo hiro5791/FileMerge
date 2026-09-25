@@ -59,9 +59,9 @@ Grab the latest from [Releases](../../releases):
 | File | Size | Requirements |
 | --- | --- | --- |
 | `FileMerge-<version>-setup-x64.exe` | ~43 MB | none — an ordinary installer: Start menu entry, uninstall from Settings |
-| `FileMerge-<version>-win-x64.exe` | ~59 MB | none — .NET is inside the executable |
-| `FileMerge-<version>-win-arm64.exe` | ~59 MB | none |
-| `FileMerge-<version>-win-x64-netdep.zip` | ~0.3 MB | [.NET Desktop Runtime 10](https://dotnet.microsoft.com/download/dotnet/10.0) |
+| `FileMerge-<version>-win-x64.zip` | ~54 MB | none — one `.exe` inside with .NET built in; unzip and double-click |
+| `FileMerge-<version>-win-arm64.zip` | ~50 MB | none — the same for ARM PCs |
+| `FileMerge-<version>-win-x64-netdep.zip` | ~0.6 MB | [.NET Desktop Runtime 10](https://dotnet.microsoft.com/download/dotnet/10.0) |
 
 Windows 10 version 1809 or later. Double-click and it runs.
 
