@@ -128,8 +128,23 @@ foreach ($row in $rows) {
     }
 }
 
+# Written in the same style as Partner Center's own export: quotes only where a value needs
+# them, and the padding rows at the end copied as they were. Export-Csv quotes everything.
+function Format-CsvValue([string] $s) {
+    if ($null -eq $s) { return '' }
+    if ($s -match '[",\r\n]') { return '"' + $s.Replace('"', '""') + '"' }
+    $s
+}
+
+$headers = $rows[0].PSObject.Properties.Name
+$lines = New-Object System.Collections.Generic.List[string]
+$lines.Add((($headers | ForEach-Object { Format-CsvValue $_ }) -join ','))
+foreach ($row in $rows) {
+    $lines.Add((($headers | ForEach-Object { Format-CsvValue $row.$_ }) -join ','))
+}
+
 New-Item -ItemType Directory -Force -Path $OutDir | Out-Null
 $csvPath = Join-Path $OutDir 'listingData.csv'
-$rows | Export-Csv -Path $csvPath -NoTypeInformation -Encoding UTF8
+[IO.File]::WriteAllText($csvPath, ($lines -join "`r`n"), [Text.UTF8Encoding]::new($true))
 
 Write-Output "listing -> $csvPath ($($columns.Count) languages)"
