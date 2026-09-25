@@ -26,7 +26,7 @@ Add-Type -AssemblyName System.Drawing
 
 $repoRoot = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)
 if (-not $Exe) { $Exe = Join-Path $repoRoot 'src\FileMerge\bin\Debug\net10.0-windows\FileMerge.exe' }
-if (-not $OutDir) { $OutDir = Join-Path $repoRoot 'artifacts\store-listing\images' }
+if (-not $OutDir) { $OutDir = Join-Path $repoRoot 'artifacts\store-screenshots' }
 if (-not $Languages) {
     $Languages = Get-ChildItem (Join-Path $repoRoot 'src\FileMerge\Localization\Strings\*.json') |
         ForEach-Object { $_.BaseName }

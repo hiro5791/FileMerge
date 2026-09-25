@@ -8,7 +8,10 @@
     build/Capture-StoreScreenshots.ps1, and writes an import folder:
 
         artifacts/store-listing/listingData.csv
-        artifacts/store-listing/images/<code>-light.png, <code>-dark.png
+        artifacts/store-listing/<code>-light.png, <code>-dark.png
+
+    The images sit next to the CSV and are referenced by file name only: Partner Center's
+    folder import rejected the whole file when they were referenced as images/<name>.png.
 
     In Partner Center, choose "Import listings" and select that folder.
 
@@ -26,6 +29,7 @@
 param(
     [Parameter(Mandatory = $true)] [string] $Template,
     [string] $OutDir,
+    [string] $ScreenshotDir,
     [string] $Copyright = "$([char]0x00A9) 2026 Hiroyura",
     [string] $Developer = 'Hiroyura',
     [switch] $LocalizedJapaneseTitle
@@ -35,7 +39,7 @@ $ErrorActionPreference = 'Stop'
 
 $repoRoot = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)
 if (-not $OutDir) { $OutDir = Join-Path $repoRoot 'artifacts\store-listing' }
-$imagesDir = Join-Path $OutDir 'images'
+if (-not $ScreenshotDir) { $ScreenshotDir = Join-Path $repoRoot 'artifacts\store-screenshots' }
 $stringsDir = Join-Path $repoRoot 'src\FileMerge\Localization\Strings'
 $text = Get-Content (Join-Path $repoRoot 'docs\store\listing-text.json') -Raw -Encoding UTF8 | ConvertFrom-Json
 
@@ -92,8 +96,8 @@ foreach ($column in $columns.Keys) {
 
     $shots = @("$code-light.png", "$code-dark.png")
     for ($i = 0; $i -lt $shots.Count; $i++) {
-        if (-not (Test-Path (Join-Path $imagesDir $shots[$i]))) { $problems.Add("missing screenshot images/$($shots[$i])") }
-        $v["DesktopScreenshot$($i + 1)"] = "images/$($shots[$i])"
+        if (-not (Test-Path (Join-Path $ScreenshotDir $shots[$i]))) { $problems.Add("missing screenshot $($shots[$i]) in $ScreenshotDir") }
+        $v["DesktopScreenshot$($i + 1)"] = $shots[$i]
     }
 
     # Partner Center limits
@@ -144,6 +148,11 @@ foreach ($row in $rows) {
 }
 
 New-Item -ItemType Directory -Force -Path $OutDir | Out-Null
+foreach ($code in $columns.Values) {
+    foreach ($name in "$code-light.png", "$code-dark.png") {
+        Copy-Item (Join-Path $ScreenshotDir $name) (Join-Path $OutDir $name) -Force
+    }
+}
 $csvPath = Join-Path $OutDir 'listingData.csv'
 [IO.File]::WriteAllText($csvPath, ($lines -join "`r`n"), [Text.UTF8Encoding]::new($true))
 
