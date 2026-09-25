@@ -7,7 +7,7 @@ Packages: `artifacts/FileMerge-1.0.0.0-x64.msix`, `artifacts/FileMerge-1.0.0.0-a
 
 | Field | Value |
 | --- | --- |
-| Category | Productivity (subcategory: none) |
+| Category | Utilities & tools (secondary: Productivity) |
 | Privacy policy URL | https://github.com/hiro5791/FileMerge/blob/main/PRIVACY.md |
 | Website | https://github.com/hiro5791/FileMerge |
 | Support contact info | https://github.com/hiro5791/FileMerge/issues |
