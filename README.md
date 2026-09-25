@@ -74,7 +74,7 @@ Program Files is offered on the first page), adds a Start menu entry, and can be
 Settings → Apps. It is not code-signed yet, so Windows SmartScreen may warn the first time it
 is run.
 
-A **Microsoft Store** version, with automatic updates, is on its way.
+Also on the **[Microsoft Store](https://apps.microsoft.com/detail/9MSSHDP4MJZK)**, with automatic updates.
 
 ### Portable mode
 

@@ -54,7 +54,7 @@ Windows 10 バージョン 1809 以降。ダブルクリックで起動します
 
 インストーラーも、インストール先の PC に何も要求しません（.NET も Inno Setup も不要）。管理者権限なしで今のユーザーにインストールされ（最初の画面で全ユーザー向けに Program Files へ入れることも選べます）、スタートメニューに登録され、「設定」→「アプリ」からアンインストールできます。まだコード署名をしていないため、初回実行時に Windows SmartScreen の警告が出ることがあります。
 
-自動更新のある **Microsoft Store** 版も準備中です。
+自動更新のある **[Microsoft Store 版](https://apps.microsoft.com/detail/9MSSHDP4MJZK)** もあります。
 
 ### ポータブルモード
 
