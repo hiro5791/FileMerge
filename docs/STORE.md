@@ -78,13 +78,75 @@ refuses the install. Remove the test certificate from the Trusted Root store whe
   stating that the app collects and transmits no data is enough; GitHub Pages works.
 - **Store listing** — needed per language you list. The app itself ships 21 languages; you can
   start with one listing and add more later.
-- **Screenshots** — at least one, 1366x768 or larger. There are usable ones in
-  [`docs/images`](images).
-- **Category** — Utilities and tools → File managers.
+- **Screenshots** — at least one per listing language, 1366x768 or larger. Generate them with
+  `build/Capture-StoreScreenshots.ps1` (see below).
+- **Category** — Utilities & tools; secondary category Productivity.
+- **Product declarations** — tick "supports purchases but does not use the Microsoft Store
+  commerce system": the Donate button goes to Ko-fi, and Store policy 10.8.2 requires that
+  third-party payments, donations included, are declared.
 - **Certification notes** — worth stating that the app is a plain offline file utility and
   needs no account, so the reviewer does not go looking for a sign-in.
 
-## 5. Automating it
+## 5. Store listings in all 21 languages
+
+The listing text for every language lives in
+[`docs/store/listing-text.json`](store/listing-text.json). Partner Center takes it as a CSV
+import, together with the screenshots.
+
+1. Build the app (Debug is fine), then capture the screenshots. The app window pops up 42
+   times; leave the machine alone until it finishes.
+
+   ```powershell
+   ./build/Capture-StoreScreenshots.ps1 -Files (1..4 | % { "F:\dev\test1\csv\sales-2024-0$_.csv" })
+   ```
+
+   Output: `artifacts/store-screenshots/<code>-light.png` and `<code>-dark.png`.
+
+2. In Partner Center, on the submission, choose **Export listings** and save the CSV (for
+   example as `artifacts/partner-center-listing-export.csv`). Always start from a fresh export
+   of the current submission.
+
+3. Build the import folder:
+
+   ```powershell
+   ./build/New-StoreListing.ps1 -Template artifacts\partner-center-listing-export.csv -LocalizedJapaneseTitle
+   ```
+
+   This writes `artifacts/store-listing/` with `listingData.csv` and the 42 screenshots, and
+   refuses to write anything if a text breaks a Partner Center limit.
+
+4. In Partner Center choose **Import listings → Import folder** and pick
+   `artifacts/store-listing` itself.
+
+What went wrong the first time, so it does not again (see
+[Import and export Store listings](https://learn.microsoft.com/windows/apps/publish/publish-your-app/msix/import-and-export-store-listings)):
+
+- **Image paths start with the name of the uploaded folder**: `store-listing/en-light.png`.
+  Neither `en-light.png` nor `images/en-light.png` works. A wrong path does not produce a
+  per-field error; the whole CSV is rejected with "this .csv file could not be processed" and
+  an empty error list.
+- **Nothing is saved until the whole file is error-free**, including the fields that were
+  fine. When an import fails, split it: import the CSV alone (**Import .csv**) with the image
+  fields empty to test the text, then the folder.
+- **Only one .csv file in the folder.**
+- **Keep Partner Center's own CSV style**: UTF-8 with BOM, quotes only where needed, the
+  Field, ID and Type columns and the padding rows at the end unchanged. PowerShell's
+  `Export-Csv` quotes every value; the script writes the file itself for that reason.
+- **The Japanese title (てくてくファイル結合) must be reserved** under App management → Manage
+  app names before the import. Every other language uses TekuTeku File Merge.
+- After a successful folder import, a new export shows the images as Partner Center URLs.
+  Those URLs can be reused in later imports instead of uploading the files again.
+
+This app's Store identity (not secret; it ends up in every package):
+
+| Field | Value |
+| --- | --- |
+| Store ID | 9MSSHDP4MJZK |
+| Package/Identity/Name | 9B6C9F60.TekuTekuFileMerge |
+| Package/Identity/Publisher | CN=E5A55C73-7E5B-4BF9-B37E-C562F23A3A5E |
+| PublisherDisplayName | Hiroyura |
+
+## 6. Automating it
 
 [`.github/workflows/release.yml`](../.github/workflows/release.yml) builds the MSIX on every
 `v*` tag. Set these repository variables (Settings → Secrets and variables → Actions →
