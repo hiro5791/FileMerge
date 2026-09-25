@@ -59,6 +59,15 @@ function Expand([string] $s, $strings, [string] $title) {
        Replace('{Opt2}', $strings.'Options.RemoveInnerBoms')
 }
 
+# Last paragraph of every description: a link to the page listing the developer's apps.
+function MoreApps([string] $code) {
+    $label = $text._moreApps.labels.$code
+    if (-not $label) { $problems.Add("$code has no more-apps label") }
+    $link = $text._moreApps.links.$code
+    if (-not $link) { $link = $text._moreApps.links.default }
+    "$label`r`n$link"
+}
+
 # Build every language's values first, then write them into the template rows.
 $values = @{}
 foreach ($column in $columns.Keys) {
@@ -72,7 +81,7 @@ foreach ($column in $columns.Keys) {
     $v = @{
         Title = $title
         ShortDescription = Expand $entry.short $strings $title
-        Description = Expand ($entry.description -join "`r`n") $strings $title
+        Description = (Expand ($entry.description -join "`r`n") $strings $title) + "`r`n`r`n" + (MoreApps $code)
         ReleaseNotes = $entry.notes
         DevStudio = $Developer
         CopyrightTrademarkInformation = $Copyright

@@ -48,6 +48,9 @@ No network access, no telemetry, no account. Available in 21 languages, with lig
 
 TekuTeku File Merge is free. The Donate button opens the developer's Ko-fi page in your browser, where you can leave a voluntary tip. Donations are processed by Ko-fi and do not unlock any features.
 
+More apps and tools by the developer:
+https://tekuteku.online/en/2026/09/20/my-apps-and-tools/
+
 **What's new in this version**
 
 First release.
@@ -95,6 +98,9 @@ merge files, combine files, join files, concatenate, csv merge, log merge, split
 通信、テレメトリー、アカウント登録はありません。21 言語に対応し、ライトとダークのテーマを選べます。
 
 てくてくファイル結合は無料です。「寄付」ボタンを押すと、開発者の Ko-fi のページがブラウザーで開き、任意で寄付できます。寄付は Ko-fi が処理し、寄付によって使える機能が増えることはありません。
+
+開発者のほかのアプリとツール:
+https://tekuteku.online/2026/09/19/%e8%87%aa%e4%bd%9c%e3%82%a2%e3%83%97%e3%83%aa%e3%81%a8%e3%83%84%e3%83%bc%e3%83%ab/
 
 **このバージョンの新機能**
 

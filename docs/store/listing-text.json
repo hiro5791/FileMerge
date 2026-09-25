@@ -692,5 +692,35 @@
       "รองรับ 21 ภาษา ธีมสว่างและธีมมืด"
     ],
     "terms": ["รวมไฟล์", "ต่อไฟล์", "รวมไฟล์ csv", "รวมไฟล์ log", "รวมไฟล์ที่แบ่งส่วน", "รวมไฟล์ข้อความ", "merge files"]
+  },
+  "_moreApps": {
+    "_comment": "The last paragraph of every description: this label, then the page that lists the developer's apps. Japanese links to the Japanese page, every other language to the English one.",
+    "links": {
+      "ja": "https://tekuteku.online/2026/09/19/%e8%87%aa%e4%bd%9c%e3%82%a2%e3%83%97%e3%83%aa%e3%81%a8%e3%83%84%e3%83%bc%e3%83%ab/",
+      "default": "https://tekuteku.online/en/2026/09/20/my-apps-and-tools/"
+    },
+    "labels": {
+      "en": "More apps and tools by the developer:",
+      "ja": "開発者のほかのアプリとツール:",
+      "zh-Hans": "开发者的其他应用和工具：",
+      "zh-Hant": "開發者的其他應用程式與工具：",
+      "ko": "개발자의 다른 앱과 도구:",
+      "es": "Más aplicaciones y herramientas del desarrollador:",
+      "pt-BR": "Mais aplicativos e ferramentas do desenvolvedor:",
+      "fr": "Autres applications et outils du développeur :",
+      "de": "Weitere Apps und Tools des Entwicklers:",
+      "it": "Altre app e strumenti dello sviluppatore:",
+      "ru": "Другие приложения и инструменты разработчика:",
+      "uk": "Інші застосунки та інструменти розробника:",
+      "pl": "Inne aplikacje i narzędzia dewelopera:",
+      "nl": "Meer apps en tools van de ontwikkelaar:",
+      "sv": "Fler appar och verktyg från utvecklaren:",
+      "tr": "Geliştiricinin diğer uygulamaları ve araçları:",
+      "ar": "تطبيقات وأدوات أخرى من المطوّر:",
+      "hi": "डेवलपर के अन्य ऐप और टूल:",
+      "id": "Aplikasi dan alat lain dari pengembang:",
+      "vi": "Các ứng dụng và công cụ khác của nhà phát triển:",
+      "th": "แอปและเครื่องมืออื่น ๆ ของผู้พัฒนา:"
+    }
   }
 }
