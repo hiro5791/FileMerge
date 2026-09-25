@@ -10,8 +10,9 @@
         artifacts/store-listing/listingData.csv
         artifacts/store-listing/<code>-light.png, <code>-dark.png
 
-    The images sit next to the CSV and are referenced by file name only: Partner Center's
-    folder import rejected the whole file when they were referenced as images/<name>.png.
+    Partner Center wants image paths that start with the name of the folder you upload
+    (store-listing/en-light.png), not paths relative to the CSV. See "Import and export
+    Store listings" on Microsoft Learn. A path without the folder name fails the whole import.
 
     In Partner Center, choose "Import listings" and select that folder.
 
@@ -40,6 +41,7 @@ $ErrorActionPreference = 'Stop'
 $repoRoot = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)
 if (-not $OutDir) { $OutDir = Join-Path $repoRoot 'artifacts\store-listing' }
 if (-not $ScreenshotDir) { $ScreenshotDir = Join-Path $repoRoot 'artifacts\store-screenshots' }
+$rootName = Split-Path -Leaf $OutDir
 $stringsDir = Join-Path $repoRoot 'src\FileMerge\Localization\Strings'
 $text = Get-Content (Join-Path $repoRoot 'docs\store\listing-text.json') -Raw -Encoding UTF8 | ConvertFrom-Json
 
@@ -97,7 +99,7 @@ foreach ($column in $columns.Keys) {
     $shots = @("$code-light.png", "$code-dark.png")
     for ($i = 0; $i -lt $shots.Count; $i++) {
         if (-not (Test-Path (Join-Path $ScreenshotDir $shots[$i]))) { $problems.Add("missing screenshot $($shots[$i]) in $ScreenshotDir") }
-        $v["DesktopScreenshot$($i + 1)"] = $shots[$i]
+        $v["DesktopScreenshot$($i + 1)"] = "$rootName/$($shots[$i])"
     }
 
     # Partner Center limits
