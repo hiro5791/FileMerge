@@ -1,5 +1,3 @@
-[日本語は下にあります](#日本語)
-
 ## English
 
 Combine multiple files into one, byte for byte. Nothing is decoded or converted.
