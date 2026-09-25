@@ -145,6 +145,7 @@ This app's Store identity (not secret; it ends up in every package):
 | Package/Identity/Name | 9B6C9F60.TekuTekuFileMerge |
 | Package/Identity/Publisher | CN=E5A55C73-7E5B-4BF9-B37E-C562F23A3A5E |
 | PublisherDisplayName | Hiroyura |
+| IARC global rating ID | c7fa2119-c534-8d7d-8760-3f9ae9a1f0f7 (all ages; reuse it in other IARC storefronts) |
 
 ## 6. Automating it
 
