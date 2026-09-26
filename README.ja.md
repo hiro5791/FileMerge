@@ -44,7 +44,7 @@
 | ファイル | サイズ | 必要なもの |
 | --- | --- | --- |
 | `FileMerge-<version>-setup-x64.exe` | 約 43 MB | なし（普通のインストーラー。スタートメニューに登録され、「設定」からアンインストールできます） |
-| `FileMerge-<version>-win-x64.zip` | 約 54 MB | なし（中身は .NET を同梱した EXE 1つ。展開してダブルクリック） |
+| `FileMerge-<version>-win-x64.zip` | 約 54 MB | なし（.NET を同梱した EXE と `portable.txt`。展開してダブルクリック） |
 | `FileMerge-<version>-win-arm64.zip` | 約 50 MB | なし（ARM 版 Windows 用） |
 | `FileMerge-<version>-win-x64-netdep.zip` | 約 0.6 MB | [.NET Desktop Runtime 10](https://dotnet.microsoft.com/download/dotnet/10.0) |
 
@@ -58,7 +58,7 @@ Windows 10 バージョン 1809 以降。ダブルクリックで起動します
 
 ### ポータブルモード
 
-設定は通常 `%LOCALAPPDATA%\FileMerge\` に保存されます。EXE と同じ場所に `portable.txt` という空ファイルを置くと、設定が EXE の隣に保存されるようになり、USB メモリーに入れて持ち運べます。書き込み不可のメディアでは設定が保存されないだけで、アプリは通常どおり動きます。
+ポータブル版の ZIP には、EXE と同じ場所に `portable.txt` というファイルが入っています。このファイルがある間は、設定を EXE の隣に保存し、ユーザーフォルダーやレジストリには何も書き込まないので、USB メモリーに入れて持ち運べます。`portable.txt` を削除すると、インストーラー版や Store 版と同じく `%LOCALAPPDATA%\FileMerge\` に保存されます。書き込み不可のメディアでは設定が保存されないだけで、アプリは通常どおり動きます。
 
 ## 対応言語
 

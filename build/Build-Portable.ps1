@@ -8,6 +8,9 @@
       FileMerge-<version>-win-<arch>.zip           the same file zipped for GitHub Releases
       FileMerge-<version>-win-<arch>-netdep.zip    ~1 MB, needs the .NET Desktop Runtime
 
+    Both zips carry packaging\portable\portable.txt next to the executable, so a copy that is
+    unzipped and run leaves nothing in the user profile: settings are kept beside the .exe.
+
     The single-file build extracts its native WPF components to %TEMP% on first run. That is
     how WPF single-file works; it needs no administrator rights and happens only once.
 
@@ -60,13 +63,16 @@ dotnet publish $project `
 
 if ($LASTEXITCODE -ne 0) { throw "publish failed" }
 
+# Ships inside the portable zips only. The installer and the Store package must not carry it.
+$portableMarker = Join-Path $repoRoot 'packaging\portable\portable.txt'
+
 $exeName = "FileMerge-$Version-$Runtime.exe"
 $exePath = Join-Path $artifacts $exeName
 Copy-Item (Join-Path $selfContained 'FileMerge.exe') $exePath -Force
 
 $zipPath = Join-Path $artifacts "FileMerge-$Version-$Runtime.zip"
 if (Test-Path $zipPath) { Remove-Item $zipPath }
-Compress-Archive -Path $exePath -DestinationPath $zipPath
+Compress-Archive -Path $exePath, $portableMarker -DestinationPath $zipPath
 
 $sizeMb = [Math]::Round((Get-Item $exePath).Length / 1MB, 1)
 Write-Output "  $exeName  ($sizeMb MB, no .NET required)"
@@ -91,6 +97,7 @@ if (-not $SkipFrameworkDependent) {
 
     $netdepZip = Join-Path $artifacts "FileMerge-$Version-$Runtime-netdep.zip"
     if (Test-Path $netdepZip) { Remove-Item $netdepZip }
+    Copy-Item $portableMarker $frameworkDependent
     Compress-Archive -Path (Join-Path $frameworkDependent '*') -DestinationPath $netdepZip
 
     $netdepMb = [Math]::Round((Get-Item $netdepZip).Length / 1MB, 2)

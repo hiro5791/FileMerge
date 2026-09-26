@@ -59,7 +59,7 @@ Grab the latest from [Releases](../../releases):
 | File | Size | Requirements |
 | --- | --- | --- |
 | `FileMerge-<version>-setup-x64.exe` | ~43 MB | none — an ordinary installer: Start menu entry, uninstall from Settings |
-| `FileMerge-<version>-win-x64.zip` | ~54 MB | none — one `.exe` inside with .NET built in; unzip and double-click |
+| `FileMerge-<version>-win-x64.zip` | ~54 MB | none — an `.exe` with .NET built in, plus `portable.txt`; unzip and double-click |
 | `FileMerge-<version>-win-arm64.zip` | ~50 MB | none — the same for ARM PCs |
 | `FileMerge-<version>-win-x64-netdep.zip` | ~0.6 MB | [.NET Desktop Runtime 10](https://dotnet.microsoft.com/download/dotnet/10.0) |
 
@@ -78,9 +78,10 @@ Also on the **[Microsoft Store](https://apps.microsoft.com/detail/9MSSHDP4MJZK)*
 
 ### Portable mode
 
-Settings normally live in `%LOCALAPPDATA%\FileMerge\`. Put an empty file named `portable.txt`
-next to the executable and they are stored beside it instead, so a copy on a USB stick carries
-its own configuration. On read-only media nothing is written and the app still runs.
+The portable zips come with a file named `portable.txt` next to the executable. While it is
+there, settings are stored beside the executable and nothing is written to your user profile or
+the registry, so a copy on a USB stick carries its own configuration. Delete `portable.txt` to
+keep settings in `%LOCALAPPDATA%\FileMerge\` instead, as the installer and Store versions do. On read-only media nothing is written and the app still runs.
 
 ## Languages
 
