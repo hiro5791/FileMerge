@@ -17,6 +17,8 @@ packaging/msix/*.cer
 # Portable settings written next to the executable (portable mode)
 FileMerge.settings.json
 portable.txt
+# ...except the marker that the portable zips ship with
+!/packaging/portable/portable.txt
 
 # OS
 Thumbs.db

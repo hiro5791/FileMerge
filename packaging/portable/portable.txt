@@ -1,0 +1,12 @@
+TekuTeku File Merge - portable mode
+
+While this file sits next to the .exe, settings are saved beside it as
+FileMerge.settings.json, and nothing is written to your user profile or the
+registry. Delete this file to keep settings in %LOCALAPPDATA%\FileMerge instead.
+
+
+てくてくファイル結合 - ポータブルモード
+
+このファイルが .exe と同じ場所にある間は、設定を .exe の隣に
+FileMerge.settings.json として保存し、ユーザーフォルダーやレジストリには何も書き込みません。
+このファイルを削除すると、設定は %LOCALAPPDATA%\FileMerge に保存されます。
