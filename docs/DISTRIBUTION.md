@@ -25,6 +25,7 @@ Last updated: 2026-09-26.
 | AlternativeTo | 2026-09-26 | https://alternativeto.net/software/tekuteku-file-merge/ (user hiroyura), 8 alternatives linked | Private until reviewed; the free queue can take months. $5 priority review is optional (My submissions). Do not share the link yet. |
 | Uptodown | 2026-09-26 | Developers Console (organization Hiroyura), app ID 1000876127, 1.0.1 installer from the GitHub release URL, English description, 4 screenshots | Status "Pending revision": editorial review. |
 | FileHorse | 2026-09-26 | Contact form https://www.filehorse.com/contact/ with the 10 items from filehorse.com/submit (1.0.1 installer and portable links) | Tested by their team and VirusTotal; no stated timeline. |
+| winget (winget-pkgs) | 2026-09-26 | PR https://github.com/microsoft/winget-pkgs/pull/441636 from the fork hiro5791/winget-pkgs, branch hiro5791.FileMerge-1.0.1; manifest in packaging/winget | Automated validation, then moderator review. Sign the CLA when the bot asks. Answer Needs-Author-Feedback within 10 days. Then `winget install hiro5791.FileMerge`. |
 | GitHub Sponsors | 2026-09-24 | Profile submitted for review | "A few days". Once approved: add it to the profile README and check the repo's Sponsor button. |
 
 ## Not done yet
@@ -33,7 +34,6 @@ Last updated: 2026-09-26.
 | --- | --- |
 | Vector | Author registration sent; waiting for the author number (PA…) by e-mail, then register the software (listing text drafted in the conversation). |
 | FOSShub | Contact-form text drafted; send if not already sent. |
-| winget community repo (`winget-pkgs`) | Not started. Would allow `winget install hiro5791.FileMerge` for the GitHub installer. |
 | Neowin / gHacks | Not started (news tips). |
 | Ninite | Not possible: Ninite adds only popular apps on its own. |
 
