@@ -35,7 +35,6 @@ Last updated: 2026-09-26.
 | Vector | Author registration sent; waiting for the author number (PA…) by e-mail, then register the software (listing text drafted in the conversation). |
 | FOSShub | Contact-form text drafted; send if not already sent. |
 | Neowin / gHacks | Not started (news tips). |
-| Ninite | Not possible: Ninite adds only popular apps on its own. |
 
 ## Rules learned along the way
 
