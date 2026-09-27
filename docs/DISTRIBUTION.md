@@ -12,6 +12,7 @@ Last updated: 2026-09-26.
 | SourceForge | https://sourceforge.net/projects/tekuteku-merge/ | Imports every GitHub release automatically (GitHub Integration webhook). Logo not uploaded yet. |
 | GitHub profile | https://github.com/hiro5791 | Profile README (repo `hiro5791/hiro5791`) lists the app; FileMerge is pinned. |
 | tekuteku.online | https://tekuteku.online/2026/09/19/%e8%87%aa%e4%bd%9c%e3%82%a2%e3%83%97%e3%83%aa%e3%81%a8%e3%83%84%e3%83%bc%e3%83%ab/ (ja), https://tekuteku.online/en/2026/09/20/my-apps-and-tools/ (en) | App added to both "my apps" pages. |
+| AlternativeTo | https://alternativeto.net/software/tekuteku-file-merge/ | Approved 2026-09-26. 8 alternatives linked (GSplit, Splitcat, ...). Anyone can suggest edits; they are reviewed. |
 | winget (msstore source) | `winget install 9MSSHDP4MJZK` | Automatic, because of the Store listing. |
 
 ## Submitted, waiting
@@ -22,7 +23,6 @@ Last updated: 2026-09-26.
 | MajorGeeks | 2026-09-25 | E-mail to mgnews@majorgeeks.com (1.0.0) | The thread shows 2 messages: check for a reply. |
 | Softpedia | 2026-09-26 | Regular submission form (download links point to the 1.0.0 files) | Up to 30 days; not guaranteed. Search Softpedia for "TekuTeku". |
 | Portable Freeware Collection | 2026-09-26 | Forum topic in "Portable Freeware Submission" (user Hiroyura), 1.0.1 | First post needs moderator approval (usually < 24 h). Answer questions in the thread. Adding a database entry is possible 24 h after sign-up with one approved post. |
-| AlternativeTo | 2026-09-26 | https://alternativeto.net/software/tekuteku-file-merge/ (user hiroyura), 8 alternatives linked | Private until reviewed; the free queue can take months. $5 priority review is optional (My submissions). Do not share the link yet. |
 | Uptodown | 2026-09-26 | Developers Console (organization Hiroyura), app ID 1000876127, 1.0.1 installer from the GitHub release URL, English description, 4 screenshots | Status "Pending revision": editorial review. |
 | FileHorse | 2026-09-26 | Contact form https://www.filehorse.com/contact/ with the 10 items from filehorse.com/submit (1.0.1 installer and portable links) | Tested by their team and VirusTotal; no stated timeline. |
 | winget (winget-pkgs) | 2026-09-26 | PR https://github.com/microsoft/winget-pkgs/pull/441636 from the fork hiro5791/winget-pkgs, branch hiro5791.FileMerge-1.0.1; manifest in packaging/winget | Automated validation, then moderator review. Sign the CLA when the bot asks. Answer Needs-Author-Feedback within 10 days. Then `winget install hiro5791.FileMerge`. |
