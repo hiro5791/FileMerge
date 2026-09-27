@@ -13,6 +13,7 @@ Last updated: 2026-09-26.
 | GitHub profile | https://github.com/hiro5791 | Profile README (repo `hiro5791/hiro5791`) lists the app; FileMerge is pinned. |
 | tekuteku.online | https://tekuteku.online/2026/09/19/%e8%87%aa%e4%bd%9c%e3%82%a2%e3%83%97%e3%83%aa%e3%81%a8%e3%83%84%e3%83%bc%e3%83%ab/ (ja), https://tekuteku.online/en/2026/09/20/my-apps-and-tools/ (en) | App added to both "my apps" pages. |
 | AlternativeTo | https://alternativeto.net/software/tekuteku-file-merge/ | Approved 2026-09-26. 8 alternatives linked (GSplit, Splitcat, ...). Anyone can suggest edits; they are reviewed. |
+| GitHub Sponsors | https://github.com/sponsors/hiro5791 | Approved 2026-09-27. Tiers: monthly $1, $5; one-time $3, $10 (no rewards). Listed in the repo Sponsor button (FUNDING.yml), both READMEs and the profile README. |
 | winget (msstore source) | `winget install 9MSSHDP4MJZK` | Automatic, because of the Store listing. |
 
 ## Submitted, waiting
@@ -26,7 +27,6 @@ Last updated: 2026-09-26.
 | Uptodown | 2026-09-26 | Developers Console (organization Hiroyura), app ID 1000876127, 1.0.1 installer from the GitHub release URL, English description, 4 screenshots | Status "Pending revision": editorial review. |
 | FileHorse | 2026-09-26 | Contact form https://www.filehorse.com/contact/ with the 10 items from filehorse.com/submit (1.0.1 installer and portable links) | Tested by their team and VirusTotal; no stated timeline. |
 | winget (winget-pkgs) | 2026-09-26 | PR https://github.com/microsoft/winget-pkgs/pull/441636 from the fork hiro5791/winget-pkgs, branch hiro5791.FileMerge-1.0.1; manifest in packaging/winget | Automated validation, then moderator review. Sign the CLA when the bot asks. Answer Needs-Author-Feedback within 10 days. Then `winget install hiro5791.FileMerge`. |
-| GitHub Sponsors | 2026-09-24 | Profile submitted for review | "A few days". Once approved: add it to the profile README and check the repo's Sponsor button. |
 
 ## Not done yet
 
