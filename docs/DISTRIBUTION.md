@@ -32,7 +32,7 @@ Last updated: 2026-09-26.
 
 | Where | Status |
 | --- | --- |
-| Vector | Author registration sent; waiting for the author number (PA…) by e-mail, then register the software (listing text drafted in the conversation). |
+| Vector | An author account already exists: author number PA051551 (Vector replied 2026-10-02; one number per person, so no new registration). Next: log in at https://vecauthor.vector.co.jp/libauthor/ and register the software (listing text drafted in the conversation). |
 | FOSShub | Contact-form text drafted; send if not already sent. |
 
 ## Rules learned along the way
