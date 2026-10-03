@@ -26,13 +26,13 @@ Last updated: 2026-09-26.
 | Portable Freeware Collection | 2026-09-26 | Forum topic in "Portable Freeware Submission" (user Hiroyura), 1.0.1 | First post needs moderator approval (usually < 24 h). Answer questions in the thread. Adding a database entry is possible 24 h after sign-up with one approved post. |
 | Uptodown | 2026-09-26 | Developers Console (organization Hiroyura), app ID 1000876127, 1.0.1 installer from the GitHub release URL, English description, 4 screenshots | Status "Pending revision": editorial review. |
 | FileHorse | 2026-09-26 | Contact form https://www.filehorse.com/contact/ with the 10 items from filehorse.com/submit (1.0.1 installer and portable links) | Tested by their team and VirusTotal; no stated timeline. |
+| Vector | 2026-10-03 | Author PA051551, software page se_no=529760, file PS791116 = FileMerge-1.0.1-win-x64.zip (56,176,273 bytes, MD5 0dab7efb253da8684652b8c71063d988) | "Publication requested"; about a week (5 business days). A first upload of the 1.0.0 zip by mistake (PS791114) is stopped and never published. |
 | winget (winget-pkgs) | 2026-09-26 | PR https://github.com/microsoft/winget-pkgs/pull/441636 from the fork hiro5791/winget-pkgs, branch hiro5791.FileMerge-1.0.1; manifest in packaging/winget | Automated validation, then moderator review. Sign the CLA when the bot asks. Answer Needs-Author-Feedback within 10 days. Then `winget install hiro5791.FileMerge`. |
 
 ## Not done yet
 
 | Where | Status |
 | --- | --- |
-| Vector | An author account already exists: author number PA051551 (Vector replied 2026-10-02; one number per person, so no new registration). Next: log in at https://vecauthor.vector.co.jp/libauthor/ and register the software (listing text drafted in the conversation). |
 | FOSShub | Contact-form text drafted; send if not already sent. |
 
 ## Rules learned along the way
