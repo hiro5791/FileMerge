@@ -63,8 +63,24 @@ dotnet publish $project `
 
 if ($LASTEXITCODE -ne 0) { throw "publish failed" }
 
-# Ships inside the portable zips only. The installer and the Store package must not carry it.
-$portableMarker = Join-Path $repoRoot 'packaging\portable\portable.txt'
+# Files that ship next to the .exe in the portable zips only; the installer and the Store
+# package must not carry portable.txt. Download sites such as Vector refuse an archive without
+# a user document, hence the readmes. Text is written as UTF-8 with BOM and CRLF so Notepad on
+# any supported Windows shows it correctly, whatever line endings the checkout has.
+$portableDir = Join-Path $repoRoot 'packaging\portable'
+$extras = Join-Path $staging 'extras'
+New-Item -ItemType Directory -Force -Path $extras | Out-Null
+$extraFiles = [ordered]@{
+    'portable.txt'  = Join-Path $portableDir 'portable.txt'
+    'readme.txt'    = Join-Path $portableDir 'readme.txt'
+    'readme_ja.txt' = Join-Path $portableDir 'readme_ja.txt'
+    'LICENSE.txt'   = Join-Path $repoRoot 'LICENSE'
+}
+foreach ($name in $extraFiles.Keys) {
+    $text = [IO.File]::ReadAllText($extraFiles[$name], [Text.Encoding]::UTF8) -replace "`r?`n", "`r`n"
+    [IO.File]::WriteAllText((Join-Path $extras $name), $text, [Text.UTF8Encoding]::new($true))
+}
+$extraPaths = @($extraFiles.Keys | ForEach-Object { Join-Path $extras $_ })
 
 $exeName = "FileMerge-$Version-$Runtime.exe"
 $exePath = Join-Path $artifacts $exeName
@@ -72,7 +88,7 @@ Copy-Item (Join-Path $selfContained 'FileMerge.exe') $exePath -Force
 
 $zipPath = Join-Path $artifacts "FileMerge-$Version-$Runtime.zip"
 if (Test-Path $zipPath) { Remove-Item $zipPath }
-Compress-Archive -Path $exePath, $portableMarker -DestinationPath $zipPath
+Compress-Archive -Path (@($exePath) + $extraPaths) -DestinationPath $zipPath
 
 $sizeMb = [Math]::Round((Get-Item $exePath).Length / 1MB, 1)
 Write-Output "  $exeName  ($sizeMb MB, no .NET required)"
@@ -97,7 +113,7 @@ if (-not $SkipFrameworkDependent) {
 
     $netdepZip = Join-Path $artifacts "FileMerge-$Version-$Runtime-netdep.zip"
     if (Test-Path $netdepZip) { Remove-Item $netdepZip }
-    Copy-Item $portableMarker $frameworkDependent
+    Copy-Item $extraPaths $frameworkDependent
     Compress-Archive -Path (Join-Path $frameworkDependent '*') -DestinationPath $netdepZip
 
     $netdepMb = [Math]::Round((Get-Item $netdepZip).Length / 1MB, 2)
