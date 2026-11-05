@@ -7,7 +7,7 @@ Last updated: 2026-09-26.
 
 | Where | URL | Notes |
 | --- | --- | --- |
-| GitHub Releases | https://github.com/hiro5791/FileMerge/releases/latest | 1.0.1 is the latest. Keep the 1.0.0 release: Softpedia links to its files. |
+| GitHub Releases | https://github.com/hiro5791/FileMerge/releases/latest | 1.0.2 is the latest (adds readmes and the license to the portable zips). Keep the 1.0.0 release: Softpedia links to its files. |
 | Microsoft Store | https://apps.microsoft.com/detail/9MSSHDP4MJZK | Published 2026-09-25. Listings in 21 languages. See [STORE.md](STORE.md). |
 | SourceForge | https://sourceforge.net/projects/tekuteku-merge/ | Imports every GitHub release automatically (GitHub Integration webhook). Logo not uploaded yet. |
 | GitHub profile | https://github.com/hiro5791 | Profile README (repo `hiro5791/hiro5791`) lists the app; FileMerge is pinned. |
@@ -26,7 +26,7 @@ Last updated: 2026-09-26.
 | Portable Freeware Collection | 2026-09-26 | Forum topic in "Portable Freeware Submission" (user Hiroyura), 1.0.1 | First post needs moderator approval (usually < 24 h). Answer questions in the thread. Adding a database entry is possible 24 h after sign-up with one approved post. |
 | Uptodown | 2026-09-26 | Developers Console (organization Hiroyura), app ID 1000876127, 1.0.1 installer from the GitHub release URL, English description, 4 screenshots | Status "Pending revision": editorial review. |
 | FileHorse | 2026-09-26 | Contact form https://www.filehorse.com/contact/ with the 10 items from filehorse.com/submit (1.0.1 installer and portable links) | Tested by their team and VirusTotal; no stated timeline. |
-| Vector | 2026-10-03 | Author PA051551, software page se_no=529760, file PS791116 = FileMerge-1.0.1-win-x64.zip (56,176,273 bytes, MD5 0dab7efb253da8684652b8c71063d988) | "Publication requested"; about a week (5 business days). A first upload of the 1.0.0 zip by mistake (PS791114) is stopped and never published. |
+| Vector | 2026-11-05 | Author PA051551, software page se_no=529760, file PS792218 = FileMerge-1.0.2-win-x64.zip (56,180,385 bytes, MD5 18030acf28e09d704751a05b545207a5) | "Publication requested". Vector refused 1.0.1 (PS791116) on 2026-10-29 because the zip had no user document; 1.0.2 adds readme_ja.txt, readme.txt and LICENSE.txt. PS791116 and the mistaken 1.0.0 upload PS791114 are stopped by Vector. |
 | winget (winget-pkgs) | 2026-09-26 | PR https://github.com/microsoft/winget-pkgs/pull/441636 from the fork hiro5791/winget-pkgs, branch hiro5791.FileMerge-1.0.1; manifest in packaging/winget | Automated validation, then moderator review. Sign the CLA when the bot asks. Answer Needs-Author-Feedback within 10 days. Then `winget install hiro5791.FileMerge`. |
 
 ## Not done yet
@@ -40,3 +40,5 @@ Last updated: 2026-09-26.
 - Read the service's official documentation before guessing at a failure.
 - Portable Freeware Collection cares about "stealth": the portable zips ship `portable.txt`, so an unzipped copy writes nothing outside its folder (verified for 1.0.1).
 - Do not delete release tags: a draft release and its tag belong together.
+- Download sites such as Vector refuse an archive without a user document: every portable zip ships readme.txt, readme_ja.txt and LICENSE.txt (from 1.0.2).
+- When choosing a file to upload, check the full file name in the file dialog: the page shortens it to "FileMerge…win-x64.zip".
